@@ -10,13 +10,25 @@ With IntelliAgents, we want to experiment with advanced agentic workflows to str
 To run the frontend locally, follow these steps:
 
 ### Prerequisites
+> **Note:** It's easier to deal with Node.js versions if you use a tool called nvm, installations can be seen [here](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/).
 
 Ensure you have the following installed:
 - [Node.js](https://nodejs.org/) (version 20 or higher)
 - [npm](https://www.npmjs.com/) (version 9 or higher)
 - [Git](https://git-scm.com/)
 
-> **Note:** It's easier to deal with Node.js versions if you use a tool called nvm, installations can be seen [here](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/).
+
+To check whether these were installed properly, you can run these:
+```bash
+# Check Node.js version (should be 20 or higher)
+node -v
+
+# Check npm version (should be 9 or higher)
+npm -v
+
+# Check Git version
+git --version
+```
 
 ### Installation
 
@@ -28,12 +40,7 @@ Ensure you have the following installed:
     ```sh
     cd intelliAgents
     ```
-3. Navigate to the frontend directory:
-    ```sh
-    cd frontend
-    ```
-
-4. Install the dependencies:
+3. Install the dependencies:
     ```sh
     npm install
     ```
@@ -42,7 +49,7 @@ Ensure you have the following installed:
 
 1. Start the development server:
     ```sh
-    npm start
+    npm run dev
     ```
 2. Open your browser and navigate to `http://localhost:3000` to see the application in action.
 
