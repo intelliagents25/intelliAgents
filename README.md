@@ -28,7 +28,12 @@ Ensure you have the following installed:
     ```sh
     cd intelliAgents
     ```
-3. Install the dependencies:
+3. Navigate to the frontend directory:
+    ```sh
+    cd frontend
+    ```
+
+4. Install the dependencies:
     ```sh
     npm install
     ```
