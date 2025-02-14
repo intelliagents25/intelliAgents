@@ -55,6 +55,3 @@ git --version
 
 For other options on running the frontend, please refer to the [README in the frontend folder](frontend/README.md).
 
-### Contributing
-
-We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for more details.
