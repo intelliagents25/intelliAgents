@@ -43,3 +43,17 @@ body {
     background-position: 200% center;
   }
 }
+
+.roboto-mono-regular {
+  font-family: "Roboto Mono", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.inter-regular {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}

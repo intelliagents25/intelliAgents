@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="px-[90px] pt-[21px] h- bg-[#98D7F2]">
+    <header className="h-[137px] px-[90px] pt-[21px] h- bg-gradient-to-b from-[#37b5ec] via-[#98d7f2] to-[#f9f9f9]">
       <nav className="mx-auto flex items-center justify-between">
         <div className="text-4xl text-[#272776] font-bold">Intelli</div>
         <div className="space-x-8">

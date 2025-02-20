@@ -1,32 +1,26 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
-import DescriptionBox from './components/DescriptionBox';
-import SignInSection from './components/SignInSection';
-import DropZone from './components/DropZone';
 import Footer from './components/Footer';
+import { CheckCircle } from 'lucide-react';
 
 const LandingPage = () => {
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign In clicked');
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-100 to-white">
-      <Header />
-      <main className="flex-1">
-        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="flex-1 space-y-6 relative">
-              <DescriptionBox />
-              <SignInSection handleGoogleSignIn={handleGoogleSignIn} />
-            </div>
-            <DropZone />
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet"
+      />
+
+    <div className="min-h-screen flex flex-col bg-[#f9f9f9]">
+        <Header />
+        <main className="flex-1">
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 
