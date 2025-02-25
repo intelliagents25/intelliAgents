@@ -1,0 +1,51 @@
+/* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
+
+.active-hover {
+    border-color: var(--secondary-color-1);
+    box-shadow: 0 0 10px var(--secondary-color-1);
+}
+
+.button-remove-file {
+    background-color: var(--secondary-color-2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    display: inline-block;
+}
+
+
+/* comment this out for on focus styling  */
+/* .inputfile:focus + label,
+.inputfile + label:hover { */
+    /* add stuff here */
+/* } */
+
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}

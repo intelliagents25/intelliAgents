@@ -5,9 +5,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-color: #272776;
+  --secondary-color-1: #7C91DC;
+  --secondary-color-2: #6138B9;
+  --neutral-black: #151515;
+  --neutral-white: ##F9F9F9;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
