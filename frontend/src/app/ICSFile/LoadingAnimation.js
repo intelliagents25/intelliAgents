@@ -1,9 +1,10 @@
 'use client';
+
 import { useLottie } from 'lottie-react';
 import animationData from './../../../public/lottie/loading-plane.json';
 
 export const dynamic = 'force-dynamic';
-const LoadingPage = () => {
+const LoadingAnimation = () => {
 
   const defaultOptions = {
     loop: true,
@@ -16,11 +17,11 @@ const LoadingPage = () => {
   // if (!isLoading) return null;    
 
   return (
-    <div className='w-full flex justify-center items-center h-screen'>
+    <div className='flex justify-center items-center'>
       {View}
     </div>
   );
 
 };
 
-export default LoadingPage;
+export default LoadingAnimation;
