@@ -1,16 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useLottie } from 'lottie-react';
+import animationData from './../../../public/lottie/loading-plane.json';
 
 const LoadingPage = () => {
-
-  const [animationData, setAnimationData] = useState(null);
-
-  useEffect(() => {
-    fetch('/lottie/loading-plane.json')
-      .then(response => response.json())
-      .then(data => setAnimationData(data));
-  }, []);
 
   const defaultOptions = {
     loop: true,
