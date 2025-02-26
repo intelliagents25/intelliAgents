@@ -2,6 +2,7 @@
 import { useLottie } from 'lottie-react';
 import animationData from './../../../public/lottie/loading-plane.json';
 
+export const dynamic = 'force-dynamic';
 const LoadingPage = () => {
 
   const defaultOptions = {
