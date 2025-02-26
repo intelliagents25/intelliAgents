@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { CheckCircle } from 'lucide-react';
 
-const LandingPage = () => {
+const ICSFile = () => {
   return (
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,4 +49,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default ICSFile;

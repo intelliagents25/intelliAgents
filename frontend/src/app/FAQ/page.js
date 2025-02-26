@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import Header from './components/Header';
-import FAQContainer from './components/FAQContainer';
-import Footer from './components/Footer';
-import FAQSwitcher from './components/FAQSwitcher';
+import Header from '../components/Header';
+import FAQContainer from '../components/FAQContainer';
+import Footer from '../components/Footer';
+import FAQSwitcher from '../components/FAQSwitcher';
 
-const LandingPage = () => {
+const FAQ = () => {
   const [selectedTab, setSelectedTab] = useState('General');
 
   const handleTabSwitch = (tab) => {
@@ -33,4 +33,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default FAQ;

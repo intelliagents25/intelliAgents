@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { CheckCircle } from 'lucide-react';
 
-const LandingPage = () => {
+const GCalIntegration = () => {
   return (
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,4 +42,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default GCalIntegration;
