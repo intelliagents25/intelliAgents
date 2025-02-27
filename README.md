@@ -31,7 +31,7 @@ git --version
 ```
 
 ### Installation
-
+ > Note on why we use `npm ci` instead of `npm install`: read this [thread](https://stackoverflow.com/questions/48524417/should-the-package-lock-json-file-be-added-to-gitignore).
 1. Clone the repository:
     ```sh
     git clone https://github.com/vangeliq/intelliAgents.git
@@ -42,9 +42,8 @@ git --version
     ```
 3. Install the dependencies:
     ```sh
-    npm install
+    npm ci
     ```
-
 ### Running the Application
 
 1. Start the development server:
