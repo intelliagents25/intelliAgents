@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import FAQContainer from '../components/FAQContainer';
+import FAQContainer from './FAQContainer';
 import Footer from '../components/Footer';
-import FAQSwitcher from '../components/FAQSwitcher';
+import FAQSwitcher from './FAQSwitcher';
 
 const FAQ = () => {
   const [selectedTab, setSelectedTab] = useState('General');

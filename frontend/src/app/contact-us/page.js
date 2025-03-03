@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import ContactUsForm from '../components/ContactUsForm';
+import ContactUsForm from './ContactUsForm';
 
 const ContactUsPage = () => {
 
