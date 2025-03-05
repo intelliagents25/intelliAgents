@@ -26,12 +26,12 @@ const InfinitiScrollLandingPage = () => {
               <h1 className="text-[60px] md:text-[90px] lg:text-[120px] text-[#283C69] font-[400]" style={{ fontFamily: 'Suez One' }}>
                 IntelliAgents
               </h1>
-              <p className="text-[#505F7C] text-[12px] md:text-[18px] lg:text-[24px] font-[400] text-center md:text-left lg:text-left" style={{ fontFamily: 'Roboto Mono' }}>
+              <p className="text-[#505F7C] text-[12px] md:text-[18px] lg:text-[24px] font-[400] text-center md:text-left lg:text-left mb-20" style={{ fontFamily: 'Roboto Mono' }}>
                 The AI agent that organises your schedule... and <br /> keeps it organised.
               </p>
-              <div className="flex flex-col space-y-10 mb-8 items-center md:items-start lg:items-start">
+              <div className="flex flex-col space-y-10 mb-8 items-center">
                 {/* Sign-In Section */}
-                <SignInSection />
+                <SignInSection className='w-[95%]'/>
                 
                 {/* Separator */}
                 <div className="flex items-center w-[95%]">
