@@ -2,8 +2,7 @@
 export async function POST(req) {
 
   try {
-    // let url = https://fake-json-api.mock.beeceptor.com/users
-    let url = "https://intelliagents.ddns.net/webhook-test/chat/fetch";
+    let url = "https://intelliagents.ddns.net/webhook/chat/fetch";
     let input_data = await req.json();
 
     const response = await fetch(url, {method: "POST", body: JSON.stringify(input_data)});
