@@ -11,12 +11,6 @@ const InfinitiScrollLandingPage = () => {
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet"
       />
-
-      <div className="min-h-screen bg-white">
-        {/* Navigation */}
-        <Header />
-
-        {/* Hero Section */}
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
@@ -109,10 +103,6 @@ const InfinitiScrollLandingPage = () => {
                 </div>
           </section>
         </main>
-
-        {/* Footer */}
-        <Footer />
-      </div>
     </>
   );
 };

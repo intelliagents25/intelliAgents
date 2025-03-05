@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { CheckCircle } from 'lucide-react';
 
 const GCalIntegration = () => {
@@ -13,9 +11,6 @@ const GCalIntegration = () => {
         href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet"
       />
-
-    <div className="min-h-screen flex flex-col bg-[#f9f9f9]">
-        <Header />
         <main className="flex-1">
         <div className="flex flex-col items-center justify-center px-4 py-16">
       <CheckCircle className="w-24 h-24 text-sky-300 mb-4" />
@@ -36,8 +31,6 @@ const GCalIntegration = () => {
 
     <img src="/images/temp_mascot.png" alt="Mascot" className="w-[195px] rotate-[29.92deg] ml-[-50px]" />
         </main>
-        <Footer />
-      </div>
     </>
   );
 };
