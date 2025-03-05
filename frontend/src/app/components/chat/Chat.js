@@ -12,8 +12,7 @@ const Chat = () => {
 
   return (
     <>
-      <ChatBox handleButtonToggle={toggleChat} />
-      {showChat && <ChatBox />}
+      {showChat && <ChatBox handleButtonToggle={toggleChat}  />}
       <ChatPopUpIcon handleButtonToggle={toggleChat} />
     </>
   );
