@@ -16,8 +16,9 @@
   /* main container for the chatbox */
 .chatHolder {
   /* positioning */
-    display: grid;
+    display: flex;
     align-content: space-between;
+    flex-direction: column;
     position: fixed;
     bottom: 140px; 
     right: 40px;
@@ -53,6 +54,7 @@
   /* styling for the chat contents */
   .chatTextContents {
     display: flex;
+    flex-grow: 1;
     height: auto;
     flex-direction: column;
     align-items: flex-start;
