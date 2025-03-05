@@ -13,11 +13,12 @@ const Footer = () => {
         <p className="text-[14px] text-gray-600 -mt-2" style={{ fontFamily: 'Roboto Mono' }}>Your student-led, AI-powered, semester agent</p>
         
         <div className="flex gap-8 mt-5 mb-5" style={{ fontFamily: 'Roboto Mono' }}>
-          <a href="#" className="text-[15px] font-[700] text-[#152935] hover:underline">Back to top</a>
           <a href="/" className="text-[15px] font-[500] text-[#152935] hover:underline">Home</a>
           <a href="about-us" className="text-[15px] font-[500] text-[#152935] hover:underline">About</a>
+          <a href="/" className="text-[15px] font-[500] text-[#152935] hover:underline">How It Works</a>
           <a href="contact-us" className="text-[15px] font-[500] text-[#152935] hover:underline">Contact</a>
         </div>
+        <a href="#" className="text-[15px] font-[700] text-[#152935] hover:underline">Back to top</a>
 
         <div className="border-t border-[#C1C7CD] mt-5"></div>
         
