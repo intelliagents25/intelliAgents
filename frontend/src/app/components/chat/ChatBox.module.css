@@ -1,59 +1,69 @@
+/* css file for the chatbox component */
+/* TODO: clean this up and get rid of magic numbers */
+
+
+
+.chatPopUpIcon {
+    --length-square-side: 80px;
+    width: var(--length-square-side);
+    height: var(--length-square-side);
+    border-radius: 50%;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+  }
+
+  /* main container for the chatbox */
 .chatHolder {
+  /* positioning */
     display: grid;
-    grid-template-rows: 1fr 100px;
+    align-content: space-between;
+    position: fixed;
+    bottom: 140px; 
+    right: 40px;
+    /* sizing */
+    max-height: 60%;
+    height:700px;
+    min-width: 20%;
+    max-width: 500px;
+    /* styling */
+    border-radius: 12px;
+    overflow:hidden;
+    background-color: white;
+    border-color: black;
+    border-width: 1px;
   }
   
-  .chatText {
+  .chatHeader {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 1em;
+    border-bottom: 1px solid #eee;
+  }
+
+  .closeButton {
+    border: 0;
+    background: none;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+
+  /* styling for the chat contents */
+  .chatTextContents {
+    display: flex;
+    height: auto;
     flex-direction: column;
     align-items: flex-start;
     gap: 1em;
     padding: 1em;
-    height: calc(100vh - 40px - 100px - 100px - 100px);
-    overflow-y: auto;
+    overflow: auto;
   }
-  
-  .form {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-    border-top: 1px solid #eee;
-  }
-  
-  .textarea {
-    padding: 1em;
-    border: 0;
-    font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      Segoe UI,
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      Fira Sans,
-      Droid Sans,
-      Helvetica Neue,
-      sans-serif;
-    font-size: 1.2em;
-  }
-  
-  .button {
-    border: 0;
-    color: white;
-    font-weight: bold;
-    font-size: 1.4em;
-    background: linear-gradient(to right, #363795, #005c97);
-  }
-  
-  .button:hover {
-    background: linear-gradient(90deg, rgba(54, 55, 149, 1) 0%, rgba(0, 92, 151, 1) 62%, rgba(0, 125, 205, 1) 100%);
-  }
-  
-  .button:disabled,
-  .button:hover:disabled {
-    background: linear-gradient(to right, #363795, #005c97);
-    opacity: 0.5;
-  }
+
+  /* #loading {
+  } */
+
   
   .message {
     background-color: #eef5f8;
@@ -61,14 +71,68 @@
     border-radius: 10px;
     flex-grow: 0;
     border-bottom-left-radius: 0;
+    max-width: 70%;
   }
 
   .message[data-author="me"] {
     background-color: #e0ffe0;
     align-self: flex-end;
+
   }
   
   .message[data-author="other"] {
     background-color: #ffe0e0;
     align-self: flex-start;
   }
+
+
+  .retryMessage {
+    display: flex;
+    margin: 15px 0 ;
+    padding: 15px 15px 15px 15px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    color: rgb(95, 95, 95);
+  }
+
+  /* this is a bit jank but when i want to */
+  .anchor {
+    min-height: 1px;
+    height: 1px;
+    width: 100%;
+  }
+  
+  /* "footer" for text input and send button */
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    border-top: 1px solid #eee;
+    max-height: 100px;
+    height: 100px;
+  }
+  
+  /* form text area */
+  .textarea {
+    padding: 1em;
+    border: 0;
+  }
+  
+  
+  /* button to send the message */
+  .sendButton {
+    border: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4em;
+    background-color: var(--secondary-color-2);
+  }
+  
+  .sendButton:hover {
+    opacity: 0.9;
+  }
+  
+  .sendButton:disabled,
+  .sendButton:hover:disabled {
+    opacity: 0.5;
+  }
+  
