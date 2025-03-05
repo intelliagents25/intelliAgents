@@ -1,7 +1,10 @@
-export const sendDataToBot = async () => {
+export const sendDataToBot = async (message_str) => {
+    let data = {"message": message_str}
+
     return fetch("/api/chat", {
-        method: 'GET',
-        signal: AbortSignal.timeout(10 * 1000) // 10 second timeout
+        method: 'POST',
+        body: JSON.stringify(data),
+        signal: AbortSignal.timeout(15 * 1000) // 10 second timeout
     })
         .then((response) => {
             if (!response.ok) {
@@ -10,7 +13,8 @@ export const sendDataToBot = async () => {
             return response.json();
         })
         .then((response) => {
-            return response.data;
+            response = response.message;
+            return response;
         })
         .catch((error) => {
             return error;

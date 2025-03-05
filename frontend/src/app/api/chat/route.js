@@ -1,10 +1,12 @@
 // Sample GET response for the chat
-export async function GET(req) {
+export async function POST(req) {
 
   try {
     // let url = https://fake-json-api.mock.beeceptor.com/users
-    let url = "https://intelliagents.ddns.net/webhook-test/chat/fetch"
-    const response = await fetch(url);
+    let url = "https://intelliagents.ddns.net/webhook-test/chat/fetch";
+    let input_data = await req.json();
+
+    const response = await fetch(url, {method: "POST", body: JSON.stringify(input_data)});
     if (!response.ok) {
       console.log(response)
       throw new Error('Failed to fetch data');
@@ -12,7 +14,7 @@ export async function GET(req) {
     
     const data = await response.json();
        return Response.json(
-      { data: data.message },
+      { message: data[0].output},
       { status: 200 }
     );
   } catch (error) {
