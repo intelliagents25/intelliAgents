@@ -18,14 +18,14 @@ const Chat = () => {
     const disableSend = messageText.trim().length === 0 || awaitingResponse;
 
     const sendChatMessage = async (messageText) => {
+        let message = messageText;
         setShowRetryMessage(false);
         setMessageText("");
         let new_messages = [...receivedMessages, { data: messageText, author: "me" }];
 
         inputBox.focus();
         setAwaitingResponse(true);
-
-        const response = await sendDataToBot();
+        const response = await sendDataToBot(message);
 
         if (response instanceof Error) {
             setShowRetryMessage(true);
