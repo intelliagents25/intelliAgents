@@ -13,9 +13,6 @@ const InfinitiScrollLandingPage = () => {
       />
 
       <div className="min-h-screen bg-white">
-        {/* Navigation */}
-        <Header />
-
         {/* Hero Section */}
         <main className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between">
@@ -109,9 +106,6 @@ const InfinitiScrollLandingPage = () => {
                 </div>
           </section>
         </main>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </>
   );
