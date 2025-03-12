@@ -8,9 +8,6 @@ const ChatPopUpIcon = ({ handleButtonToggle }) => {
         style={{backgroundColor: "grey"}}
         onClick={handleButtonToggle}
     >
-        <button className={styles.chatPopUpButton}>
-            <i className="fas fa-comment-alt"></i>
-        </button>
     </div>
 }
 

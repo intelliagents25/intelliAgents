@@ -1,22 +1,48 @@
 "use client";
 import React from 'react';
-import Header from './components/Header';
-import DescriptionBox from './components/DescriptionBox';
 import SignInSection from './components/SignInSection';
 import DropZone from './components/DropZone';
 import FrequentlyAskedQuestionAccordion from './components/FrequentlyAskedQuestionAccordion';
 
 const InfinitiScrollLandingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-sky-100 to-white">
-      <Header />
-      <main className="flex-1">
-        <div className="grid grid-cols-3 gap-y-[100px]">
-          <div className="col-span-2">
-            <DescriptionBox />
+    <>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+      <div className="min-h-screen bg-white">
+          <div className="flex flex-row w-full h-[1181px] justify-between bg-[#D5E9FA]">
+            {/* Left content */}
+            <div className="flex flex-col items-center md:items-start lg:items-start justify-center md:pl-16 lg:pl-16 md:pr-16 lg:pr-16">
+              <h1 className="text-[60px] md:text-[90px] lg:text-[120px] text-[#283C69] font-[400]" style={{ fontFamily: 'Suez One' }}>
+                IntelliAgents
+              </h1>
+              <p className="text-[#505F7C] text-[12px] md:text-[18px] lg:text-[24px] font-[400] text-center md:text-left lg:text-left mb-20" style={{ fontFamily: 'Roboto Mono' }}>
+                The AI agent that organises your schedule... and <br /> keeps it organised.
+              </p>
+              <div className="flex flex-col space-y-10 mb-8 items-center">
+                {/* Sign-In Section */}
+                <SignInSection className='w-[95%]'/>
+                
+                {/* Separator */}
+                <div className="flex items-center w-[95%]">
+                  <hr className="flex-grow border-t border-gray-400" />
+                  <span className="px-2 text-gray-600 text-sm">or</span>
+                  <hr className="flex-grow border-t border-gray-400" />
+                </div>
+                
+                {/* DropZone */}
+                <DropZone />
+              </div>
+            </div>
+            
+            {/* Right mascot */}
+            <div className="flex">
+              <img src="/images/temp_mascot.gif" alt="Animated mascot" className="hidden lg:block" />
+            </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full h-auto bg-[#FFFFFB]">
+          <div id="how-it-works" className="flex flex-col items-center justify-center w-full h-auto bg-[#FFFFFB]">
             <p className="text-[#454F54] text-[18px] font-[500] pt-10" style={{ fontFamily: 'Roboto Mono' }}>
               How It works
             </p>
@@ -74,13 +100,8 @@ const InfinitiScrollLandingPage = () => {
             </h2>
             <FrequentlyAskedQuestionAccordion />
           </div>
-        </div>
-        <p className="text-[#151515] text-[15px] font-[500] ml-[67px]">By continuing, you agree to our privacy policy.
-        <a href="#how-it-works" className="hover:text-blue-600 text-[#37B5EC] text-[15px] font-[500] ml-[10px]">Learn more.</a>
-        </p>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 
