@@ -3,28 +3,38 @@
 import React, { useState } from "react";
 import "./DropZone.css";
 import { Icons } from "./Icons";
+import {sendFileToBot, getExtension} from "./DropZoneRequests";
 
-function getExtension(filename) {
-  var parts = filename.split('.');
-  return parts[parts.length - 1];
-}
+
 
 const validFileTypes = ["pdf", "docx", "txt"];
 
 const DropZone = () => {
   const [files, setFile] = useState([]);
   const [fileEnter, setFileEnter] = useState(false);
-  const handleFileChange = (event) => {
-    if (event.target.files[0]){
-      const extension = getExtension(event.target.files[0].name);
-      if (validFileTypes.includes(extension)){
-        setFile(files.concat(event.target.files[0]));
-        return;
-      }else {
-        alert("Invalid file type. Please select a PDF, DOCX, or TXT file.");
-      }
+
+  
+const handleUploadFile = () => {
+  if (files.length === 0) {
+    alert("Please select a file to upload.");
+    return;
+  }
+  sendFileToBot(files[0]);
+}
+
+const handleFileChange = (event) => {
+  if (event.target.files[0]){
+    const extension = getExtension(event.target.files[0].name);
+    if (validFileTypes.includes(extension)){
+      setFile(files.concat(event.target.files[0]));
+      return;
+    }else {
+      alert("Invalid file type. Please select a PDF, DOCX, or TXT file.");
     }
-  };
+  }
+};
+
+
 
   const removeFile = (index) => {
     if (index === undefined) {
@@ -124,6 +134,7 @@ const renderFileList = () => {
         </div>
       </div>
       {renderFileList()}
+      <button className="mt-4 px-6 py-2 bg-[#6138B9] text-white rounded-lg hover:bg-[#532EA3]" onClick={handleUploadFile}>Upload</button>
     </div>
   );
 };

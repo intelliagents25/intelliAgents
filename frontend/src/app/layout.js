@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "./api/auth/[...nextauth]/Providers";
 import React from 'react';
 import Link from 'next/link'
+import Chat from './components/chat/Chat';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
             <main className="body">
               {children}
             </main>
+            <Chat />
 
             <footer className="footer">
               <h2 className="font-logo">IntelliAgents</h2>
