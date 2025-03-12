@@ -7,9 +7,11 @@ export async function POST(req) {
       console.log(file);
       let environment = process.env.NODE_ENV === "development" ? "-test" : "";
       let url = `https://intelliagents.ddns.net/webhook${environment}/upload`
-  
+      url = "https://intelliagents.ddns.net/webhook/cc22bde7-3214-438d-b617-69efc2400de5"
+      // this is a test url
+      
       const response = await fetch(url, {
-        method: "GET", 
+        method: "POST", 
         body: file
       });
       if (!response.ok) {

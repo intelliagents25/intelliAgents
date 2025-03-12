@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const VerifyTable = ({ rows }) => {
-    const [actionStatus, setActionStatus] = useState(
-        rows.map(() => ({
-            accepted: false,
-            rejected: false,
-        }))
-    );
+    const [actionStatus, setActionStatus] = useState([]);
+
+    useEffect(() => {
+        let eventList = sessionStorage.getItem('eventList');
+        eventList = JSON.parse(eventList);
+        if (!eventList) {
+            return;
+        }
+        setActionStatus(
+            eventList.map(() => ({
+                accepted: false,
+                rejected: false,
+            })))     
+    }, []);
 
     const handleAccept = (index) => {
         const newStatus = [...actionStatus];

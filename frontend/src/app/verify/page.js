@@ -1,15 +1,19 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import VerifyTable from './VerifyTable';
 
 const VerifyResults = () => {
-
-    const tableData = [
-        { description: 'Class Name: MDIA470' },
-        { description: 'Group: Agentic AI' },
-        { description: 'Final: April 9th' },
-        // Add more rows as needed
-    ];
+    const [tableData, setTableData] = useState([]);
+    const ics = useRef('');
+    useEffect(() => {
+        // Fetch data from the backend
+        ics.current = sessionStorage.getItem('myData');
+        let eventList = sessionStorage.getItem('eventList');
+        console.log(JSON.parse(eventList));
+        if (eventList !== null) {
+            setTableData(JSON.parse(eventList));
+        }        
+    }, []);
 
     const handleEdit = () => {
         console.log('Edit button clicked');
