@@ -11,7 +11,7 @@ const Header = () => {
       <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Suez+One&display=swap" rel="stylesheet" />
 
       <header className="h-[68px] px-[16px] bg-[#FFFFFB] border-[1px] border-[#000000] flex items-center">
-        <nav className="w-full flex items-center justify-between">
+        <nav className="w-full flex items-center justify-between ml-20 mr-20">
           
           {/* Left Section: Intelli + Navigation Links */}
           <div className="flex items-center space-x-8">
@@ -35,10 +35,6 @@ const Header = () => {
             <CheckboxDropdown />
           </div>
           </div>
-
-          {/* Mobile Dropdown (Hidden on Large Screens) */}
-          
-
         </nav>
       </header>
     </>
