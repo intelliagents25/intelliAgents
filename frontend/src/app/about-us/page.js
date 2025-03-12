@@ -12,7 +12,6 @@ const AboutUsPage = () => {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
             <div className="min-h-screen flex flex-col">
-                <Header />
                 <div className="bg-[#D5E9FA]">
                     <div className="gap-[32px] pt-20 text-center">
                         <p className="text-[#454F54] text-[18px] font-[500]" style={{ fontFamily: 'Roboto Mono' }}>About Us</p>
@@ -90,7 +89,6 @@ const AboutUsPage = () => {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     );

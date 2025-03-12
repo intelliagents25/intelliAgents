@@ -1,7 +1,5 @@
 "use client";
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import SignInSection from './components/SignInSection';
 import DropZone from './components/DropZone';
 import FrequentlyAskedQuestionAccordion from './components/FrequentlyAskedQuestionAccordion';
@@ -16,7 +14,6 @@ const InfinitiScrollLandingPage = () => {
 
       <div className="min-h-screen bg-white">
         {/* Navigation */}
-        <Header />
 
         {/* Hero Section */}
         <main className="mx-auto">
@@ -112,7 +109,6 @@ const InfinitiScrollLandingPage = () => {
         </main>
 
         {/* Footer */}
-        <Footer />
       </div>
     </>
   );
