@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import "../globals.css";
 import { CheckCircle } from 'lucide-react';
-import LoadingAnimation from './LoadingAnimation';
+import LoadingAnimation from '../components/LoadingAnimation';
+import Link from 'next/link';
 
 
 const mainContent = (
@@ -16,18 +17,20 @@ const mainContent = (
           <br />
           Download the .ics file below to import it to your preferred calendar application!
           <br />
-          Thank you for using IntelliAgents.
+          Thank you for using IntelliAgents!
         </p>
       </div>
 
-      <div className="flex flex-row justify-center space-x-10 mt-8">
+      <div className="flex flex-col items-center justify-center space-y-10 mt-8">
         {/* Buttons for actions */}
-        <button className="px-6 py-2 font-bold">
+        <button className="px-6 py-2 font-bold button button-rounded flex-1">
           Download my .ICS file
         </button>
-        <button className="px-6 py-2 button button-blue font-bold">
-          Return Home
-        </button>
+        <Link href={{ pathname: '/' }}>
+          <button className="px-6 py-2 button button-blue button-rounded font-bold flex-1">
+            Return Home
+          </button>
+        </Link>
       </div>
     </div>
   </main>)
