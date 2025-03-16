@@ -23,11 +23,11 @@ const mainContent = (
 
       <div className="flex flex-col items-center justify-center space-y-10 mt-8">
         {/* Buttons for actions */}
-        <button className="px-6 py-2 font-bold button button-rounded flex-1">
+        <button className="px-6 py-2 font-bold button button-rounded">
           Download my .ICS file
         </button>
         <Link href={{ pathname: '/' }}>
-          <button className="px-6 py-2 button button-blue button-rounded font-bold flex-1">
+          <button className="px-6 py-2 button button-blue button-rounded font-bold1">
             Return Home
           </button>
         </Link>
