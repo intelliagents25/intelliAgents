@@ -6,6 +6,7 @@ import React from 'react';
 import Link from 'next/link'
 import Chat from './components/chat/Chat';
 import WarningModal from './components/WarningModal'; // Import the modal
+import CheckboxDropdown from './components/CheckboxDropdown';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,17 +43,33 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <div className="layout">
             
-            <header className="header">
-              <Link href={{ pathname: '/' }} className="font-logo px-6">
-                Intelli
-              </Link>
-              <div className="mx-6 space-x-8">
-                <a href="about-us">About Us</a>
-                <a href="faq">FAQ's</a>
-                <a href="contact-us">Contact Us</a>
+          <header className="h-[68px] px-[16px] bg-[#FFFFFB] border-[1px] border-[#000000] flex items-center">
+            <nav className="w-full flex items-center justify-between ml-10 mr-10 md:ml-15 md:mr-15 lg:ml-20 lg:mr-20">
+              
+              {/* Left Section: Intelli + Navigation Links */}
+              <div className="flex items-center space-x-8">
+                {/* Intelli (Always Visible) */}
+                <Link href="/" className="text-[30px] text-[#2C5281] font-[400] suez-font">
+                  Intelli
+                </Link>
+
+                {/* Navigation Links (Hidden on Small Screens) */}
+                <div className="hidden md:flex lg:flex items-center space-x-8">
+                  <Link href="about-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">About Us</Link>
+                  <Link href="/" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
+                  <Link href="contact-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">Contact Us</Link>
+                </div>
               </div>
-              <button className="mx-4 button">How It Works</button>
-            </header>
+
+              {/* Right Section: How It Works */}
+              <div className='flex items-center'>
+                <button className="mx-4 my-4 button">How It Works</button>
+                <div className="flex md:hidden lg:hidden">
+                <CheckboxDropdown />
+              </div>
+              </div>
+            </nav>
+          </header>
 
             <main className="body">
               {/* Inject WarningModal inside layout */}
@@ -64,8 +81,7 @@ export default function RootLayout({ children }) {
             <footer className="footer">
               <h2 className="font-logo">IntelliAgents</h2>
               <p className="text-md text-light">Your student-led, AI-powered, semester agent</p>
-              <div className="my-6 space-x-8">
-                <a href="#" className="scroll-top font-bold">Back to top</a>
+              <div className="my-6 space-x-4 md:space-x-6 lg:space-x-8">
                 <Link href={{ pathname: '/' }} className="font-roboto">
                   Home
                 </Link>                
@@ -76,6 +92,7 @@ export default function RootLayout({ children }) {
                   How It Works
                 </Link>  
               </div>
+              <a href="#" className="scroll-top font-bold">Back to top</a>
               <hr />
               <br />
               <p className="text-sm roboto-font">© IntelliAgents 2025</p>
