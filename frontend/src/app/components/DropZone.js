@@ -118,7 +118,7 @@ const renderFileList = () => {
 
   return (
     <div className="w-[95%]">
-      <h2 className="text-[18px] font-[400] mb-2 text-[#00000080] text-center" style={{ fontFamily: 'Roboto Mono' }}>Continue without sign-in</h2>
+      <h2 className="text-[18px] font-[400] mb-2 text-[#00000080] text-center roboto-font">Continue without sign-in</h2>
       <div className="bg-white p-8 border-2 border-blue-200 rounded-xl">
         <p className="text-gray-600 mb-6">Drag & drop your syllabus to see the magic happen!</p>
         <div 
