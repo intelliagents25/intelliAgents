@@ -167,7 +167,7 @@ button {
   background-color: var(--secondary-color-1);
   color: var(--neutral-white);
   padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 32px;
   border: 1px solid #2E374C;
   cursor: pointer;
   margin-left: auto;
