@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -12,7 +13,7 @@ const CheckboxDropdown = () => {
       <StyledWrapper>
         <div className="menu">
           <div 
-            className="item" 
+            className={`item ${isOpen ? 'open' : ''}`}
             onMouseEnter={() => setIsOpen(true)}
             onMouseLeave={() => setIsOpen(false)}
           >
@@ -25,20 +26,24 @@ const CheckboxDropdown = () => {
             </a>
             {isOpen && (
               <div className="submenu">
-                <div className="submenu-item">
-                  <a href="projects" className="submenu-link"> Projects </a>
+                {/* Left Column */}
+                <div className="column left-column">
+                  <div className="submenu-item">
+                    <a href="projects" className="submenu-link" style={{ fontFamily: 'Roboto Mono' }}>Home</a>
+                  </div>
+                  <div className="submenu-item">
+                    <a href="#experience" className="submenu-link" style={{ fontFamily: 'Roboto Mono' }}>About</a>
+                  </div>
+                  <div className="submenu-item">
+                    <a href="#achievements" className="submenu-link" style={{ fontFamily: 'Roboto Mono' }}>Contact</a>
+                  </div>
                 </div>
-                <div className="submenu-item">
-                  <a href="#experience" className="submenu-link"> Experience </a>
-                </div>
-                <div className="submenu-item">
-                  <a href="#achievements" className="submenu-link"> Achievements </a>
-                </div>
-                <div className="submenu-item">
-                  <a href="#testimonials" className="submenu-link"> Testimonials </a>
-                </div>
-                <div className="submenu-item">
-                  <a href="#contact" className="submenu-link"> Contact </a>
+                
+                {/* Right Column */}
+                <div className="column right-column">
+                  <div className="submenu-item">
+                    <a href="#testimonials" className="submenu-link" style={{ fontFamily: 'Roboto Mono' }}>How It Works</a>
+                  </div>
                 </div>
               </div>
             )}
@@ -77,8 +82,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: center;
     gap: 12px;
-    padding: 12px 36px;
-    border-radius: 16px;
+    padding: 12px;
     overflow: hidden;
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
     cursor: pointer;
@@ -112,7 +116,6 @@ const StyledWrapper = styled.div`
     height: 4px;
     width: 100%;
     background: black;
-    border-radius: 9px;
     opacity: 1;
     left: 0;
     transition: .25s ease-in-out;
@@ -123,7 +126,6 @@ const StyledWrapper = styled.div`
     color: #ffffff;
     transform: scaleX(1);
     transform-origin: right;
-    border-radius: 16px 16px 0 0;
   }
 
   .menu .item:hover .link svg {
@@ -148,18 +150,18 @@ const StyledWrapper = styled.div`
     transform: translateY(-100%);
   }
 
-  .menu .item:hover .burger span:nth-of-type(1) {
+  .menu .item.open .burger span:nth-of-type(1) {
     transform: rotate(45deg);
     top: 0px;
     left: 5px;
   }
-#
-  .menu .item:hover .burger span:nth-of-type(2) {
+
+  .menu .item.open .burger span:nth-of-type(2) {
     width: 0%;
     opacity: 0;
   }
 
-  .menu .item:hover .burger span:nth-of-type(3) {
+  .menu .item.open .burger span:nth-of-type(3) {
     transform: rotate(-45deg);
     top: 28px;
     left: 5px;
@@ -167,18 +169,29 @@ const StyledWrapper = styled.div`
 
   .menu .item .submenu {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     position: absolute;
     top: 100%;
-    border-radius: 0 0 16px 16px;
-    left: 0;
-    width: 100%;
+    right: -56.5px;
+    width: 100vw;
     overflow: hidden;
-    border: 1px solid #cccccc;
     z-index: 1;
-    list-style: none;
     background-color: #ffffff;
+    border-top: 1px solid #000000;
+    gap: 20px; /* Space between columns */
+  }
+
+  .column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    align-items: flex-start; // Added for better left alignment
+  }
+
+
+  .submenu-item {
+    width: 100%;
+    transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .submenu .submenu-item {
@@ -191,7 +204,7 @@ const StyledWrapper = styled.div`
     padding: 12px 24px;
     width: 100%;
     position: relative;
-    text-align: center;
+    text-align: left;
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
     background-color: #ffffff;
   }
