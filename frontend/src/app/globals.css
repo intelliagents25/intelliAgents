@@ -100,6 +100,53 @@ body {
   font-style: normal;
 }
 
+h5 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h4 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Small screens (sm) */
+@media (max-width: 576px) {
+  h5 {
+    font-size: 1rem; /* Adjust as needed */
+  }
+
+  h4 {
+    font-size: 1.5rem; /* Adjust as needed */
+  }
+}
+
+/* Medium screens (md) */
+@media (min-width: 577px) and (max-width: 992px) {
+  h5 {
+    font-size: 2rem; /* Adjust as needed */
+  }
+
+  h4 {
+    font-size: 2.5rem; /* Adjust as needed */
+  }
+}
+
+/* Large screens (lg) */
+@media (min-width: 993px) {
+  h5 {
+    font-size: 2.5rem; /* Adjust as needed */
+  }
+
+  h4 {
+    font-size: 3rem; /* Adjust as needed */
+  }
+}
+
 h3 {
   font-family: var(--font-suez-one), serif;
   font-size: 1.5rem;

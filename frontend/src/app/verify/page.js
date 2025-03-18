@@ -5,11 +5,10 @@ import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
-
 const VerifyResults = () => {
-
     const [tableData, setTableData] = useState([]);
     const ics = useRef('');
+    
     useEffect(() => {
         // Fetch data from the backend
         ics.current = sessionStorage.getItem('myData');
@@ -66,29 +65,30 @@ const VerifyResults = () => {
 
             {showModal}
 
-            <div className="flex flex-col justify-content-center items-center">
+            <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
-                <h1>Verify IntelliAgents' Work! </h1>
-                <h3 className="mb-2 pb-5 roboto-font text-light font-bold">
+                <h4 className='text-center'>Verify IntelliAgents' Work! </h4>
+                <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center">
                     These are details IntelliAgents need your eyes on.
-                </h3>
-                <div className="relative flex justify-center items-center w-full">
-                    <div className="flex justify-center w-full z-10">
+                </h5>
+                
+                <div className="w-full flex flex-col items-center">
+                    <div className="w-full flex justify-center mb-4">
                         <VerifyTable rows={tableData} />
                     </div>
-                    <div className="absolute right-0 hidden md:block">
+
+                    <button className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleGenerateCalendar}>
+                        Generate My Calendar
+                    </button>
+                    
+                    <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6">
                         <img
                             src="/images/verify-page-gif.svg"
                             alt="Verify"
-                            className="w-65 h-70 hidden lg:block" // Set your image dimensions here
+                            className="w-auto lg:w-[20%] h-auto"
                         />
                     </div>
                 </div>
-
-                <button className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleGenerateCalendar}>
-                    Generate Calendar
-                </button>
-
                 <br />
             </div>
         </>

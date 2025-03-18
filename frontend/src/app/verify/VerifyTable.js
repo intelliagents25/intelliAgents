@@ -54,18 +54,18 @@ const VerifyTable = ({ rows }) => {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
             <div className="border border-gray-900 rounded-2xl overflow-x-auto my-5 bg-[#E4F4FD]">
-                <table className="min-w-full table-auto">
+                <table className="min-w-full w-[50vw] h-[35vh] table-auto">
                     <thead>
                         <tr>
-                            <th className="px-4 py-2 text-[1.2rem] text-[--secondary-color-1] font-bold text-center w-auto">Description</th>
-                            <th className="px-4 py-2 text-[1.2rem] text-[--secondary-color-1] font-bold text-center w-auto">Accept</th>
-                            <th className="px-4 py-2 text-[1.2rem] text-[--secondary-color-1] font-bold text-center w-auto">Edit Info</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-left w-auto">Description</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto">Accept</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Edit Info</th>
                         </tr>
                     </thead>
                     <tbody>
                         {rows.map((row, index) => (
                             <tr key={index}>
-                                <td className="px-4 py-2 text-dark text-right w-auto roboto-font">
+                                <td className="px-4 py-2 text-dark text-sm md:text-xl lg:text-2xl text-left w-auto roboto-font">
                                     {/* If the row is rejected and being edited, show input */}
                                     {actionStatus[index].rejected && editIndex === index ? (
                                         <input
@@ -91,7 +91,7 @@ const VerifyTable = ({ rows }) => {
                                         </button>
                                     ) : (
                                         <FaCheck
-                                            className={`inline-block text-xl transition-all duration-300 ${actionStatus[index].accepted ? 'text-green-500' : 'text-gray-400'} hover:text-green-500`}
+                                            className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 ${actionStatus[index].accepted ? 'text-green-500' : 'text-gray-400'} hover:text-green-500`}
                                             onClick={() => handleAccept(index)}
                                         />
                                     )}
@@ -99,7 +99,7 @@ const VerifyTable = ({ rows }) => {
 
                                 <td className="px-4 py-2 text-center cursor-pointer w-auto" onClick={() => handleReject(index)}>
                                     <FaEdit
-                                        className={`inline-block text-xl transition-all duration-300 ${actionStatus[index].rejected ? 'text-blue-500' : 'text-gray-400'} hover:text-blue-500`}
+                                        className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 ${actionStatus[index].rejected ? 'text-blue-500' : 'text-gray-400'} hover:text-blue-500`}
                                     />
                                 </td>
                             </tr>
