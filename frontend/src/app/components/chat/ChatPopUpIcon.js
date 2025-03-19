@@ -1,14 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import styles from './ChatBox.module.css';
 
+// class for the button/icon that will toggle the chatbox
 const ChatPopUpIcon = ({ handleButtonToggle }) => {
-    return <div
-        className={styles.chatPopUpIcon}
-        style={{backgroundColor: "grey"}}
-        onClick={handleButtonToggle}
-    >
-    </div>
+    return <img src="/images/temp_mascot.gif" alt="Animated mascot" className="hidden lg:block" onClick={handleButtonToggle}/>
 }
-
 export default ChatPopUpIcon;

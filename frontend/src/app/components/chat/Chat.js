@@ -10,10 +10,13 @@ const Chat = () => {
     setShowChat(!showChat);
   };
 
+  // main part of the chat component, handles the box and the button.
   return (
     <>
       {showChat && <ChatBox handleButtonToggle={toggleChat}  />}
-      <ChatPopUpIcon handleButtonToggle={toggleChat} />
+      <div className={showChat? styles.minimizedIcon : styles.maximizeIcon}>
+        <ChatPopUpIcon handleButtonToggle={toggleChat} />
+      </div>
     </>
   );
 };

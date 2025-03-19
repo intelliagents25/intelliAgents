@@ -1,25 +1,23 @@
 /* css file for the chatbox component */
-/* TODO: clean this up and get rid of magic numbers */
+/* chat icon stuff */
+.minimizedIcon {
+/* TODO: maybe use this to change the icon sizing etc */
+  border-color: red;
+  border-width: 10px;
+}
 
+.maximizeIcon {
+  /* TODO: use this to change the icon sizing */
+  border-color: black;
+  border-width: 10px;
+}
 
-
-.chatPopUpIcon {
-    --length-square-side: 80px;
-    width: var(--length-square-side);
-    height: var(--length-square-side);
-    border-radius: 50%;
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-  }
-
-  /* main container for the chatbox */
+/* main container for the chatbox */
 .chatHolder {
   /* positioning */
     display: flex;
     align-content: space-between;
     flex-direction: column;
-    position: fixed;
     bottom: 140px; 
     right: 40px;
     /* sizing */

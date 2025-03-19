@@ -3,6 +3,7 @@ import React from 'react';
 import SignInSection from './components/SignInSection';
 import DropZone from './components/DropZone';
 import FrequentlyAskedQuestionAccordion from './components/FrequentlyAskedQuestionAccordion';
+import Chat from './components/chat/Chat';
 
 const InfinitiScrollLandingPage = () => {
   return (
@@ -38,7 +39,7 @@ const InfinitiScrollLandingPage = () => {
             
             {/* Right mascot */}
             <div className="flex">
-              <img src="/images/temp_mascot.gif" alt="Animated mascot" className="hidden lg:block" />
+              <Chat />
             </div>
           </div>
 
