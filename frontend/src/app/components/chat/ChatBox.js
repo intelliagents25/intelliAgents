@@ -4,22 +4,44 @@ import styles from "./ChatBox.module.css";
 import { sendDataToBot } from "./ChatRequests";
 import LoadingAnimation from "./ChatLoadingAnimation";
 
+const initialChatState = [
+  {
+    data: "Hello There! Feel free to ask me any questions :)",
+    author: "other",
+  },
+];
+
 const ChatBox = ({ handleButtonToggle }) => {
   // ==== state variables ====
   let inputBox = null;
   let messageEnd = null;
 
   const [messageText, setMessageText] = useState("");
-  const [receivedMessages, setMessages] = useState([
-    {
-      data: "Hello There! Feel free to ask me any questions :)",
-      author: "other",
-    },
-  ]);
+  const [receivedMessages, setMessages] = useState(initialChatState);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [showRetryMessage, setShowRetryMessage] = useState(false);
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
+
+  // check if there are existing messages in this session and try to load. 
+  useEffect(() => {
+    try{
+      let chatMsg = sessionStorage.getItem("chatMessages");
+      if (chatMsg) {
+        let chatMessages = JSON.parse(sessionStorage.getItem("chatMessages"));
+        setMessages(chatMessages);
+      } else {
+        setMessages(initialChatState);
+        let msg_json = JSON.stringify(initialChatState);
+        sessionStorage.setItem("chatMessages", msg_json);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessages(initialChatState);
+      let msg_json = JSON.stringify(initialChatState);
+      sessionStorage.setItem("chatMessages", msg_json);
+    }
+  }, []);
 
   // ==== helper functions ====
 
@@ -61,6 +83,7 @@ const ChatBox = ({ handleButtonToggle }) => {
     }
 
     setMessages(new_messages);
+    sessionStorage.setItem("chatMessages", JSON.stringify(new_messages));
 
     scrollToBottom();
   };
