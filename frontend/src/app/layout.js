@@ -4,6 +4,8 @@ import "./globals.css";
 import { AuthProvider } from "./api/auth/[...nextauth]/Providers";
 import React from 'react';
 import Link from 'next/link'
+import Chat from './components/chat/Chat';
+import WarningModal from './components/WarningModal'; // Import the modal
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +55,8 @@ export default function RootLayout({ children }) {
             </header>
 
             <main className="body">
+              {/* Inject WarningModal inside layout */}
+              <WarningModal />
               {children}
             </main>
 
