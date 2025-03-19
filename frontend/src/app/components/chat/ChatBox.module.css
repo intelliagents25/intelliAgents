@@ -1,15 +1,14 @@
 /* css file for the chatbox component */
+
 /* chat icon stuff */
 .minimizedIcon {
 /* TODO: maybe use this to change the icon sizing etc */
-  border-color: red;
-  border-width: 10px;
+  min-width: 100px;
 }
 
 .maximizeIcon {
-  /* TODO: use this to change the icon sizing */
-  border-color: black;
-  border-width: 10px;
+  /* TODO: maybe use this to change the icon sizing */
+  min-width: 100px;
 }
 
 /* main container for the chatbox */

@@ -46,13 +46,14 @@ const ChatBox = ({ handleButtonToggle }) => {
   // ==== helper functions ====
 
   // scroll to the bottom of the chat box
+  // TODO: re-implement this so it works with the new chat box location
   const scrollToBottom = () => {
-    const el = document.getElementById("anchor");
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // const el = document.getElementById("anchor");
+    // el.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    setTimeout(() => {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 10);
+    // setTimeout(() => {
+    //   el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // }, 10);
   };
 
   // given a text message, send the message to n8n and update the chat box with the response
