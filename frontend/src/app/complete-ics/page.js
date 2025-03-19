@@ -1,39 +1,45 @@
 'use client';
 import React, { useState } from 'react';
 import "../globals.css";
-import { CheckCircle } from 'lucide-react';
-import LoadingAnimation from './LoadingAnimation';
-
+import LoadingAnimation from '../components/LoadingAnimation';
+import Link from 'next/link';
 
 const mainContent = (
-  <main className="flex-1">
-    <div className="flex flex-col items-center justify-center px-4 py-16">
-      <CheckCircle className="w-24 h-24 text-sky-300 mb-4" />
-      <h1 className="mb-4">Integration Completed!</h1>
-      <div className="text-center max-w-5xl mb-8">
-        <p className='text-light text-xl'>
-          IntelliAgents has successfully generated a calendar for your syllabus!
-          <br />
-          Download the .ics file below to import it to your preferred calendar application!
-          <br />
+  <main className="flex-1 flex justify-center items-center">
+    <div className="flex flex-col items-center justify-center px-4 py-16 text-center w-full">
+      <div className="flex justify-center mb-6">
+        <img src="/images/check.png" alt="Check mark" />
+      </div>
+      
+      <h6 className="mb-4 text-center">Integration Complete!</h6>
+      
+      <div className="text-center mx-auto mb-8">
+        <p className='text-light text-md md:text-xl lg:text-2xl'> 
+          Check your calendar - IntelliAgents has successfully integrated your syllabus into your calendar!
+        </p>
+        <p className='text-light text-md md:text-xl lg:text-2xl mt-2'>
           Thank you for using IntelliAgents.
         </p>
       </div>
 
-      <div className="flex flex-row justify-center space-x-10 mt-8">
-        {/* Buttons for actions */}
-        <button className="px-6 py-2 font-bold">
-          Download my .ICS file
+      <div className="flex flex-col items-center justify-center space-y-5 mt-8">
+        <button className="px-8 py-3 font-bold button button-rounded w-64">
+          Download .ics File
         </button>
-        <button className="px-6 py-2 button button-blue font-bold">
-          Return Home
-        </button>
+        
+        <Link href={{ pathname: '/' }}>
+          <button className="px-8 py-3 button button-blue button-rounded font-bold w-64">
+            Return Home
+          </button>
+        </Link>
       </div>
     </div>
-  </main>)
+  </main>
+);
 
 const ICSFile = () => {
   const [isLoading, setLoadingState] = useState(false); //TODO: use the state to show loading animation
+  
   return (
     <>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
