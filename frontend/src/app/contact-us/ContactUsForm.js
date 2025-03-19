@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import "../globals.css";
 
-
 const ContactUsForm = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -18,13 +17,14 @@ const ContactUsForm = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // Handle form submission logic, e.g., API call or sending the message
     console.log('Form submitted:', formData);
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex">
       <form onSubmit={handleSubmit} className="w-full max-w-lg rounded-lg">
         <div className="grid grid-cols-1 gap-4">
           {/* First Name and Last Name */}
@@ -37,8 +37,9 @@ const ContactUsForm = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md text-dark"
+                className="mt-1 p-2 w-full border rounded-md text-dark border-[1px] border-black"
                 required
+                placeholder="Start typing here..."
               />
             </div>
             <div>
@@ -49,8 +50,9 @@ const ContactUsForm = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md text-dark"
+                className="mt-1 p-2 w-full border rounded-md text-dark border-[1px] border-black"
                 required
+                placeholder="Start typing here..."
               />
             </div>
           </div>
@@ -64,8 +66,9 @@ const ContactUsForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md text-dark"
+              className="mt-1 p-2 w-full border rounded-md text-dark border-[1px] border-black"
               required
+              placeholder="example@email.com"
             />
           </div>
 
@@ -78,14 +81,15 @@ const ContactUsForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows="4"
-              className="mt-1 p-2 w-full border rounded-md text-dark"
+              className="mt-1 p-2 w-full border rounded-md text-dark border-[1px] border-black"
               required
+              placeholder="Type your message here..."
             />
           </div>
 
           {/* Submit Button */}
-          <div className="mt-6">
-            <button type="submit" className="w-full py-2"> Send Message </button>
+          <div>
+            <button type="submit" className="w-full bg-gradient-to-r from-[#9855D4] to-[#5AAAFA] text-white rounded-md roboto-font">Send message</button>
           </div>
         </div>
       </form>

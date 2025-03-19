@@ -36,7 +36,7 @@ const AboutUsPage = () => {
                 </div>
 
                 <div className="bg-[#FFFFFB]">                    
-                    <div className="flex flex-col md:grid md:grid-cols-2 w-full items-center justify-between pt-[32px] md:pt-[128px] lg:pt-[128px] pb-[128px] px-10 md:px-20 lg:px-32">                      
+                    <div className="flex flex-col md:grid md:grid-cols-2 w-full items-center justify-between pt-[32px] px-10 md:px-20 lg:px-32">                      
                         {/* Left content */}
                         <div className="flex justify-start mr-20 ml-20">
                             <video
@@ -61,7 +61,17 @@ const AboutUsPage = () => {
                 </div>
 
                 <div className="bg-blue">
-                    <div className="flex flex-col-reverse md:grid w-full items-center justify-center pt-[128px] pb-[128px] px-10">
+                    <div className="gap-[32px] pt-20 text-center">
+                        <h1 className="text-dark text-[48px] font-[400] suez-font">Where does my data go?</h1>
+                    </div>
+                    
+                    <div className="w-full flex justify-center items-center pt-[32px] pb-[128px] px-10 md:px-20 lg:px-32">
+                        <p className="text-dark text-[18px] roboto-font text-center max-w-5xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </div>
+
+                <div className="bg-[#FFFFFB]">
+                    <div className="flex flex-col-reverse md:grid w-full items-center justify-center pt-[32px] px-10">
                         {/* Title and Subtitle */}
                         <div className="space-y-5 font-[400] flex flex-col justify-center items-center rounded-lg text-center">
                             <h2 className="text-[20px] md:text-[40px] lg:text-[40px]" style={{ fontFamily: 'Suez One' }}>
