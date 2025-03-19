@@ -88,8 +88,8 @@ const ContactUsForm = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="my-6">
-            <button type="submit" className="w-full py-2 bg-gradient-to-r from-[#9855D4] to-[#5AAAFA] text-white rounded-md roboto-font">Send message</button>
+          <div>
+            <button type="submit" className="w-full bg-gradient-to-r from-[#9855D4] to-[#5AAAFA] text-white rounded-md roboto-font">Send message</button>
           </div>
         </div>
       </form>

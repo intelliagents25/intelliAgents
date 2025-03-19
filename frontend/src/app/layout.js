@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Chat from './components/chat/Chat';
 import WarningModal from './components/WarningModal'; // Import the modal
 import CheckboxDropdown from './components/CheckboxDropdown';
+import ScrollToSection from "./components/ScrollToSection";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,14 +57,22 @@ export default function RootLayout({ children }) {
                 {/* Navigation Links (Hidden on Small Screens) */}
                 <div className="hidden md:flex lg:flex items-center space-x-8">
                   <Link href="about-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">About Us</Link>
-                  <Link href="/" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
                   <Link href="contact-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">Contact Us</Link>
+                  <Link href="#faq" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
                 </div>
               </div>
 
+              <ScrollToSection />
+
               {/* Right Section: How It Works */}
-              <div className='flex items-center'>
-                <button className="mx-4 my-4 button">How It Works</button>
+              <div className='flex items-center py-[5px]'>
+              <Link
+              href="#how-it-works"
+              id="how-it-works-button"
+              className="flex justify-center items-center bg-[#6138B9] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium"
+              >
+                How It Works
+                </Link>
                 <div className="flex md:hidden lg:hidden">
                 <CheckboxDropdown />
               </div>
@@ -86,9 +95,9 @@ export default function RootLayout({ children }) {
                   Home
                 </Link>                
                 <a href="about-us">About Us</a>
-                <a href="faq">FAQ's</a>
+                <Link href="#faq">FAQ's</Link>
                 <a href="contact-us">Contact Us</a>
-                <Link href={{ pathname: '/' }} className="font-roboto">
+                <Link href="fa" className="font-roboto">
                   How It Works
                 </Link>  
               </div>
