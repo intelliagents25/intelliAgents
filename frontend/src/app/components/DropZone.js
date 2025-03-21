@@ -158,7 +158,14 @@ const DropZone = () => {
                 Select File
               </label>
             </div>
+
           </div>
+          <button
+            className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
+            onClick={handleUploadFile}
+          >
+            Submit
+          </button>
         </div>
       )}
 
