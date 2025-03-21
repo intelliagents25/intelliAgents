@@ -10,6 +10,17 @@ const DropZone = () => {
   const [files, setFile] = useState([]);
   const [fileEnter, setFileEnter] = useState(false);
   const [activeTab, setActiveTab] = useState("upload"); // "upload" or "paste"
+  const [textInput, setTextInput] = useState("");
+
+  const handleTextUpload = () => {
+    if (textInput === "") {
+      alert("Please paste the text to upload.");
+      return;
+    }
+    // convert the text to a file and send it to the bot
+    const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
+    sendFileToBot(textFile);
+  };
 
   const handleUploadFile = () => {
     if (files.length === 0) {
@@ -151,15 +162,21 @@ const DropZone = () => {
         </div>
       )}
 
-      {/* Paste Text Content - Hidden in this implementation */}
+      {/* Paste Text Content */}
       {activeTab === "paste" && (
         <div className="p-8 border border-gray-300 bg-white">
           <textarea
             className="w-full h-40 p-4 border border-gray-300 rounded-md"
             placeholder="Copy and paste your syllabus here"
+            name="syllabusText"
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
           ></textarea>
 
-          <button className="mt-4 w-full text-white py-2 px-4 rounded-md">
+          <button
+            className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
+            onClick={handleTextUpload}
+          >
             Submit
           </button>
         </div>
