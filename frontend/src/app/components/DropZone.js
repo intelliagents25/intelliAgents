@@ -160,6 +160,14 @@ const DropZone = () => {
             </div>
 
           </div>
+                      {/* Display Uploaded Files */}
+                      <ul className="mt-4">
+              {files.map((file, index) => (
+                <li key={index} className="text-gray-700">
+                  {file.name}
+                </li>
+              ))}
+            </ul>
           <button
             className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
             onClick={handleUploadFile}
