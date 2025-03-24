@@ -3,12 +3,14 @@
 /* chat icon stuff */
 .minimizedIcon {
 /* TODO: maybe use this to change the icon sizing etc */
-  min-width: 100px;
+  width: 10vw;
 }
 
 .maximizeIcon {
-  /* TODO: maybe use this to change the icon sizing */
-  min-width: 100px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* main container for the chatbox */
@@ -27,19 +29,19 @@
     /* styling */
     border-radius: 12px;
     overflow:hidden;
-    background-color: white;
-    border-color: black;
+    background-color: #FFFFFB;
+    border-color: #152935;
     border-width: 1px;
   }
   
   .chatHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    padding: 1em;
-    border-bottom: 1px solid #eee;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+}
 
   .closeButton {
     border: 0;
@@ -67,20 +69,22 @@
   .message {
     background-color: #eef5f8;
     padding: 1em;
-    border-radius: 10px;
+    border-radius: 20px;
     flex-grow: 0;
-    border-bottom-left-radius: 0;
     max-width: 70%;
+    border: 1px;
+    border-style: solid;
+    border-color: #152935;
   }
 
   .message[data-author="me"] {
-    background-color: #e0ffe0;
+    background-color: #8AC9E4;
     align-self: flex-end;
 
   }
   
   .message[data-author="other"] {
-    background-color: #ffe0e0;
+    background-color: #D9D9D9;
     align-self: flex-start;
   }
 
@@ -124,6 +128,8 @@
     font-weight: bold;
     font-size: 1.4em;
     background-color: var(--secondary-color-2);
+    cursor: pointer;
+    height: 75%;
   }
   
   .sendButton:hover {

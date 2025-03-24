@@ -9,8 +9,8 @@ const SignInSection = ({ className = "" }) => {
         onClick={() => signIn("google")} 
         className="flex items-center justify-center gap-4 px-6 py-4 border-[1px] w-full border-[#000000] rounded-[32px] bg-[#FFFFFF] text-[#757575] hover:bg-gray-50"
       >
-        <Icons.google className="w-7 h-7" />
-        <span>Sign in with Google</span>
+        <Icons.google className="w-[20%] h-[20%]" />
+        <span className='text-[4vw] md:text-[2vw] lg:text-[1vw]'>Sign in with Google</span>
       </button>
     </div>
   );

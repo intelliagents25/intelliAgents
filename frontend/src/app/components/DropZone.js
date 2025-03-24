@@ -91,7 +91,7 @@ const DropZone = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-[90%]">
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
