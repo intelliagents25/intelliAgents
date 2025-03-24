@@ -1,8 +1,7 @@
-// js component for handling file uploads, including drag and drop
-
 import React, { useState } from "react";
 import "./DropZone.css";
 import { sendFileToBot, getExtension } from "./DropZoneRequests";
+import LoadingAnimation from './LoadingAnimation';
 
 const validFileTypes = ["pdf"];
 
@@ -11,15 +10,19 @@ const DropZone = () => {
   const [fileEnter, setFileEnter] = useState(false);
   const [activeTab, setActiveTab] = useState("upload"); // "upload" or "paste"
   const [textInput, setTextInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTextUpload = () => {
     if (textInput === "") {
       alert("Please paste the text to upload.");
       return;
     }
-    // convert the text to a file and send it to the bot
+    setIsLoading(true);
+
     const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
-    sendFileToBot(textFile);
+    sendFileToBot(textFile).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const handleUploadFile = () => {
@@ -27,7 +30,12 @@ const DropZone = () => {
       alert("Please select a file to upload.");
       return;
     }
-    sendFileToBot(files[0]);
+
+    setIsLoading(true);
+
+    sendFileToBot(files[0]).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const handleFileChange = (event) => {
@@ -108,6 +116,8 @@ const DropZone = () => {
         </button>
       </div>
 
+      {isLoading && <LoadingAnimation isLoading={isLoading} />}
+
       {/* Upload Content */}
       {activeTab === "upload" && (
         <div className="p-8 bg-white border border-gray-300">
@@ -137,7 +147,6 @@ const DropZone = () => {
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
-            
             <p className="text-center font-medium mb-2">Upload your course syllabus here!</p>
             <p className="text-center text-gray-500 mb-4">Use a PDF file with a size no more than 10MB</p>
             
@@ -158,16 +167,14 @@ const DropZone = () => {
                 Select File
               </label>
             </div>
-
           </div>
-                      {/* Display Uploaded Files */}
-                      <ul className="mt-4">
-              {files.map((file, index) => (
-                <li key={index} className="text-gray-700">
-                  {file.name}
-                </li>
-              ))}
-            </ul>
+          <ul className="mt-4">
+            {files.map((file, index) => (
+              <li key={index} className="text-gray-700">
+                {file.name}
+              </li>
+            ))}
+          </ul>
           <button
             className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
             onClick={handleUploadFile}
@@ -201,8 +208,3 @@ const DropZone = () => {
 };
 
 export default DropZone;
-
-
-// TODO: error handling for input file:
-// https://www.csharp.com/article/how-to-handling-file-uploads-in-next-js/
-// https://codersteps.com/articles/building-a-multi-file-uploader-with-next-js-app-directory
