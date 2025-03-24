@@ -13,8 +13,8 @@ const LoadingAnimation = () => {
     }, []);
 
     return (
-        <span key="loading" id="loading" className={styles.message} data-author={"other"}>
-            {".".repeat(dotCount)}
+        <span key="loading" id="loading" className={styles.loading} data-author={"other"}>
+            {"●".repeat(dotCount)}
         </span>
     );
 };
