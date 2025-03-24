@@ -31,8 +31,6 @@
     background: #8AC9E4;
   }
 
-
-  /* done */
   .closeButton {
     position: absolute;
     top: 0.2em;
@@ -48,9 +46,8 @@
     cursor: pointer;
   }
 
-  /* done */
   .whiteBox {
-    width: 87%; /* Adjusted relative to modalContainer */
+    width: 87%; /* Adjusted relative to chatContainer */
     height: 87%; /* Keeps the aspect ratio */
     background-color: white;
     border: 1px solid var(--text-colour-dark);
@@ -64,7 +61,7 @@
   .chatTextContents {
     display: flex;
     flex-grow: 1;
-    width: 95%; /* Adjusted relative to modalContainer */
+    width: 95%; /* Adjusted relative to chatContainer */
     height: 90%; /* Keeps the aspect ratio */
     flex-direction: column;
     align-items: flex-start;
@@ -140,7 +137,7 @@
   }
   
   
-  /* button to send the message  - done */
+  /* button to send the message */
   .sendButton {
     border: none;
     background-color: white;
