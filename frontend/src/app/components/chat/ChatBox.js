@@ -26,20 +26,20 @@ const ChatBox = ({ handleButtonToggle }) => {
   // check if there are existing messages in this session and try to load. 
   useEffect(() => {
     try{
-      let chatMsg = sessionStorage.getItem("chatMessages");
+      let chatMsg = sessionStorage.getItem(process.env.CHAT_BOX);
       if (chatMsg) {
-        let chatMessages = JSON.parse(sessionStorage.getItem("chatMessages"));
+        let chatMessages = JSON.parse(sessionStorage.getItem(process.env.CHAT_BOX));
         setMessages(chatMessages);
       } else {
         setMessages(initialChatState);
         let msg_json = JSON.stringify(initialChatState);
-        sessionStorage.setItem("chatMessages", msg_json);
+        sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
       }
     } catch (error) {
       console.log(error);
       setMessages(initialChatState);
       let msg_json = JSON.stringify(initialChatState);
-      sessionStorage.setItem("chatMessages", msg_json);
+      sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
     }
   }, []);
 
@@ -84,7 +84,7 @@ const ChatBox = ({ handleButtonToggle }) => {
     }
 
     setMessages(new_messages);
-    sessionStorage.setItem("chatMessages", JSON.stringify(new_messages));
+    sessionStorage.setItem(process.env.CHAT_BOX, JSON.stringify(new_messages));
 
     scrollToBottom();
   };
