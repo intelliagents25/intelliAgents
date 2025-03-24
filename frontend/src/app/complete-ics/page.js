@@ -4,6 +4,20 @@ import "../globals.css";
 import LoadingAnimation from '../components/LoadingAnimation';
 import Link from 'next/link';
 
+const handleDownload = () => {
+  console.log("Download button clicked");
+  const icsData = sessionStorage.getItem(process.env.FINAL_ICALS);
+  // Log to verify the cleaned-up data
+  const blob = new Blob([icsData], { type: 'text/calendar' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  console.log(url);
+  a.href = url;
+  a.download = 'semester_schedule.ics';
+  a.click();
+}
+
+
 const mainContent = (
   <main className="flex-1 flex justify-center items-center">
     <div className="flex flex-col items-center justify-center px-4 py-16 text-center w-full">
@@ -23,7 +37,8 @@ const mainContent = (
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-5 mt-8">
-        <button className="px-8 py-3 font-bold button button-rounded w-64">
+        <button className="px-8 py-3 font-bold button button-rounded w-64"
+          onClick={handleDownload} >
           Download .ics File
         </button>
         

@@ -1,107 +1,98 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react';
 import { FaCheck } from "react-icons/fa6";
 import { FaEdit } from 'react-icons/fa';
 
-const VerifyTable = ({ rows }) => {
+const VerifyTable = forwardRef((props, ref) => {
+    const [tableData, setTableData] = useState([]);
 
-    const [actionStatus, setActionStatus] = useState([]);
-    const [editedDescription, setEditedDescription] = useState("");
-    const [editIndex, setEditIndex] = useState(null);
+    
+    // Expose the getData method to parent
+    useImperativeHandle(ref, () => ({
+        getData: () => tableData,
+    }));
 
     useEffect(() => {
-        let eventList = sessionStorage.getItem('eventList');
-        eventList = JSON.parse(eventList);
-        if (!eventList) {
-            return;
+        let icals_json_data = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
+        let eventList = JSON.parse(`{ "items":` + icals_json_data + "}").items;
+        console.log(eventList);
+        setTableData(eventList);
+        // Ensure parsedData is an array
+        if (!Array.isArray(eventList)) {
+            eventList = JSON.parse(eventList);
+           
         }
-        setActionStatus(
-            eventList.map(() => ({
-                accepted: false,
-                rejected: false,
-            }))
-        );
-    }, []);
+        if (Array.isArray(eventList)) {
+            setTableData(eventList);
+        }    }, []);
 
-    const handleAccept = (index) => {
-        const newStatus = [...actionStatus];
-        newStatus[index].accepted = true;
-        newStatus[index].rejected = false;
-        setActionStatus(newStatus);
-    };
 
-    const handleReject = (index) => {
-        const newStatus = [...actionStatus];
-        newStatus[index].accepted = false;
-        newStatus[index].rejected = true;
-        setActionStatus(newStatus);
-        setEditIndex(index); 
-        setEditedDescription(rows[index].description);
-    };
-
-    const handleSave = (index) => {
-        const updatedRows = [...rows];
-        updatedRows[index].description = editedDescription;
-        setEditIndex(null);
-    };
-
-    const handleChange = (e) => {
-        setEditedDescription(e.target.value);
-    };
-
+    const handleFormChange = (e, idx, field) => {
+        const updatedData = [...tableData];
+        updatedData[idx][field] = e.target.value;
+        setTableData(updatedData);
+    }
     return (
         <>
+
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
             <div className="border border-gray-900 rounded-2xl overflow-x-auto my-5 bg-[#E4F4FD]">
+            <br />
                 <table className="min-w-full w-[50vw] h-[35vh] table-auto">
                     <thead>
                         <tr>
-                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-left w-auto">Description</th>
-                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto">Accept</th>
-                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Edit Info</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-left w-auto">Name</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto">Start Date</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">End Date</th>
+                            <th className="px-4 py-5 text-[1.0rem] md:text-[1.5rem] lg:text-[2rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Frequency</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {rows.map((row, index) => (
+                        {tableData.map((row, index) => (
                             <tr key={index}>
                                 <td className="px-4 py-2 text-dark text-sm md:text-xl lg:text-2xl text-left w-auto roboto-font">
                                     {/* If the row is rejected and being edited, show input */}
-                                    {actionStatus[index].rejected && editIndex === index ? (
                                         <input
                                             type="text"
-                                            value={editedDescription || row.description}
-                                            onChange={handleChange}
+                                            defaultValue={row.Name}
+                                            // onChange={handleChange}
                                             className="w-full p-2 border border-gray-300 rounded-md"
                                         />
+                                </td>
 
-                                    ) : (
-                                        row.description
-                                    )}
+                                {/* TODO: make this a picker */}
+                                <td className="px-4 py-2 text-center cursor-pointer w-auto">
+                                <input
+                                            type="text"
+                                            defaultValue={row["Start Date"]}
+                                            // onChange={handleChange}
+                                            className="w-full p-2 border border-gray-300 rounded-md"
+                                        />
+                                    
                                 </td>
 
                                 <td className="px-4 py-2 text-center cursor-pointer w-auto">
-                                    {/* Replace the checkmark with the Save button if row is being edited */}
-                                    {actionStatus[index].rejected && editIndex === index ? (
-                                        <button
-                                            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                                            onClick={() => handleSave(index)} // Save when clicked
-                                        >
-                                            Save
-                                        </button>
-                                    ) : (
-                                        <FaCheck
-                                            className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 ${actionStatus[index].accepted ? 'text-green-500' : 'text-gray-400'} hover:text-green-500`}
-                                            onClick={() => handleAccept(index)}
+                                <input
+                                            type="text"
+                                            defaultValue={row["End Date"]}
+                                            onChange={handleFormChange}
+                                            className="w-full p-2 border border-gray-300 rounded-md"
                                         />
-                                    )}
+                                    
                                 </td>
 
-                                <td className="px-4 py-2 text-center cursor-pointer w-auto" onClick={() => handleReject(index)}>
-                                    <FaEdit
-                                        className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 ${actionStatus[index].rejected ? 'text-blue-500' : 'text-gray-400'} hover:text-blue-500`}
-                                    />
+                                <td className="px-4 py-2 text-center cursor-pointer w-auto">
+                                <input
+                                            type="text"
+                                            defaultValue={row["Recur"]}
+                                            onChange={(event) =>
+                                                handleFormChange(event, index, "Recur")
+                                            }
+                                            className="w-full p-2 border border-gray-300 rounded-md"
+                                        />
+                                    
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>
@@ -109,7 +100,9 @@ const VerifyTable = ({ rows }) => {
             </div>
         </>
     );
-};
+});
 
+VerifyTable.displayName = "VerifyTable";
 export default VerifyTable;
+
 

@@ -1,21 +1,23 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import "../globals.css";
-import VerifyTable from './VerifyTable';
+import "../../globals.css";
+import VerifyOH from './VerifyOH';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import generateCalendar from './verifyOhAction';
 
-const VerifyResults = () => {
-    const [isLoading, setIsLoading] = useState(false);
+const VerifyResults = () => {    
     const [showModal, setShowModal] = useState(false);
     const [pendingNavigation, setPendingNavigation] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    
     const childRef = useRef();
     const router = useRouter();
     const pathname = usePathname();
 
     // Trigger modal logic only on the `/verify` page
     useEffect(() => {
-        if (pathname !== '/verify') return; // Exit early if not on `/verify` page
+        if (pathname !== '/verify/recommended-oh') return; // Exit early if not on `/verify` page
 
         const handleBeforeUnload = (event) => {
             event.preventDefault();
@@ -39,71 +41,46 @@ const VerifyResults = () => {
         }
     };
 
-    // Render the modal only if pathname is `/verify`
-    if (pathname !== '/verify') return null;
-
-    
-    const handleUploadChanges = async () => {
+    const handleGenerateCalendar = () => {
         setIsLoading(true);
+        const offoce_hours_data = childRef.current.getData(); 
+        const ok = generateCalendar(offoce_hours_data);
 
-        const childData = childRef.current.getData(); 
-            const requestOptions = {
-        method: "POST",
-        // headers: headers,
-        body: childData,
-        redirect: "follow",
-        signal: AbortSignal.timeout(10 * 1000)
-    };
-    
-    try {
-        let res = await fetch("/api/return-edited-events", requestOptions)
-        
-        if (!res.ok) {
-            throw new Error('Failed to fetch data');
+        if (ok) {
+            router.push('/complete-ics');
+        }else {
+            console.error('Failed to generate calendar');
         }
-
-        let json_data = await res.text();
-        json_data = JSON.parse(json_data);
-        json_data = json_data.data;
-
-        if (json_data) {
-            sessionStorage.setItem(process.env.RECOMMENDED_OH, JSON.stringify(json_data));
-            setIsLoading(false);
-            console.log("Data saved successfully, redirecting");
-            router.push('/verify/recommended-oh');
-            return
-
-        }
-        throw new Error('Failed to save data');
-    } catch (error) {
-        console.error(error);
     }
-    };
+
+    // Render the modal only if pathname is `/verify`
+    if (pathname !== '/verify/recommended-oh') return null;
 
     return (
         <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-            {/* todo: add a loading animation */}
-            {/* {isLoading && (loadng)} */}
             {showModal}
 
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
-                <h4 className='text-center'>Verify IntelliAgents' Work! </h4>
+                <h4 className='text-center'>Here are some recommended office hours </h4>
                 <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center">
-                    These are details IntelliAgents need your eyes on.
+                    Add these to your calendar to get some help before your major assignments
                 </h5>
                 
                 <div className="w-full flex flex-col items-center">
                     <div className="w-full flex justify-center mb-4">
-                        <VerifyTable ref={childRef}/>
+                        <VerifyOH ref={childRef}/>
                     </div>
 
-                    <button className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleUploadChanges}>
-                        Generate My Calendar
+                    <button className="ml-0 button button-blue button-rounded font-bold my-3"
+                    
+                    onClick={handleGenerateCalendar}>
+                        Generate Your Calendar!
                     </button>
+
                     
                     <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6">
                         <img
