@@ -4,6 +4,7 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import uploadChanges from './verifyAction';
 
 const VerifyResults = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -47,37 +48,12 @@ const VerifyResults = () => {
         setIsLoading(true);
 
         const childData = childRef.current.getData(); 
-            const requestOptions = {
-        method: "POST",
-        // headers: headers,
-        body: childData,
-        redirect: "follow",
-        signal: AbortSignal.timeout(10 * 1000)
-    };
-    
-    try {
-        let res = await fetch("/api/return-edited-events", requestOptions)
-        
-        if (!res.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        let json_data = await res.text();
-        json_data = JSON.parse(json_data);
-        json_data = json_data.data;
-
-        if (json_data) {
-            sessionStorage.setItem(process.env.RECOMMENDED_OH, JSON.stringify(json_data));
-            setIsLoading(false);
-            console.log("Data saved successfully, redirecting");
+        const ok = await uploadChanges(childData);
+        if (ok) {
             router.push('/verify/recommended-oh');
-            return
-
+        } else {
+            console.error('Failed to upload changes');
         }
-        throw new Error('Failed to save data');
-    } catch (error) {
-        console.error(error);
-    }
     };
 
     return (
