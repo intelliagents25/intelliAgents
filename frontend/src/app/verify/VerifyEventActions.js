@@ -1,6 +1,9 @@
  async function  uploadChanges(json_data) {
+    // save data to session
+    sessionStorage.setItem(process.env.INITIAL_EVENTS_JSON, JSON.stringify(json_data));
 
-            const requestOptions = {
+    // send data to backend and get recommended office hours
+    const requestOptions = {
         method: "POST",
         // headers: headers,
         body: json_data,

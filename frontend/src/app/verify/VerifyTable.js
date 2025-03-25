@@ -2,6 +2,13 @@ import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react
 import { FaCheck } from "react-icons/fa6";
 import { FaEdit } from 'react-icons/fa';
 
+
+const frequency_map = { // actual value,  showed on drop down
+    'FREQ=DAILY': 'Daily',
+    'FREQ=WEEKLY': 'Weekly',
+    'FREQ=MONTHLY': 'Monthly',
+    'NONE': 'Once'
+};
 const VerifyTable = forwardRef((props, ref) => {
     const [tableData, setTableData] = useState([]);
 
@@ -22,15 +29,47 @@ const VerifyTable = forwardRef((props, ref) => {
            
         }
         if (Array.isArray(eventList)) {
+            eventList = eventList.map((item) => {
+                const is_all_day = (item["Start Time"] == "")
+                return {
+                    ...item,
+                    "All Day": is_all_day,
+                }});
             setTableData(eventList);
         }    }, []);
 
-
+    // TODO: form validation for date, make sure start is before end date
     const handleFormChange = (e, idx, field) => {
         const updatedData = [...tableData];
-        updatedData[idx][field] = e.target.value;
+        switch (field) {
+            case "Start Time":
+                updatedData[idx][field] = e.target.value;
+                updatedData[idx]["All Day"] = false;
+                break;
+                case "End Time":
+                    updatedData[idx][field] = e.target.value;
+                    updatedData[idx]["All Day"] = false;
+                    break;
+            case "All Day":
+                updatedData[idx]["All Day"] = e.target.checked;
+                updatedData[idx]["Start Time"] = ""
+                updatedData[idx]["End Time"] = ""
+                break;
+            case "Recur":
+                if (e.target.value === "NONE") {
+                    delete updatedData[idx]["Recur"];
+                } else {
+                    updatedData[idx]["Recur"] = e.target.value;
+                }
+                break; 
+            default:
+                updatedData[idx][field] = e.target.value;
+                break;  
+            }
         setTableData(updatedData);
+        console.log(updatedData);
     }
+
     return (
         <>
 
@@ -50,7 +89,7 @@ const VerifyTable = forwardRef((props, ref) => {
                     <tbody>
                         {tableData.map((row, index) => (
                             <tr key={index}>
-                                <td className="px-4 py-2 text-dark text-sm md:text-xl lg:text-2xl text-left w-auto roboto-font">
+                                <td className="px-4 py-2 text-dark text-sm md:text-xl lg:text-2xl text-left w-2/5 align-top">
                                     {/* If the row is rejected and being edited, show input */}
                                         <input
                                             type="text"
@@ -60,36 +99,63 @@ const VerifyTable = forwardRef((props, ref) => {
                                         />
                                 </td>
 
-                                {/* TODO: make this a picker */}
-                                <td className="px-4 py-2 text-center cursor-pointer w-auto">
+                                <td className="px-4 py-2 text-center cursor-pointer w-1/5 align-top ">
                                 <input
-                                            type="text"
-                                            defaultValue={row["Start Date"]}
-                                            // onChange={handleChange}
-                                            className="w-full p-2 border border-gray-300 rounded-md"
-                                        />
+                                    type="date"
+                                    value={row["Start Date"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "Start Date")}
+                                    className="w-full p-2 border mb-2 border-gray-300 rounded-md"
+                                />
+                                <input
+                                    type="time"
+                                    value={row["Start Time"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "Start Time")}
+                                    className="w-full p-2 border border-gray-300 rounded-md"
+                                />
+
+                                <div className="flex items-center">
+                                    <input type="checkbox" name="all_day" 
+                                    onChange={(event) => handleFormChange(event, index, "All Day")}
+                                    checked={row["All Day"]}
+                                    />
+                                    <label htmlFor="all_day" className='ml-2'>All Day</label>
+                                </div>
+
+                                </td>
+
+                                <td className="w-1/8 px-4 py-2 text-center cursor-pointer w-1/5 align-top">
+                                <input
+                                    type="date"
+                                    value={row["End Date"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "End Date")}
+                                    className="w-full p-2 border mb-2 border-gray-300 rounded-md"
+                                />
+                                <input
+                                    type="time"
+                                    value={row["End Time"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "End Time")}
+                                    className="w-full p-2 border border-gray-300 rounded-md"
+                                />
+
                                     
                                 </td>
 
-                                <td className="px-4 py-2 text-center cursor-pointer w-auto">
-                                <input
-                                            type="text"
-                                            defaultValue={row["End Date"]}
-                                            onChange={handleFormChange}
-                                            className="w-full p-2 border border-gray-300 rounded-md"
-                                        />
-                                    
-                                </td>
+                                <td className="w-1/8 px-4 py-2 text-center cursor-pointer w-1/5 align-top">
 
-                                <td className="px-4 py-2 text-center cursor-pointer w-auto">
-                                <input
-                                            type="text"
-                                            defaultValue={row["Recur"]}
-                                            onChange={(event) =>
-                                                handleFormChange(event, index, "Recur")
-                                            }
-                                            className="w-full p-2 border border-gray-300 rounded-md"
-                                        />
+                                <select
+                                    value={row["Recur"]}
+                                    onChange={(event) => handleFormChange(event, index, "Recur")}
+                                    className="w-full rounded-md px-4 py-2 cursor-pointer w-auto"
+                                >
+                                    {Object.entries(frequency_map).map((key, _) => {
+                                        return <option 
+                                        key={key[0]} value={key[0]}
+                                        
+                                        > 
+                                        {key[1]}
+                                        </option>;
+                                    })}
+                                </select>
                                     
                                 </td>
 

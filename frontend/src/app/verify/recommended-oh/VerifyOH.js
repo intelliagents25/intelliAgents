@@ -14,12 +14,10 @@ const VerifyOH = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
-    let icals_json_data = sessionStorage.getItem(
-      process.env.INITIAL_EVENTS_JSON
+    let recommended_oh_json = sessionStorage.getItem(
+      process.env.RECOMMENDED_OH
     );
-    let eventList = JSON.parse(`{ "items":` + icals_json_data + "}").items;
-    console.log(eventList);
-    setTableData(eventList);
+    let eventList = JSON.parse(`{ "items":` + recommended_oh_json + "}").items;
     // Ensure parsedData is an array
     if (!Array.isArray(eventList)) {
       eventList = JSON.parse(eventList);
