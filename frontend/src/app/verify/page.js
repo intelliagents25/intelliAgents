@@ -4,7 +4,8 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import uploadChanges from './verifyAction';
+import uploadChanges from './VerifyEventActions';
+
 
 const VerifyResults = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +82,7 @@ const VerifyResults = () => {
                         Generate My Calendar
                     </button>
                     
-                    <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6">
+                    <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6z" style={{ zIndex: -1 }}>
                         <img
                             src="/images/verify-page-gif.svg"
                             alt="Verify"
