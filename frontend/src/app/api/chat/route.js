@@ -20,8 +20,8 @@ export async function POST(req) {
     }
     
     const data = await response.json();
-       return Response.json(
-      { message: data[0].output},
+    return Response.json(
+      { message: data},
       { status: 200 }
     );
   } catch (error) {

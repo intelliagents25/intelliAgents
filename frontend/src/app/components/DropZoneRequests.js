@@ -1,18 +1,3 @@
-import { get } from 'http';
-import { redirect } from 'next/navigation'
-import { compileFunction } from 'vm';
-
-function generateTableData(icsData) {
-    //TODO: given the ics data, create a list of table rows that we can edit
-    let mock_data =     [{ description: 'Class Name: MDIA470'},
-    { description: 'Group: Agentic AI' },
-    { description: 'Final: April 33rd' }]
-
-    return JSON.stringify(mock_data);
-
-}
-
-
 export const getExtension = (filename) =>{
     var parts = filename.split('.');
     return parts[parts.length - 1];
@@ -40,19 +25,18 @@ export const sendFileToBot = async (file) => {
             throw new Error('Failed to fetch data');
         }
 
-        let data = await res.text()
+        let json_data = await res.text();
+        json_data = JSON.parse(json_data);
+        json_data = json_data.data;
+        let json_data_string = JSON.stringify(json_data);
 
-        if (data) {
-            sessionStorage.setItem('icsFile', data);
 
-            let eventList = generateTableData(data);
-            sessionStorage.setItem('eventList', eventList)
-            console.log("redirecting to verify")
+        if (json_data_string) {
+            sessionStorage.setItem(process.env.INITIAL_EVENTS_JSON, json_data_string);
         }
+        return true
     } catch (error) {
         console.error(error);
     }
-
-    redirect('/verify')
-};
-
+    return false
+}

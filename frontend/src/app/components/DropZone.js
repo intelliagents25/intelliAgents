@@ -11,6 +11,7 @@ const DropZone = () => {
   const [fileEnter, setFileEnter] = useState(false);
   const [activeTab, setActiveTab] = useState("upload"); // "upload" or "paste"
   const [textInput, setTextInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTextUpload = () => {
     if (textInput === "") {
@@ -19,7 +20,19 @@ const DropZone = () => {
     }
     // convert the text to a file and send it to the bot
     const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
-    sendFileToBot(textFile);
+    setIsLoading(true);
+    // since sendFile to Bot does a redirect, we don't need to set isLoading to false 
+    return sendFileToBot(textFile)
+      .then((received) => {
+        if (received) {
+          // redirect to the next page
+          setIsLoading(false);
+          window.location.href = "/verify";
+        } else {
+          // TODO: define what happens if the call fails
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleUploadFile = () => {
@@ -27,7 +40,19 @@ const DropZone = () => {
       alert("Please select a file to upload.");
       return;
     }
-    sendFileToBot(files[0]);
+    setIsLoading(true);
+    // since sendFile to Bot does a redirect, we don't need to set isLoading to false 
+    return sendFileToBot(files[0])
+      .then((received) => {
+        if (received) {
+          // redirect to the next page
+          setIsLoading(false);
+          window.location.href = "/verify";
+        } else {
+          // TODO: define what happens if the call fails
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleFileChange = (event) => {
@@ -84,6 +109,8 @@ const DropZone = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
+      {/* TODO: add the loading animation here */}
+      {isLoading && <p>Loading...</p>}
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
@@ -159,6 +186,12 @@ const DropZone = () => {
               </label>
             </div>
           </div>
+          <button
+            className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
+            onClick={handleUploadFile}
+          >
+            Submit
+          </button>
         </div>
       )}
 

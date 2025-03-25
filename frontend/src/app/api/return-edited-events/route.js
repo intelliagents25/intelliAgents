@@ -3,8 +3,7 @@ import { addCookiesToHeader } from '../helpers';
 export async function POST(req) {
 
     try {
-      const formData = await req.formData();
-      const file = formData.get("file");
+      let input_data = await req.data;
       const headers = await addCookiesToHeader();
 
       let environment = process.env.NODE_ENV === "development" ? "-test" : "";
@@ -14,7 +13,7 @@ export async function POST(req) {
       
       const response = await fetch(url, {
         method: "POST", 
-        body: file,
+        body: input_data,
         headers: headers
       });
       if (!response.ok) {
@@ -23,7 +22,6 @@ export async function POST(req) {
       }
       
       const data = await response.text();
-      console.log(data);
          return Response.json(
         { data: data},
         { status: 200 }
