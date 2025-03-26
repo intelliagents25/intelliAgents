@@ -4,7 +4,7 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import uploadChanges from './verifyAction';
+import uploadChanges from './VerifyEventActions';
 
 const VerifyResults = () => {
     const [isLoading, setIsLoading] = useState(false);
