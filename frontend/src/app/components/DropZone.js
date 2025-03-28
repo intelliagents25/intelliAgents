@@ -120,7 +120,7 @@ const DropZone = () => {
 
       {/* Upload Content */}
       {activeTab === "upload" && (
-        <div className="p-8 bg-white border border-gray-300">
+        <div className="p-8 bg-white border border-black">
           <div
             className={`flex flex-col items-center justify-center p-8 border border-gray-300 rounded-md ${
               fileEnter ? "bg-gray-100" : ""
@@ -186,7 +186,7 @@ const DropZone = () => {
 
       {/* Paste Text Content */}
       {activeTab === "paste" && (
-        <div className="p-8 border border-gray-300 bg-white">
+        <div className="p-8 border border-black bg-white">
           <textarea
             className="w-full h-40 p-4 border border-gray-300 rounded-md"
             placeholder="Copy and paste your syllabus here"

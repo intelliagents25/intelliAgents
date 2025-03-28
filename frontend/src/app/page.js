@@ -21,19 +21,25 @@ const InfinitiScrollLandingPage = () => {
               <p className="text-[#505F7C] text-[4.5vw] md:text-[3vw] lg:text-[1.5vw] font-[400] text-center md:text-left lg:text-left mb-10 roboto-font">
                 The AI agent that organises your schedule... and keeps it organised.
               </p>
-              <div className="flex flex-col space-y-10 mb-8 items-center md:items-start lg:items-start w-full">
+              <div className="flex flex-col mb-8 items-center md:items-start lg:items-start w-full">
                 {/* Sign-In Section */}
-                <SignInSection className='w-[90%]'/>
+                <SignInSection className='w-[90%] my-[25px]'/>
                 
                 {/* Separator */}
                 <div className="flex items-center w-[90%]">
                   <hr className="flex-grow border-t border-gray-400" />
-                  <span className="px-2 text-gray-600 text-sm">or</span>
+                  <span className="px-2 text-gray-600 text-sm my-[20px]">or</span>
                   <hr className="flex-grow border-t border-gray-400" />
                 </div>
                 
                 {/* DropZone */}
-                <DropZone />
+                <div className="flex flex-col items-center w-[90%]">
+                  <p className="text-[#505F7C] text-[18px] font-[400] roboto-font text-center self-center mb-[10px] mt-[25px]">
+                    Continue without signing in
+                  </p>
+                  <DropZone />
+                </div>
+
               </div>
             </div>
             
