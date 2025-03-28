@@ -3,12 +3,14 @@
 /* chat icon stuff */
 .minimizedIcon {
 /* TODO: maybe use this to change the icon sizing etc */
-  min-width: 100px;
+  width: 10vw;
 }
 
 .maximizeIcon {
-  /* TODO: maybe use this to change the icon sizing */
-  min-width: 100px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* main container for the chatbox */
@@ -26,10 +28,19 @@
     max-width: 32rem; /* approx. 500px */
     /* styling */
     overflow:hidden;
-    border-radius: 15px;
-    border: 1px solid var(--text-colour-dark);
-    background: #8AC9E4;
+    background-color: #FFFFFB;
+    border-color: #152935;
+    border-width: 1px;
   }
+  
+  .chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+}
 
   .closeButton {
     position: absolute;
@@ -139,11 +150,13 @@
   
   /* button to send the message */
   .sendButton {
-    border: none;
-    background-color: white;
-    font-size: 2rem;
-    padding: 0.5em;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4em;
+    background-color: var(--secondary-color-2);
     cursor: pointer;
+    height: 75%;
   }
   
   .sendButton:hover {

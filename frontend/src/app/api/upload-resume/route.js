@@ -1,7 +1,7 @@
 import { addCookiesToHeader } from '../helpers';
 
 export async function POST(req) {
-
+  console.log("POST request received");
     try {
       const formData = await req.formData();
       const file = formData.get("file");

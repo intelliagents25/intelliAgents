@@ -4,6 +4,7 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import LoadingAnimation from '../components/LoadingAnimation'; // Import the LoadingAnimation component
 import {uploadChanges, validateInputs} from './VerifyEventActions';
 
 
@@ -74,6 +75,7 @@ const VerifyResults = () => {
             {/* todo: add a loading animation */}
             {/* {isLoading && (loadng)} */}
             {showModal}
+            <LoadingAnimation isLoading={isLoading} />
 
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />

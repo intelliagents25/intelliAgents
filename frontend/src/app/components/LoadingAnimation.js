@@ -4,8 +4,8 @@ import { useLottie } from 'lottie-react';
 import animationData from './../../../public/lottie/loading-plane.json';
 
 export const dynamic = 'force-dynamic';
-const LoadingAnimation = () => {
 
+const LoadingAnimation = ({ isLoading }) => {
   const defaultOptions = {
     loop: true,
     animationData: animationData,
@@ -13,15 +13,15 @@ const LoadingAnimation = () => {
 
   const { View } = useLottie(defaultOptions);
 
-  // TODO: need to set if condition to render loading only when a bool is true
-  // if (!isLoading) return null;    
+  if (!isLoading) return null;
 
   return (
-    <div className='flex justify-center items-center'>
-      {View}
+    <div className="fixed inset-0 flex justify-center items-center bg-white bg-opacity-90 z-[9999]">
+      <div className="w-64 h-64">
+        {View}
+      </div>
     </div>
   );
-
 };
 
 export default LoadingAnimation;

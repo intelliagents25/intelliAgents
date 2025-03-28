@@ -1,8 +1,7 @@
-// js component for handling file uploads, including drag and drop
-
 import React, { useState } from "react";
 import "./DropZone.css";
 import { sendFileToBot, getExtension } from "./DropZoneRequests";
+import LoadingAnimation from './LoadingAnimation';
 
 const validFileTypes = ["pdf"];
 
@@ -18,21 +17,10 @@ const DropZone = () => {
       alert("Please paste the text to upload.");
       return;
     }
-    // convert the text to a file and send it to the bot
-    const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
     setIsLoading(true);
-    // since sendFile to Bot does a redirect, we don't need to set isLoading to false 
-    return sendFileToBot(textFile)
-      .then((received) => {
-        if (received) {
-          // redirect to the next page
-          setIsLoading(false);
-          window.location.href = "/verify";
-        } else {
-          // TODO: define what happens if the call fails
-        }
-      })
-      .catch((error) => console.error(error));
+
+    const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
+    sendFileToBot(textFile);
   };
 
   const handleUploadFile = () => {
@@ -40,19 +28,7 @@ const DropZone = () => {
       alert("Please select a file to upload.");
       return;
     }
-    setIsLoading(true);
-    // since sendFile to Bot does a redirect, we don't need to set isLoading to false 
-    return sendFileToBot(files[0])
-      .then((received) => {
-        if (received) {
-          // redirect to the next page
-          setIsLoading(false);
-          window.location.href = "/verify";
-        } else {
-          // TODO: define what happens if the call fails
-        }
-      })
-      .catch((error) => console.error(error));
+    sendFileToBot(files[0]);
   };
 
   const handleFileChange = (event) => {
@@ -109,8 +85,6 @@ const DropZone = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* TODO: add the loading animation here */}
-      {isLoading && <p>Loading...</p>}
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
@@ -135,9 +109,11 @@ const DropZone = () => {
         </button>
       </div>
 
+      {isLoading && <LoadingAnimation isLoading={isLoading} />}
+
       {/* Upload Content */}
       {activeTab === "upload" && (
-        <div className="p-8 bg-white border border-gray-300">
+        <div className="p-8 bg-white border border-black">
           <div
             className={`flex flex-col items-center justify-center p-8 border border-gray-300 rounded-md ${
               fileEnter ? "bg-gray-100" : ""
@@ -164,7 +140,6 @@ const DropZone = () => {
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
-            
             <p className="text-center font-medium mb-2">Upload your course syllabus here!</p>
             <p className="text-center text-gray-500 mb-4">Use a PDF file with a size no more than 10MB</p>
             
@@ -186,18 +161,12 @@ const DropZone = () => {
               </label>
             </div>
           </div>
-          <button
-            className="mt-4 w-full text-white py-2 px-4 rounded-md bg-blue-400 hover:bg-blue-500"
-            onClick={handleUploadFile}
-          >
-            Submit
-          </button>
         </div>
       )}
 
       {/* Paste Text Content */}
       {activeTab === "paste" && (
-        <div className="p-8 border border-gray-300 bg-white">
+        <div className="p-8 border border-black bg-white">
           <textarea
             className="w-full h-40 p-4 border border-gray-300 rounded-md"
             placeholder="Copy and paste your syllabus here"
@@ -219,8 +188,3 @@ const DropZone = () => {
 };
 
 export default DropZone;
-
-
-// TODO: error handling for input file:
-// https://www.csharp.com/article/how-to-handling-file-uploads-in-next-js/
-// https://codersteps.com/articles/building-a-multi-file-uploader-with-next-js-app-directory
