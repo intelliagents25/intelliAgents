@@ -4,9 +4,11 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import LoadingAnimation from '../components/LoadingAnimation'; // Import the LoadingAnimation component
 
 const VerifyResults = () => {
     const [tableData, setTableData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false); // Add loading state
     const ics = useRef('');
     
     useEffect(() => {
@@ -21,7 +23,15 @@ const VerifyResults = () => {
 
     const handleGenerateCalendar = () => {
         console.log('Generate Calendar button clicked');
-        // TODO: Add logic to generate the calendar including the loading animation
+        setIsLoading(true);
+        
+        setTimeout(() => {
+            // Calendar generation logic here
+            setIsLoading(false);
+            
+            // Additional actions after generation
+            // e.g., redirect, download, etc.
+        }, 3000);
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -64,6 +74,7 @@ const VerifyResults = () => {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
             {showModal}
+            <LoadingAnimation isLoading={isLoading} />
 
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
@@ -77,8 +88,12 @@ const VerifyResults = () => {
                         <VerifyTable rows={tableData} />
                     </div>
 
-                    <button className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleGenerateCalendar}>
-                        Generate My Calendar
+                    <button 
+                        className="ml-0 button button-blue button-rounded font-bold my-3" 
+                        onClick={handleGenerateCalendar}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Generating...' : 'Generate My Calendar'}
                     </button>
                     
                     <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6">
