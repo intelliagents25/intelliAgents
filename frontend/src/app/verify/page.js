@@ -69,7 +69,7 @@ const VerifyResults = () => {
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
                 <h4 className='text-center'>Verify IntelliAgents' Work! </h4>
-                <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center">
+                <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center text-[0.8rem] md:text-[1.3rem] lg:text-[1.8rem]">
                     These are details IntelliAgents need your eyes on.
                 </h5>
                 
