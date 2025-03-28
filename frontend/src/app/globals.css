@@ -3,13 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
   --foreground: #171717;
-  --primary-color: #272776;
-  --secondary-color-1: #7C91DC;
-  --secondary-color-2: #6138B9;
+  --primary-color: #D5E9FD;
+  --secondary-color-1: #9855D4;
+  --secondary-color-2: #5AAAFA;
   --neutral-black: #151515;
-  --neutral-white: ##F9F9F9;
+  --neutral-white: #F9F9F9;
+  --text-colour-dark: #152935;
+  --text-colour-light: #454f54;
+  --text-colour-blue: #2C5281;
+  --bg-colour-blue: #D5E9FA;
+  --bg-colour-white: #ffffff;
+  --bg-colour-off-white: #fffffb;
+  --button-color-1: #6138B9;
 }
 
 @media (prefers-color-scheme: light) {
@@ -18,11 +24,16 @@
     --foreground: #ededed;
   }
 }
+main {
+  flex: 1;
+}
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Add this to your CSS file */
@@ -49,16 +60,264 @@ body {
   }
 }
 
-.roboto-mono-regular {
-  font-family: "Roboto Mono", serif;
-  font-optical-sizing: auto;
+/* Background styles */
+.bg-off-white {
+  background-color: var(--bg-colour-off-white);
+}
+
+.bg-white {
+  background-color: var(--bg-colour-white);
+}
+
+.bg-blue {
+  background-color: var(--bg-colour-blue);
+}
+
+/* Font styles */
+.roboto-font {
+  font-family: var(--font-roboto), sans-serif;;
   font-weight: 400;
   font-style: normal;
 }
 
-.inter-regular {
-  font-family: "Inter", serif;
-  font-optical-sizing: auto;
+.suez-font {
+  font-family: var(--font-suez-one), serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.font-body {
+  font-family: var(--font-roboto), sans-serif;;
+  font-size: 1.12rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-subtitle {
+  font-family: var(--font-roboto), sans-serif;;
+  font-size: 1.37rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h6 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h5 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h4 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (max-width: 576px) {
+  h6 {
+    font-size: 2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Medium screens (md) */
+@media (min-width: 577px) and (max-width: 992px) {
+  h6 {
+    font-size: 3rem;
+  }
+
+  h5 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Large screens (lg) */
+@media (min-width: 993px) {
+  h6 {
+    font-size: 4rem;
+  }
+
+  h5 {
+    font-size: 2.5rem;
+  }
+
+  h4 {
+    font-size: 3rem;
+  }
+}
+
+h3 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h2 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 2rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  font-family: var(--font-suez-one), serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p {
+  font-family: var(--font-roboto), sans-serif;;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Navigation links */
+a {
+  text-decoration: none;
+  font-family: var(--font-roboto);
+}
+
+a:hover {
+  /* color: var(--text-colour-light); */
+  font-weight: bolder;
+}
+
+/* Font style for Intelli (Logo) */
+.font-logo {
+  font-family: var(--font-suez-one), serif;
+  font-weight: bold;
+  color: var(--text-colour-blue);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.text-dark {
+  color: var(--text-colour-dark);
+}
+
+.text-light {
+  color: var(--text-colour-light);
+}
+
+.text-dark-blue {
+  color: var(--text-colour-blue);
+}
+
+/* Buttons */
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color-1);
+  color: var(--neutral-white);
+  padding: 0.5rem 1rem;
+  border-radius: 32px;
+  border: 1px solid #2E374C;
+  cursor: pointer;
+  margin-left: auto;
+  font-family: var(--font-roboto), sans-serif;
+  font-size: 1rem;
+  position: relative;
+  z-index: 1000;
+}
+
+button:hover {
+  background-color: var(--secondary-color-2);
+}
+
+button.button-rounded {
+  border-radius: 32px;
+}
+
+.button-blue {
+  background-color: var(--secondary-color-2);
+  color: var(--neutral-black);
+}
+
+.button-blue:hover {
+  background-color: #85D0F1;
+}
+
+/* Layout */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header of Layout */
+.header {
+  width: 100%;
+  background-color: var(--bg-colour-off-white);
+  color: var(--text-colour-blue);
+  font-family: var(--font-roboto), sans-serif;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #000;
+}
+
+.header .font-logo{
+  font-size: 1.7rem;
+}
+
+/* Button inside header */
+.header .button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color-1);
+  color: var(--neutral-white);
+  padding: 0.5rem 1rem;
+  border-radius: 32px;;
+  cursor: pointer;
+  margin-left: auto;
+  font-family: var(--font-roboto), sans-serif;
+  font-size: 0.8rem;
+  /* font-weight: bold; */
+}
+
+.header .button:hover {
+  background-color: var(--secondary-color-2);
+}
+
+/* Body of layout */
+.body {
+  background-color: var(--bg-colour-blue);
+}
+
+/* Footer of layour */
+.footer {
+  width: 100%;
+  background-color: var(--bg-colour-off-white);
+  /* color: var(--text-colour-blue);
+  font-family: var(--font-roboto), sans-serif;
+  font-size: 1vw; */
+  padding: 2rem;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-top: 1px solid #000;
 }

@@ -1,13 +1,17 @@
 import React from 'react';
-import { getProviders, signIn } from "next-auth/react"
+import { signIn } from "next-auth/react";
 import { Icons } from './Icons';
-const SignInSection = ({}) => {
+
+const SignInSection = ({ className = "" }) => {
   return (
-    <div className="px-16">
-    <h2 className="text-[35px] font-[700] mb-3 text-[#151515]" style={{ fontFamily: 'Inria Sans' }}>Sign in with Google</h2>
-      <button onClick={() => signIn("google")} className="flex items-center gap-4 px-6 py-4 w-full max-w-[328px] h-[112px] border-2 border-[#151515] rounded-xl bg-white text-gray-700 hover:bg-gray-50">
-      <Icons.google className="w-7 h-7"/>
-      Sign in with Google</button>
+    <div className={`flex flex-col items-center justify-center ${className}`}>
+      <button 
+        onClick={() => signIn("google")} 
+        className="flex items-center justify-center gap-4 px-6 py-4 border-[1px] w-full border-[#000000] rounded-[16px] bg-[#FFFFFF] text-[#757575] hover:bg-gray-50"
+      >
+        <Icons.google className="w-[20%] h-[20%]" />
+        <span className='text-[4vw] md:text-[2vw] lg:text-[1vw]'>Sign in with Google</span>
+      </button>
     </div>
   );
 };
