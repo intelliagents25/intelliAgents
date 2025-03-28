@@ -6,7 +6,11 @@ const nextConfig = {
         INITIAL_EVENTS_JSON: "initial_events_json",
         RECOMMENDED_OH: "recommended_oh_json",
         FINAL_ICALS: "final_icals"
+      },
+      compiler: {
+        styledComponents: true
       }
+
 };
 
 export default nextConfig;
