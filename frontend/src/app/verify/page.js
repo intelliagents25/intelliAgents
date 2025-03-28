@@ -4,7 +4,7 @@ import "../globals.css";
 import VerifyTable from './VerifyTable';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import uploadChanges from './VerifyEventActions';
+import {uploadChanges, validateInputs} from './VerifyEventActions';
 
 
 const VerifyResults = () => {
@@ -45,10 +45,19 @@ const VerifyResults = () => {
     if (pathname !== '/verify') return null;
 
     
-    const handleUploadChanges = async () => {
-        setIsLoading(true);
+    const handleUploadChanges = async (event) => {
+        // Prevent the default form submission behavior
+        event.preventDefault(); // Uncomment this if you want to prevent the default form submission`
 
+        console.log("handleUploadChanges called")
         const childData = childRef.current.getData(); 
+
+        if(validateInputs(childData) == false) {
+            return false;
+        }
+
+        setIsLoading(true);
+        
         const ok = await uploadChanges(childData);
         if (ok) {
             router.push('/verify/recommended-oh');
@@ -74,13 +83,15 @@ const VerifyResults = () => {
                 </h5>
                 
                 <div className="w-full flex flex-col items-center">
+                    <form className="w-full flex flex-col items-center">
                     <div className="w-full flex justify-center mb-4">
                         <VerifyTable ref={childRef}/>
                     </div>
 
-                    <button className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleUploadChanges}>
+                    <button type="submit" className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleUploadChanges}>
                         Generate My Calendar
                     </button>
+                    </form>
                     
                     <div className="w-full flex justify-center lg:justify-end lg:absolute lg:top-1/2 mb-6z" style={{ zIndex: -1 }}>
                         <img

@@ -92,9 +92,10 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="px-4 py-2 text-dark text-sm md:text-xl lg:text-2xl text-left w-2/5 align-top">
                                     {/* If the row is rejected and being edited, show input */}
                                         <input
+                                            required={true}
                                             type="text"
                                             defaultValue={row.Name}
-                                            // onChange={handleChange}
+                                            onChange={(event) => handleFormChange(event, index, "Name")}
                                             className="w-full p-2 border border-gray-300 rounded-md"
                                         />
                                 </td>
@@ -102,6 +103,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="px-4 py-2 text-center cursor-pointer w-1/5 align-top ">
                                 <input
                                     type="date"
+                                    required={true}
                                     value={row["Start Date"]|| ""}
                                     onChange={(event) => handleFormChange(event, index, "Start Date")}
                                     className="w-full p-2 border mb-2 border-gray-300 rounded-md"
@@ -127,6 +129,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <input
                                     type="date"
                                     value={row["End Date"]|| ""}
+                                    required={true}
                                     onChange={(event) => handleFormChange(event, index, "End Date")}
                                     className="w-full p-2 border mb-2 border-gray-300 rounded-md"
                                 />
@@ -144,6 +147,7 @@ const VerifyTable = forwardRef((props, ref) => {
 
                                 <select
                                     value={row["Recur"]}
+                                    required={true}
                                     onChange={(event) => handleFormChange(event, index, "Recur")}
                                     className="w-full rounded-md px-4 py-2 cursor-pointer w-auto"
                                 >

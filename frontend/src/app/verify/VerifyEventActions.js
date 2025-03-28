@@ -34,5 +34,21 @@
     return false
 };
 
+// returns: boolean
+function validateInputs(inputs) {
+    for (const input of inputs) {
+        if (input.Name === "" || input["Start Date"] === "" || input["End Date"] === "") {
+            return false; // Invalid input found
+        }
 
-export default uploadChanges;
+        if (input["Start Date"] > input["End Date"]) {
+            // console.error("Start date must be before end date");
+            return false; // Start date must be before end date
+        }
+    }
+    console.log("All inputs are valid");
+    console.log(input["Start Date"] > input["End Date"]);
+    return true; // All inputs are valid
+}
+
+export { uploadChanges, validateInputs };
