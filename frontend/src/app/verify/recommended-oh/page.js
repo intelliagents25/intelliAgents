@@ -66,9 +66,12 @@ const VerifyResults = () => {
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
                 <h4 className='text-center'>Here are some recommended office hours </h4>
-                <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center">
-                    Add these to your calendar to get some help before your major assignments
-                </h5>
+                <h2 className="roboto-font text-light font-bold text-center text-[0.8rem] md:text-[1.3rem] lg:text-[1.8rem]">
+                    These are added to your calendar to get some help before your major assignments. 
+                </h2>
+                <h2 className="mb-2 pb-5 roboto-font text-light text-center text-[0.6rem] md:text-[1.1rem] lg:text-[1.6rem]">
+                    If you don't want to attend, please select "No". 
+                </h2>
                 
                 <div className="w-full flex flex-col items-center">
                     <div className="w-full flex justify-center mb-4">

@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./ChatBox.module.css";
 import { sendDataToBot } from "./ChatRequests";
 import LoadingAnimation from "./ChatLoadingAnimation";
+import { IoCloseOutline } from "react-icons/io5";
+import { IoMdSend } from "react-icons/io";
 
 const initialChatState = [
   {
-    data: "Hello There! Feel free to ask me any questions :)",
+    data: "Hello There! I'm Intelli. Feel free to ask me any questions :)",
     author: "other",
   },
 ];
@@ -118,50 +120,49 @@ const ChatBox = ({ handleButtonToggle }) => {
     <>
       <h1 className={styles.retryMessage}>
         {" "}
-        Something went wrong, please retry sending a message
+        Oh no! Something went wrong. Please try again.
       </h1>
     </>
   );
 
   return (
     <div className={styles.chatHolder}>
-      <div className={styles.chatHeader}>
-        <h1>Chat</h1>
-        <button className={styles.closeButton} onClick={handleButtonToggle}>
-          X
-        </button>
+      <button className={styles.closeButton} onClick={handleButtonToggle}>
+        <IoCloseOutline />
+      </button>
+      <div className={styles.whiteBox}>
+        <div id="chatTextContents" className={styles.chatTextContents}>
+          {messages}
+          <div id="loading">{awaitingResponse && <LoadingAnimation />}</div>
+          {showRetryMessage && retryMessage}
+          <div
+            className={styles.anchor}
+            id="anchor"
+            ref={(element) => {
+              messageEnd = element;
+            }}
+          ></div>
+        </div>
+        <form onSubmit={handleFormSubmission} className={styles.form}>
+          <textarea
+            ref={(element) => {
+              inputBox = element;
+            }}
+            value={messageText}
+            placeholder="Type a message..."
+            onChange={(e) => setMessageText(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className={styles.textarea}
+          ></textarea>
+          <button
+            type="submit"
+            className={styles.sendButton}
+            disabled={disableSend}
+          >
+            <IoMdSend className={styles.sendButtonIcon}/>
+          </button>
+        </form>
       </div>
-      <div id="chatTextContents" className={styles.chatTextContents}>
-        {messages}
-        <div id="loading">{awaitingResponse && <LoadingAnimation />}</div>
-        {showRetryMessage && retryMessage}
-        <div
-          className={styles.anchor}
-          id="anchor"
-          ref={(element) => {
-            messageEnd = element;
-          }}
-        ></div>
-      </div>
-      <form onSubmit={handleFormSubmission} className={styles.form}>
-        <textarea
-          ref={(element) => {
-            inputBox = element;
-          }}
-          value={messageText}
-          placeholder="Type a message..."
-          onChange={(e) => setMessageText(e.target.value)}
-          onKeyPress={handleKeyPress}
-          className={styles.textarea}
-        ></textarea>
-        <button
-          type="submit"
-          className={styles.sendButton}
-          disabled={disableSend}
-        >
-          Send
-        </button>
-      </form>
     </div>
   );
 };

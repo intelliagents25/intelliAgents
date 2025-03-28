@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
               <Link
               href="#how-it-works"
               id="how-it-works-button"
-              className="flex justify-center items-center bg-[#6138B9] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium"
+              className="flex justify-center items-center bg-[#985DD4] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium"
               >
                 How It Works
                 </Link>

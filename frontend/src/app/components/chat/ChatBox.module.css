@@ -14,84 +14,104 @@
 /* main container for the chatbox */
 .chatHolder {
   /* positioning */
+    position: relative;
     display: flex;
-    align-content: space-between;
     flex-direction: column;
-    bottom: 140px; 
-    right: 40px;
+    align-items: center;
+    justify-content: center;
     /* sizing */
     max-height: 60%;
-    height:700px;
+    height: 44rem; /* approx. 700px */
     min-width: 20%;
-    max-width: 500px;
+    max-width: 32rem; /* approx. 500px */
     /* styling */
-    border-radius: 12px;
     overflow:hidden;
-    background-color: white;
-    border-color: black;
-    border-width: 1px;
-  }
-  
-  .chatHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    padding: 1em;
-    border-bottom: 1px solid #eee;
+    border-radius: 15px;
+    border: 1px solid var(--text-colour-dark);
+    background: #8AC9E4;
   }
 
   .closeButton {
-    border: 0;
-    background: none;
-    font-size: 1.5em;
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    background-color: white;
+    color: var(--neutral-white);
+    padding: 0rem;
+    border-radius: 32px;
+    border: 1px solid #2E374C;
     cursor: pointer;
+    font-size: 1.5em;
+    color: black;
+    cursor: pointer;
+  }
+
+  .whiteBox {
+    width: 87%; /* Adjusted relative to chatContainer */
+    height: 87%; /* Keeps the aspect ratio */
+    background-color: white;
+    border: 1px solid var(--text-colour-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   /* styling for the chat contents */
   .chatTextContents {
     display: flex;
     flex-grow: 1;
-    height: auto;
+    width: 95%; /* Adjusted relative to chatContainer */
+    height: 90%; /* Keeps the aspect ratio */
     flex-direction: column;
     align-items: flex-start;
     gap: 1em;
-    padding: 1em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    padding-top: 1em;
     overflow: auto;
+    background-color: white;
   }
 
-  /* #loading {
-  } */
+  .loading {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+    color: var(--secondary-color-2);
+    border-radius: 50%;
+  }
 
   
   .message {
     background-color: #eef5f8;
     padding: 1em;
+    border: 0.5px solid var(--text-colour-dark);
     border-radius: 10px;
     flex-grow: 0;
-    border-bottom-left-radius: 0;
     max-width: 70%;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .message[data-author="me"] {
-    background-color: #e0ffe0;
+    background-color: #8AC9E4;
     align-self: flex-end;
 
   }
   
   .message[data-author="other"] {
-    background-color: #ffe0e0;
+    background-color: #D9D9D9;
     align-self: flex-start;
   }
 
 
   .retryMessage {
     display: flex;
-    margin: 15px 0 ;
-    padding: 15px 15px 15px 15px;
-    background-color: rgb(240, 240, 240);
-    border-radius: 5px;
-    color: rgb(95, 95, 95);
+    background-color: #f5d7d7;
+    padding: 1em;
+    border-radius: 10px;
+    color: #910f0f;
+    font-family: var(--font-suez-one), sans-serif;
+    font-size: 1rem;
   }
 
   /* this is a bit jank but when i want to */
@@ -103,35 +123,43 @@
   
   /* "footer" for text input and send button */
   .form {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 100px;
-    border-top: 1px solid #eee;
-    max-height: 100px;
-    height: 100px;
+    grid-template-columns: 80% 20%; 
+    border-top: 1px solid var(--text-colour-dark);
+    max-height: 20%;
+    height: 20%;
   }
   
   /* form text area */
   .textarea {
-    padding: 1em;
-    border: 0;
+    padding: 0.5em
   }
   
   
   /* button to send the message */
   .sendButton {
-    border: 0;
-    color: white;
-    font-weight: bold;
-    font-size: 1.4em;
-    background-color: var(--secondary-color-2);
+    border: none;
+    background-color: white;
+    font-size: 2rem;
+    padding: 0.5em;
+    cursor: pointer;
   }
   
   .sendButton:hover {
-    opacity: 0.9;
+    background-color: white;
   }
   
   .sendButton:disabled,
   .sendButton:hover:disabled {
     opacity: 0.5;
+  }
+
+  .sendButtonIcon {
+    color: var(--secondary-color-1);
+  }
+
+  .sendButtonIcon:hover {
+    color: var(--secondary-color-2);
   }
   
