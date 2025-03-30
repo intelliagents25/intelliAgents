@@ -25,6 +25,14 @@ const ChatBox = ({ handleButtonToggle }) => {
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
 
+  const promptSuggestions = [
+    "Prompt Suggestions A",
+    "Prompt Suggestions B",
+    "Prompt Suggestions C",
+    "Prompt Suggestions D",
+  ];
+  
+
   // check if there are existing messages in this session and try to load. 
   useEffect(() => {
     try{
@@ -142,6 +150,17 @@ const ChatBox = ({ handleButtonToggle }) => {
               messageEnd = element;
             }}
           ></div>
+        </div>
+        <div className={styles.suggestionsContainer}>
+          {promptSuggestions.map((suggestion, index) => (
+            <button 
+              key={index} 
+              className={styles.suggestionButton} 
+              onClick={() => setMessageText(suggestion)}
+            >
+              {suggestion}
+            </button>
+          ))}
         </div>
         <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea
