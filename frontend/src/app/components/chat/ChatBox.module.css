@@ -184,7 +184,9 @@
     justify-content: center;
     width: 100%;
     max-width: 90%;
-    max-height: 50%;
+    max-height: 20%;
+    overflow-y: auto; /* Prevents overflow when too many suggestions */
+    padding: 8px;
   }
   
   .suggestionButton {

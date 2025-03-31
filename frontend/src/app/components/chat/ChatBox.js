@@ -25,13 +25,30 @@ const ChatBox = ({ handleButtonToggle }) => {
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
 
-  const promptSuggestions = [
-    "Prompt Suggestions A",
-    "Prompt Suggestions B",
-    "Prompt Suggestions C",
-    "Prompt Suggestions D",
+
+  // PDFs array from the database (Replace with actual database data)
+  const pdfs = [
+    { name: "syllabus-1.pdf" },
+    { name: "sylla-2.pdf" },
+    { name: "syllabus-final-3.pdf" },
+    { name: "math-101.pdf" },
   ];
-  
+
+  // Generate all unique pairs of PDFs
+  const generatePromptSuggestions = (pdfs) => {
+    if (!pdfs || pdfs.length < 2) return []; // Ensure at least 2 PDFs exist
+
+    const suggestions = [];
+    for (let i = 0; i < pdfs.length; i++) {
+      for (let j = i + 1; j < pdfs.length; j++) {
+        suggestions.push(`Conflicts between ${pdfs[i].name} and ${pdfs[j].name}?`);
+      }
+    }
+    return suggestions;
+  };
+
+  // Generate suggestions
+  const promptSuggestions = generatePromptSuggestions(pdfs);
 
   // check if there are existing messages in this session and try to load. 
   useEffect(() => {
@@ -151,6 +168,12 @@ const ChatBox = ({ handleButtonToggle }) => {
             }}
           ></div>
         </div>
+        {pdfs.length >= 2 && (
+          <>
+            <p className={styles.suggestionsMessage}>
+              Try suggested prompts for quick insights!
+            </p>
+          </>)}
         <div className={styles.suggestionsContainer}>
           {promptSuggestions.map((suggestion, index) => (
             <button 
