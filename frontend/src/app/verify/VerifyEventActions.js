@@ -24,7 +24,6 @@
 
         if (json_data) {
             sessionStorage.setItem(process.env.RECOMMENDED_OH, JSON.stringify(json_data));
-            console.log("Data saved successfully, redirecting");
             return true
 
         }
@@ -45,10 +44,20 @@ function validateInputs(inputs) {
             // console.error("Start date must be before end date");
             return false; // Start date must be before end date
         }
+
     }
-    console.log("All inputs are valid");
-    console.log(input["Start Date"] > input["End Date"]);
     return true; // All inputs are valid
 }
 
-export { uploadChanges, validateInputs };
+
+function getUniqueSources(input_json) {
+    let sources = new Set();
+    for (const item of input_json) {
+        if (item["Source"] !== "") {
+            sources.add(item["Source"]);
+        }
+    }
+    return Array.from(sources);
+}
+
+export { uploadChanges, validateInputs ,getUniqueSources};

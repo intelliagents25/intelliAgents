@@ -1,7 +1,6 @@
 import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react';
-import { FaCheck } from "react-icons/fa6";
-import { FaEdit } from 'react-icons/fa';
-
+import { Icons } from '../components/Icons';
+import { getUniqueSources } from './VerifyEventActions';
 
 const frequency_map = { // actual value,  showed on drop down
     'FREQ=DAILY': 'Daily',
@@ -11,6 +10,7 @@ const frequency_map = { // actual value,  showed on drop down
 };
 const VerifyTable = forwardRef((props, ref) => {
     const [tableData, setTableData] = useState([]);
+    const [source_set, setSourceSet] = useState({});
 
     
     // Expose the getData method to parent
@@ -21,7 +21,6 @@ const VerifyTable = forwardRef((props, ref) => {
     useEffect(() => {
         let icals_json_data = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
         let eventList = JSON.parse(`{ "items":` + icals_json_data + "}").items;
-        console.log(eventList);
         setTableData(eventList);
         // Ensure parsedData is an array
         if (!Array.isArray(eventList)) {
@@ -36,7 +35,17 @@ const VerifyTable = forwardRef((props, ref) => {
                     "All Day": is_all_day,
                 }});
             setTableData(eventList);
-        }    }, []);
+            setSourceSet(getUniqueSources(eventList));
+        }    
+    }, []);
+
+    const handleDeletEvent = (index) => {
+        if (index === undefined) {
+        return;
+        }
+        setTableData(tableData.slice(0, index).concat(tableData.slice(index + 1)));
+  };
+
 
     // TODO: form validation for date, make sure start is before end date
     const handleFormChange = (e, idx, field) => {
@@ -67,7 +76,6 @@ const VerifyTable = forwardRef((props, ref) => {
                 break;  
             }
         setTableData(updatedData);
-        console.log(updatedData);
     }
 
     return (
@@ -84,6 +92,9 @@ const VerifyTable = forwardRef((props, ref) => {
                             <th className="px-4 py-1 pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto">Start Date</th>
                             <th className="px-4 py-1 pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">End Date</th>
                             <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Frequency</th>
+                            <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Source</th>
+
+                            <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +105,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                         <input
                                             required={true}
                                             type="text"
-                                            defaultValue={row.Name}
+                                            value={row["Name"]|| ""}
                                             onChange={(event) => handleFormChange(event, index, "Name")}
                                             className="w-full p-2 border border-gray-300 rounded-md"
                                         />
@@ -160,6 +171,36 @@ const VerifyTable = forwardRef((props, ref) => {
                                         </option>;
                                     })}
                                 </select>
+                                    
+                                </td>
+
+                                
+                                <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+
+                                    <select
+                                        value={row["Source"]}
+                                        required={true}
+                                        onChange={(event) => handleFormChange(event, index, "Source")}
+                                        className="w-full p-2 border mb-2 border-gray-300 rounded-md"
+                                    >
+                                        {Object.entries(source_set).map((key, _) => {
+                                            return <option 
+                                            key={key[0]} value={key[0]}
+                                            
+                                            > 
+                                            {key[1]}
+                                            </option>;
+                                        })}
+                                    </select>
+                                    
+                                </td>
+
+                                <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+                                    
+                                        <Icons.xmark
+                                            className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 hover:text-red-500`}
+                                            onClick={() => handleDeletEvent(index)}
+                                        />
                                     
                                 </td>
 

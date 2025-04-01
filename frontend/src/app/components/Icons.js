@@ -4,6 +4,7 @@
 
 // import icons here
 import { FaFileAlt } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 
 // "create" icons here 
@@ -12,8 +13,10 @@ const GoogleIcon = (props) => {
   };
 
 
+
 // map out icons other components can access here  
 export const Icons = {
     file: FaFileAlt,
     google: GoogleIcon,
+    xmark: FaXmark,
 }
