@@ -4,27 +4,21 @@ import { addCookiesToHeader } from '../helpers';
 export async function GET(req) {
   try {
     let environment = process.env.NODE_ENV === "development" ? "-test" : "";
-    let url = `https://intelliagents.ddns.net/webhook${environment}/chat/fetch`
+    let url = `https://intelliagents.ddns.net/webhook${environment}/uploaded-files`;
+    url = "https://intelliagents.ddns.net/webhook/uploaded-files";
 
     const headers = await addCookiesToHeader();
-
-    // return Response.json(
-    //   { file_info: [{ name: "syllabus-1.pdf" },
-    //     { name: "sylla-2.pdf" },
-    //     { name: "syllabus-final-3.pdf" },
-    //     { name: "math-101.pdf" }]},
-    //   { status: 200 }
-    // );
 
     const response = await fetch(url, {
       method: "GET", 
       headers: headers,
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to fetch data', response.message);
     }
     
-    const data = await response.json();
+    let data = await response.json();
+    data = data.file_info;
     return Response.json(
       { file_info: data},
       { status: 200 }

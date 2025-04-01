@@ -34,14 +34,14 @@ export const sendDataToBot = async (message_str) => {
 
 export const getFileInfo = async () => {
     // redirect person to the the gcals page
-    const file_info = sessionStorage.getItem(process.env.FILE_INFO);
+    let file_info = sessionStorage.getItem(process.env.FILE_INFO);
     if (file_info) {
 
-        const last_update = JSON.parse(file_info).last_update;
-        const difference = new Date() - new Date(last_update);
+        file_info = JSON.parse(file_info);
+        const difference = new Date() - new Date(file_info.last_update);
 
-        if (difference < 1000 * 60) { // check every minute
-            return JSON.parse(file_info).files;
+        if (difference < 1000 * 60 && file_info.files != []) { // check every minute
+            return file_info.files;
         }
     }
     const requestOptions = {
@@ -65,7 +65,6 @@ export const getFileInfo = async () => {
             last_update: new Date()
         }
         sessionStorage.setItem(process.env.FILE_INFO, JSON.stringify(file_info));
-
         return json_data;
     } catch (error) {
         console.error(error);
