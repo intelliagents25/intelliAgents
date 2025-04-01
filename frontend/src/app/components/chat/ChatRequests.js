@@ -31,3 +31,44 @@ export const sendDataToBot = async (message_str) => {
             }
         });
 };
+
+export const getFileInfo = async () => {
+    // redirect person to the the gcals page
+    const file_info = sessionStorage.getItem(process.env.FILE_INFO);
+    if (file_info) {
+
+        const last_update = JSON.parse(file_info).last_update;
+        const difference = new Date() - new Date(last_update);
+
+        if (difference < 1000 * 60) { // check every minute
+            return JSON.parse(file_info).files;
+        }
+    }
+    const requestOptions = {
+        method: "GET",
+        signal: AbortSignal.timeout(10 * 1000)
+    };
+
+    try {
+        let res = await fetch("/api/uploaded-files", requestOptions)
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        let json_data = await res.text();
+        json_data = JSON.parse(json_data);
+        json_data = json_data.file_info;
+
+        const file_info = {
+            files: json_data,
+            last_update: new Date()
+        }
+        sessionStorage.setItem(process.env.FILE_INFO, JSON.stringify(file_info));
+
+        return json_data;
+    } catch (error) {
+        console.error(error);
+    }
+    return false
+}
