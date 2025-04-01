@@ -63,7 +63,6 @@ const ChatBox = ({ handleButtonToggle }) => {
         sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
       }
     } catch (error) {
-      console.log(error);
       setMessages(initialChatState);
       let msg_json = JSON.stringify(initialChatState);
       sessionStorage.setItem(process.env.CHAT_BOX, msg_json);

@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "Lecture",
+    "Type": "Lecture",
+    "Day": "Friday",
+    "Start Date": "2025-09-05",
+    "End Date": "2025-11-28",
+    "Start Time": "",
+    "End Time": "",
+    "Recur": "FREQ=WEEKLY",
+    "Source": "September 5, September 12, September 19, September 26, October 3, October 10, October 17, October 24, October 31, November 7, November 14, November 21, November 28",
+    "All Day": true
+  },
+  {
+    "Name": "Lecture",
+    "Type": "Lecture",
+    "Day": "Wednesday",
+    "Start Date": "2025-09-10",
+    "End Date": "2025-12-03",
+    "Start Time": "04:48",
+    "End Time": "04:47",
+    "Recur": "FREQ=DAILY",
+    "Source": "September 10, September 17, September 24, October 1, October 8, October 15, October 22, October 29, November 5, November 12, November 19, November 26, December 3",
+    "All Day": false
+  }
+]
