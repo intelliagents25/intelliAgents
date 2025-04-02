@@ -10,9 +10,6 @@ export async function addCookiesToHeader(headers) {
 
     const cookieStore = await cookies();
     const userToken = cookieStore.get("userToken")?.value;
-
-
-    console.log("🔍 All Cookies:", Array.from(cookieStore.getAll())); // Debugging log
     
     if (userToken == null) {
         throw new Error("User token not found"); //todoL do we want to change status here?

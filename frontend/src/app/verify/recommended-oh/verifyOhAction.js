@@ -80,7 +80,6 @@ function dateToIcalsDate(date) {
 
 //todo: implement this
 function generateIcasJson(OH_data) {
-  console.log(OH_data)
   let mock_ics = createEmmptyCalendar()
 
   let mock_information = {
@@ -105,7 +104,6 @@ const ics_json = generateIcasJson(OH_data)
 
 var icalOutput = ical2json.revert(ics_json);
 sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
-console.log(icalOutput)
 return icalOutput
 }
 

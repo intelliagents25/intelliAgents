@@ -1,7 +1,6 @@
 import { addCookiesToHeader } from '../helpers';
 
 export async function POST(req) {
-  console.log("POST request received");
     try {
       const formData = await req.formData();
       const file = formData.get("file");
@@ -18,18 +17,15 @@ export async function POST(req) {
         headers: headers
       });
       if (!response.ok) {
-        console.log(response)
         throw new Error('Failed to fetch data');
       }
       
       const data = await response.text();
-      console.log(data);
          return Response.json(
         { data: data},
         { status: 200 }
       );
     } catch (error) {
-      console.error(error);
       return Response.json(
         { error: error.message },
         { status: 500 }

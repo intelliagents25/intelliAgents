@@ -38,17 +38,12 @@ const VerifyOH = forwardRef((props, ref) => {
   const handleAccept = (idx) => {
     const updatedData = [...tableData];
     updatedData[idx].Attend = true;
-    console.log(updatedData)
     setTableData(updatedData);
-    console.log("handle accept for ", idx);
   };
   const handleReject = (idx) => {
     const updatedData = [...tableData];
     updatedData[idx].Attend = false;
-    console.log(updatedData[idx].Attend)
     setTableData(updatedData);
-    console.log("handleReject for ", idx);
-
   };
 
   return (

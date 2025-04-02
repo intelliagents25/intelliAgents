@@ -5,7 +5,7 @@ const nextConfig = {
         CHAT_BOX: "chat_content",
         INITIAL_EVENTS_JSON: "initial_events_json",
         RECOMMENDED_OH: "recommended_oh_json",
-        FINAL_ICALS: "final_icals"
+        FILE_INFO: "file_info",
       },
       compiler: {
         styledComponents: true

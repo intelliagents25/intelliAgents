@@ -1,26 +1,26 @@
 import { addCookiesToHeader } from '../helpers';
-// Sample GET response for the chat
-export async function POST(req) {
+// Get list of uploaded files for this user
+
+export async function GET(req) {
   try {
     let environment = process.env.NODE_ENV === "development" ? "-test" : "";
-    let url = `https://intelliagents.ddns.net/webhook${environment}/chat/fetch`
-
-    let input_data = await req.json();
+    let url = `https://intelliagents.ddns.net/webhook${environment}/uploaded-files`;
+    url = "https://intelliagents.ddns.net/webhook/uploaded-files";
 
     const headers = await addCookiesToHeader();
 
     const response = await fetch(url, {
-      method: "POST", 
-      body: JSON.stringify(input_data),
+      method: "GET", 
       headers: headers,
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      throw new Error('Failed to fetch data', response.message);
     }
     
-    const data = await response.json();
+    let data = await response.json();
+    data = data.file_info;
     return Response.json(
-      { message: data},
+      { file_info: data},
       { status: 200 }
     );
   } catch (error) {

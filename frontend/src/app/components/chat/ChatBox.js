@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./ChatBox.module.css";
-import { sendDataToBot } from "./ChatRequests";
+import { sendDataToBot, getFileInfo  } from "./ChatRequests";
+
 import LoadingAnimation from "./ChatLoadingAnimation";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
@@ -22,17 +23,11 @@ const ChatBox = ({ handleButtonToggle }) => {
   const [receivedMessages, setMessages] = useState(initialChatState);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [showRetryMessage, setShowRetryMessage] = useState(false);
+  const [promptSuggestions, setPromptSuggestions] = useState([]);
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
 
 
-  // PDFs array from the database (Replace with actual database data)
-  const pdfs = [
-    { name: "syllabus-1.pdf" },
-    { name: "sylla-2.pdf" },
-    { name: "syllabus-final-3.pdf" },
-    { name: "math-101.pdf" },
-  ];
 
   // Generate all unique pairs of PDFs
   const generatePromptSuggestions = (pdfs) => {
@@ -47,9 +42,6 @@ const ChatBox = ({ handleButtonToggle }) => {
     return suggestions;
   };
 
-  // Generate suggestions
-  const promptSuggestions = generatePromptSuggestions(pdfs);
-
   // check if there are existing messages in this session and try to load. 
   useEffect(() => {
     try{
@@ -62,8 +54,17 @@ const ChatBox = ({ handleButtonToggle }) => {
         let msg_json = JSON.stringify(initialChatState);
         sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
       }
+
+
+      getFileInfo()
+        .then((response) => {
+          if (response) {
+            setPromptSuggestions(generatePromptSuggestions(response));
+          } else {
+            throw new Error("No file info found in the response.");
+          }
+        })
     } catch (error) {
-      console.log(error);
       setMessages(initialChatState);
       let msg_json = JSON.stringify(initialChatState);
       sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
@@ -168,7 +169,7 @@ const ChatBox = ({ handleButtonToggle }) => {
             }}
           ></div>
         </div>
-        {pdfs.length >= 2 && (
+        {promptSuggestions.length >= 1 && (
           <>
             <p className={styles.suggestionsMessage}>
               Try suggested prompts for quick insights!
@@ -179,7 +180,7 @@ const ChatBox = ({ handleButtonToggle }) => {
             <button 
               key={index} 
               className={styles.suggestionButton} 
-              onClick={() => setMessageText(suggestion)}
+              onClick={() => sendChatMessage(suggestion)}
             >
               {suggestion}
             </button>

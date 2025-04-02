@@ -50,7 +50,6 @@ const VerifyResults = () => {
         // Prevent the default form submission behavior
         event.preventDefault(); // Uncomment this if you want to prevent the default form submission`
 
-        console.log("handleUploadChanges called")
         const childData = childRef.current.getData(); 
 
         if(validateInputs(childData) == false) {
@@ -72,8 +71,6 @@ const VerifyResults = () => {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-            {/* todo: add a loading animation */}
-            {/* {isLoading && (loadng)} */}
             {showModal}
             <LoadingAnimation isLoading={isLoading} />
 
@@ -85,7 +82,7 @@ const VerifyResults = () => {
                 </h5>
                 
                 <div className="w-full flex flex-col items-center">
-                    <form className="w-full flex flex-col items-center">
+                    <form className="w-full flex flex-col items-center" onSubmit={handleUploadChanges}>
                     <div className="w-full flex justify-center mb-4">
                         <VerifyTable ref={childRef}/>
                     </div>
