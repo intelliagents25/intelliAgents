@@ -2,9 +2,13 @@
 
 /* chat icon stuff */
 .minimizedIcon {
-/* TODO: maybe use this to change the icon sizing etc */
-  width: 10vw;
+  width: fit-content;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
+
 
 .maximizeIcon {
   width: 100vw;
@@ -24,7 +28,7 @@
     /* sizing */
     max-height: 80%;
     height: 44rem; /* approx. 700px */
-    min-width: 20%;
+    min-width: 50%;
     max-width: 32rem; /* approx. 500px */
     /* styling */
     overflow:hidden;

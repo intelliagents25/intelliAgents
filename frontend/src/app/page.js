@@ -44,7 +44,7 @@ const InfinitiScrollLandingPage = () => {
             </div>
             
             {/* Right mascot */}
-            <div className="flex w-1/2 justify-center items-center hidden lg:flex">
+            <div className="w-1/2 items-end hidden lg:flex translate-y-[-50px]">
               <Chat />
             </div>
           </div>
