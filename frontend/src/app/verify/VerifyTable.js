@@ -5,7 +5,9 @@ import { getUniqueSources } from './VerifyEventActions';
 const frequency_map = { // actual value,  showed on drop down
     'FREQ=DAILY': 'Daily',
     'FREQ=WEEKLY': 'Weekly',
-    'FREQ=MONTHLY': 'Monthly',
+    'FREQ=WEEKLY;BYDAY=MO,WE': 'Weekly - Mon,Wed',
+    'FREQ=WEEKLY;BYDAY=TU,TH': 'Weekly - Tue, Thu',
+    'FREQ=WEEKLY;BYDAY=MO,WE,FR': 'Weekly - M,W,F',
     'NONE': 'Once'
 };
 const VerifyTable = forwardRef((props, ref) => {

@@ -20,10 +20,6 @@ along with some other currently unique (perhaps sequential) identifier available
 
 const DOMAIN_NAME = "@intelliagents.com"
 
-
-
-
-
 function createEmmptyCalendar() {
   return {
     "VCALENDAR": [
@@ -54,6 +50,7 @@ function createEvent(json_event) {
 
     // "optional" - will run without but it's gonna look ugly
     "SUMMARY": "", // this is the title
+    "RRULE":json_event.frequency, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
     // "DTEND;VALUE=DATE": "",
@@ -107,7 +104,7 @@ sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
 return icalOutput
 }
 
-export default generateCalendar;
+export {generateCalendar};
 
 
 
