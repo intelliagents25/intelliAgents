@@ -10,10 +10,13 @@ export async function POST(req) {
       let url = `https://intelliagents.ddns.net/webhook${environment}/upload`
       url = "https://intelliagents.ddns.net/webhook/b90cb657-4b32-4ca7-9293-74733c4c79d7"
 
-      
+
+      const formDataToSend = new FormData();
+      formDataToSend.append("file", file, formData.get("file_name"));
+
       const response = await fetch(url, {
         method: "POST", 
-        body: file,
+        body: formDataToSend,
         headers: headers
       });
       if (!response.ok) {

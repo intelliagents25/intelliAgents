@@ -7,8 +7,7 @@ const frequency_map = { // actual value,  showed on drop down
     'FREQ=WEEKLY': 'Weekly',
     'FREQ=WEEKLY;BYDAY=MO,WE': 'Weekly - Mon,Wed',
     'FREQ=WEEKLY;BYDAY=TU,TH': 'Weekly - Tue, Thu',
-    'FREQ=WEEKLY;BYDAY=MO,WE,FR': 'Weekly - M,W,F',
-    'NONE': 'Once'
+    'FREQ=WEEKLY;BYDAY=MO,WE,FR': 'Weekly - M,W,F'
 };
 const VerifyTable = forwardRef((props, ref) => {
     const [tableData, setTableData] = useState([]);
@@ -22,12 +21,15 @@ const VerifyTable = forwardRef((props, ref) => {
 
     useEffect(() => {
         let icals_json_data = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
+        if (icals_json_data == "") {
+            console.error("No initial data found in sessionStorage");
+            return;
+        }
         let eventList = JSON.parse(`{ "items":` + icals_json_data + "}").items;
-        setTableData(eventList);
+        // setTableData(eventList);
         // Ensure parsedData is an array
         if (!Array.isArray(eventList)) {
             eventList = JSON.parse(eventList);
-           
         }
         if (Array.isArray(eventList)) {
             eventList = eventList.map((item) => {

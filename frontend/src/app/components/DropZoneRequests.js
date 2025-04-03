@@ -8,13 +8,14 @@ export const sendFileToBot = async (file) => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("file_name", file.name);
 
     const requestOptions = {
         method: "POST",
         // headers: headers,
         body: formData,
         redirect: "follow",
-        signal: AbortSignal.timeout(10 * 1000)
+        signal: AbortSignal.timeout(40 * 1000)
     };
 
     try {
