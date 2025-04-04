@@ -1,5 +1,3 @@
-import { create } from "domain";
-
 var ical2json = require("ical2json");
 const { v4: uuidv4 } = require('uuid');
 /**
@@ -20,7 +18,7 @@ along with some other currently unique (perhaps sequential) identifier available
 
 const DOMAIN_NAME = "@intelliagents.com"
 
-function createEmmptyCalendar() {
+function createEmptyCalendar() {
   return {
     "VCALENDAR": [
       {
@@ -39,26 +37,50 @@ function createEvent(json_event) {
   const uniqueID = uuidv4().replace(/-/g, '').slice(0, 6); // might not be unique but its ok since we are adding the date to it
   let uid = uniqueID + dateToIcalsDate(new Date()) +DOMAIN_NAME
 
+  let startTime = json_event["Start Time"] 
+    ? new Date(`${json_event["Start Date"]}T${json_event["Start Time"]}`) 
+    : new Date(`${json_event["Start Date"]}T00:00:00`);
+  let endTime = json_event["End Time"] 
+    ? new Date(`${json_event["End Date"]}T${json_event["End Time"]}`) 
+    : new Date(`${json_event["End Date"]}T00:00:00`);
+
   let event = {
     // always required
     "DTSTAMP": dateToIcalsDate(new Date()), // timestamp of this object
     "UID": uid, // has to be unique
 
     // required if the method of the icals is not specified
-    "DTSTART;VALUE=DATE": "20130101",
+    "DTSTART": dateToIcalsDate(startTime), // start time of the event
+    "DTEND": dateToIcalsDate(endTime), // end time of the event
     "DESCRIPTION": "",
 
     // "optional" - will run without but it's gonna look ugly
-    "SUMMARY": "", // this is the title
-    "RRULE":json_event.frequency, // this is the repeat rule - this is a weekly event
+    "SUMMARY": json_event["Name"], // this is the title
+    "RRULE":json_event.RRULE, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
-    // "DTEND;VALUE=DATE": "",
     // "DESCRIPTION": "",
     // "LOCATION": "",
     // "SEQUENCE": "",
     // "STATUS": "",
     // "TRANSP": ""
+  }
+
+  switch (json_event["RRULE"]) {
+    case "FREQ=ONCE":
+      delete event.RRULE
+      break;
+    default: // if its not once, then  it is a recurring event. 
+    // change the end date so that it's start date + end time. 
+      const until = `;UNTIL=${dateToIcalsDate(endTime)}`
+
+      endTime = json_event["End Time"] 
+      ? new Date(`${json_event["Start Date"]}T${json_event["End Time"]}`)
+      : startTime
+
+      event["DTEND"] = dateToIcalsDate(endTime)
+      event["RRULE"] = json_event.RRULE + until
+      break;
   }
   return event
 }
@@ -76,32 +98,32 @@ function dateToIcalsDate(date) {
 }  
 
 //todo: implement this
-function generateIcasJson(OH_data) {
-  let mock_ics = createEmmptyCalendar()
+function generateIcalsJson(OH_data) {
+  let mock_ics = createEmptyCalendar()
 
-  let mock_information = {
-    "Start Date": dateToIcalsDate(new Date()),
-    "Name": "Office Hours",
-    "Description": "This is a description of an office hour happening"
+  if (typeof OH_data === "string") {
+    OH_data = JSON.parse(OH_data)
   }
-  let v_event = createEvent(mock_information)
-  
-  mock_ics.VCALENDAR[0].VEVENT.push(v_event)
-  mock_information.Description = "Office Hours 2"
-  mock_ics.VCALENDAR[0].VEVENT.push(createEvent(mock_information))
-  mock_information.Description = "Office Hours 3"
-  mock_ics.VCALENDAR[0].VEVENT.push(createEvent(mock_information))
 
+  for (let i = 0; i < OH_data.length; i++) {
+    let event = createEvent(OH_data[i])
+    mock_ics.VCALENDAR[0].VEVENT.push(event)
+  }
   return mock_ics  
 }
 
 
-function generateCalendar(OH_data) {
-const ics_json = generateIcasJson(OH_data)
+function generateCalendar() {
+  let events = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
+  const office_hour_data = sessionStorage.getItem("office_hour_data");
 
-var icalOutput = ical2json.revert(ics_json);
-sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
-return icalOutput
+  // todo: append OH and events together
+
+  const ics_json = generateIcalsJson(events)
+
+  var icalOutput = ical2json.revert(ics_json);
+  sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
+  return icalOutput
 }
 
 export {generateCalendar};
