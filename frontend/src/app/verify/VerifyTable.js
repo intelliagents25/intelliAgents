@@ -11,8 +11,6 @@ const frequency_map = { // actual value,  showed on drop down
 };
 const VerifyTable = forwardRef((props, ref) => {
     const [tableData, setTableData] = useState([]);
-    const [source_set, setSourceSet] = useState({});
-
     
     // Expose the getData method to parent
     useImperativeHandle(ref, () => ({
@@ -39,7 +37,6 @@ const VerifyTable = forwardRef((props, ref) => {
                     "All Day": is_all_day,
                 }});
             setTableData(eventList);
-            setSourceSet(getUniqueSources(eventList));
         } 
     }, []);
 
@@ -68,11 +65,11 @@ const VerifyTable = forwardRef((props, ref) => {
                 updatedData[idx]["Start Time"] = ""
                 updatedData[idx]["End Time"] = ""
                 break;
-            case "Recur":
+            case "rrule":
                 if (e.target.value === "NONE") {
-                    delete updatedData[idx]["Recur"];
+                    delete updatedData[idx]["rrule"];
                 } else {
-                    updatedData[idx]["Recur"] = e.target.value;
+                    updatedData[idx]["rrule"] = e.target.value;
                 }
                 break; 
             default:
@@ -161,9 +158,9 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
 
                                 <select
-                                    value={row["Recur"]}
+                                    value={row["rrule"]}
                                     required={true}
-                                    onChange={(event) => handleFormChange(event, index, "Recur")}
+                                    onChange={(event) => handleFormChange(event, index, "rrule")}
                                     className="w-full p-2 border mb-2 border-gray-300 rounded-md"
                                 >
                                     {Object.entries(frequency_map).map((key, _) => {
