@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { nanoid } from "nanoid"; // Generates a unique ID
+import {v4 as uuidv4} from 'uuid';
+
 
 export function middleware(req) {
   const res = NextResponse.next();
@@ -7,7 +8,9 @@ export function middleware(req) {
 
   // Check if the user already has a session cookie
   if (!cookies.includes("userToken")) {
-    const userToken = nanoid(); // Generate a unique token
+    let userToken = uuidv4();
+    // the uuid rn is just bigInt, so replace non numerical for now :,) 
+    userToken = userToken.replace(/\D/g, "");
     res.cookies.set({
       name: "userToken",
       value: userToken,
