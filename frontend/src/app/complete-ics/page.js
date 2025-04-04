@@ -4,6 +4,7 @@ import "../globals.css";
 import LoadingAnimation from '../components/LoadingAnimation';
 import Link from 'next/link';
 import Chat from '../components/chat/Chat';
+import { generateCalendar } from '../verify/recommended-oh/verifyOhAction';
 
 const handleDownload = () => {
   const icsData = sessionStorage.getItem(process.env.FINAL_ICALS);
@@ -40,6 +41,11 @@ const mainContent = (
           <button className="px-8 py-3 font-bold button button-rounded w-64"
             onClick={handleDownload} >
             Download .ics File
+          </button>
+
+          <button onClick={generateCalendar}>
+          CLICK HERE
+
           </button>
 
           <Link href={{ pathname: '/' }}>
