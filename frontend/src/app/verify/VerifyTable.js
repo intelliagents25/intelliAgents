@@ -40,7 +40,7 @@ const VerifyTable = forwardRef((props, ref) => {
                 }});
             setTableData(eventList);
             setSourceSet(getUniqueSources(eventList));
-        }    
+        } 
     }, []);
 
     const handleDeletEvent = (index) => {
@@ -180,22 +180,10 @@ const VerifyTable = forwardRef((props, ref) => {
 
                                 
                                 <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+                                    <p>
+                                    {row["Source"]}
 
-                                    <select
-                                        value={row["Source"]}
-                                        required={true}
-                                        onChange={(event) => handleFormChange(event, index, "Source")}
-                                        className="w-full p-2 border mb-2 border-gray-300 rounded-md"
-                                    >
-                                        {Object.entries(source_set).map((key, _) => {
-                                            return <option 
-                                            key={key[0]} value={key[0]}
-                                            
-                                            > 
-                                            {key[1]}
-                                            </option>;
-                                        })}
-                                    </select>
+                                    </p>
                                     
                                 </td>
 

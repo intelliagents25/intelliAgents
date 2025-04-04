@@ -53,6 +53,7 @@ const VerifyResults = () => {
         const childData = childRef.current.getData(); 
 
         if(validateInputs(childData) == false) {
+            alert("Please fill in all required fields and ensure the start date is before the end date.");
             return false;
         }
 
