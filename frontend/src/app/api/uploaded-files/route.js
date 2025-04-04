@@ -3,7 +3,7 @@ import { addCookiesToHeader } from '../helpers';
 
 export async function GET(req) {
   try {
-    url = "https://intelliagents.ddns.net/webhook/uploaded-files";
+    let url = "https://intelliagents.ddns.net/webhook/uploaded-files";
 
     const headers = await addCookiesToHeader();
 
