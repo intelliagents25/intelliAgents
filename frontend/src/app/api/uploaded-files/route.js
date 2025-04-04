@@ -3,8 +3,6 @@ import { addCookiesToHeader } from '../helpers';
 
 export async function GET(req) {
   try {
-    let environment = process.env.NODE_ENV === "development" ? "-test" : "";
-    let url = `https://intelliagents.ddns.net/webhook${environment}/uploaded-files`;
     url = "https://intelliagents.ddns.net/webhook/uploaded-files";
 
     const headers = await addCookiesToHeader();
@@ -18,16 +16,17 @@ export async function GET(req) {
     }
     
     let data = await response.json();
-    data = data.file_info;
+    data = data[0].data;
+
     return Response.json(
       { file_info: data},
       { status: 200 }
     );
-  } catch (error) {
-    console.error(error);
+  } catch (error) { // just return an empty array if there is an error
+    console.log(error);
     return Response.json(
-      { error: error.message },
-      { status: 500 }
+      { file_info: [] },
+      { status: 200 }
     );
   }
 
