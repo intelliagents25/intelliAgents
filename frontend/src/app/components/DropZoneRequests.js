@@ -29,6 +29,15 @@ export const sendFileToBot = async (file) => {
         let json_data = await res.text();
         json_data = JSON.parse(json_data);
         json_data = json_data.data;
+
+        if (typeof json_data === "string") {
+            try {
+              json_data = JSON.parse(json_data);
+            } catch (err) {
+              console.error("Invalid JSON string:", err);
+            }
+        }
+
         json_data = json_data[0].data; //note: this change should probably exist at the API level
 
         let json_data_string = JSON.stringify(json_data);
@@ -36,6 +45,8 @@ export const sendFileToBot = async (file) => {
 
         if (json_data_string) {
             sessionStorage.setItem(process.env.INITIAL_EVENTS_JSON, json_data_string);
+        }else {
+            throw new Error('json_data_string is empty');
         }
         return true
     } catch (error) {
