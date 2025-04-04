@@ -5,8 +5,7 @@
     // send data to backend and get recommended office hours
     const requestOptions = {
         method: "POST",
-        // headers: headers,
-        body: json_data,
+        body: JSON.stringify(json_data),
         redirect: "follow",
         signal: AbortSignal.timeout(10 * 1000)
     };
@@ -35,13 +34,12 @@
 
 // returns: boolean
 function validateInputs(inputs) {
-    for (const input of inputs) {
+    for (const [index, input] of inputs.entries()) {
         if (input.Name === "" || input["Start Date"] === "" || input["End Date"] === "") {
             return false; // Invalid input found
         }
 
         if (input["Start Date"] > input["End Date"]) {
-            // console.error("Start date must be before end date");
             return false; // Start date must be before end date
         }
 

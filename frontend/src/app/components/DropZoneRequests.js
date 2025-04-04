@@ -29,6 +29,8 @@ export const sendFileToBot = async (file) => {
         let json_data = await res.text();
         json_data = JSON.parse(json_data);
         json_data = json_data.data;
+        json_data = json_data[0].data; //note: this change should probably exist at the API level
+
         let json_data_string = JSON.stringify(json_data);
 
 

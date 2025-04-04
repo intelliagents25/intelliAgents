@@ -15,7 +15,7 @@ export async function addCookiesToHeader(headers) {
         throw new Error("User token not found"); //todoL do we want to change status here?
       }
     
-    headers['Cookie'] = `userToken=${userToken}`;
+    headers['user-cookie'] = `${userToken}`;
 
 
     return headers;

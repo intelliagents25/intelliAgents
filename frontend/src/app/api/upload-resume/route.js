@@ -6,10 +6,8 @@ export async function POST(req) {
       const file = formData.get("file");
       const headers = await addCookiesToHeader();
 
-      let environment = process.env.NODE_ENV === "development" ? "-test" : "";
-      let url = `https://intelliagents.ddns.net/webhook${environment}/upload`
       url = "https://intelliagents.ddns.net/webhook/b90cb657-4b32-4ca7-9293-74733c4c79d7"
-
+      url = "https://intelliagents.ddns.net/webhook-test/upload"
 
       const formDataToSend = new FormData();
       formDataToSend.append("file", file, formData.get("file_name"));
