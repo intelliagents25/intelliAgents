@@ -1,6 +1,5 @@
 import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react';
 import { Icons } from '../components/Icons';
-import { getUniqueSources } from './VerifyEventActions';
 
 const frequency_map = { // actual value,  showed on drop down
     'FREQ=DAILY': 'Daily',
@@ -35,6 +34,8 @@ const VerifyTable = forwardRef((props, ref) => {
                 return {
                     ...item,
                     "All Day": is_all_day,
+                    "Valid": true,
+                    "Errors": {}
                 }});
             setTableData(eventList);
         } 
@@ -79,6 +80,32 @@ const VerifyTable = forwardRef((props, ref) => {
         setTableData(updatedData);
     }
 
+    const handleBlur = (field, index) => {
+        const updatedData = [...tableData];
+        const row = updatedData[index];
+    
+        let errorMessage = "";
+    
+        if (field === "Name" && !row["Name"].trim()) {
+            errorMessage = "Name is required.";
+        }
+    
+        if (field === "Date") {
+            const startTime = row["Start Time"] 
+                ? new Date(`${row["Start Date"]}T${row["Start Time"]}`) 
+                : new Date(`${row["Start Date"]}T00:00:00`);
+            const endTime = row["End Time"] 
+                ? new Date(`${row["End Date"]}T${row["End Time"]}`) 
+                : new Date(`${row["End Date"]}T00:00:00`);
+            if (startTime > endTime) {
+                errorMessage = "Start date and time must be before end date and time.";
+            }
+        }
+    
+        updatedData[index]["Errors"][field] = errorMessage;
+        setTableData(updatedData);
+    };
+
     return (
         <>
 
@@ -108,8 +135,14 @@ const VerifyTable = forwardRef((props, ref) => {
                                             type="text"
                                             value={row["Name"]|| ""}
                                             onChange={(event) => handleFormChange(event, index, "Name")}
-                                            className="w-full p-2 border border-gray-300 rounded-md"
+                                            onBlur={() => handleBlur("Name", index)}
+                                            className={`w-full p-2 border rounded-md ${
+                                                row?.Errors?.["Name"] ? "border-red-500" : "border-gray-300"
+                                            }`}
                                         />
+                                        {row?.Errors?.["Name"] && (
+                                            <p className="text-red-500 text-xs mt-1">{row.Errors["Name"]}</p>
+                                        )}
                                 </td>
 
                                 <td className="px-4 pt-1 pb-4 text-center cursor-pointer w-1/5 align-top ">
@@ -118,13 +151,19 @@ const VerifyTable = forwardRef((props, ref) => {
                                     required={true}
                                     value={row["Start Date"]|| ""}
                                     onChange={(event) => handleFormChange(event, index, "Start Date")}
-                                    className="w-full p-2 border mb-2 border-gray-300 rounded-md"
+                                    onBlur={() => handleBlur("Date", index)}
+                                    className={`w-full p-2 border mb-2 rounded-md ${
+                                        row?.Errors?.["Date"] ? "border-red-500" : "border-gray-300"
+                                    }`}
                                 />
                                 <input
                                     type="time"
                                     value={row["Start Time"]|| ""}
                                     onChange={(event) => handleFormChange(event, index, "Start Time")}
-                                    className="w-full p-2 border border-gray-300 rounded-md"
+                                    onBlur={() => handleBlur("Date", index)}
+                                    className={`w-full p-2 border mb-2 rounded-md ${
+                                    row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
+                                    }`}
                                 />
 
                                 <div className="flex items-center pb-4">
@@ -135,6 +174,11 @@ const VerifyTable = forwardRef((props, ref) => {
                                     <label htmlFor="all_day" className='ml-2'>All Day</label>
                                 </div>
 
+                                {row?.Errors?.["Date"] && (
+                                    <p className="text-red-500 text-xs mt-1">{row.Errors["Date"]}</p>
+                                )}
+
+
                                 </td>
 
                                 <td className="w-1/8 px-4 py-1 text-center cursor-pointer w-1/5 align-top">
@@ -143,13 +187,19 @@ const VerifyTable = forwardRef((props, ref) => {
                                     value={row["End Date"]|| ""}
                                     required={true}
                                     onChange={(event) => handleFormChange(event, index, "End Date")}
-                                    className="w-full p-2 border mb-2 border-gray-300 rounded-md"
+                                    onBlur={() => handleBlur("Date", index)}
+                                    className={`w-full p-2 border mb-2 rounded-md ${
+                                    row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
+                                    }`}
                                 />
                                 <input
                                     type="time"
                                     value={row["End Time"]|| ""}
                                     onChange={(event) => handleFormChange(event, index, "End Time")}
-                                    className="w-full p-2 border border-gray-300 rounded-md"
+                                    onBlur={() => handleBlur("Date", index)}
+                                    className={`w-full p-2 border mb-2 rounded-md ${
+                                    row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
+                                    }`}
                                 />
 
                                     

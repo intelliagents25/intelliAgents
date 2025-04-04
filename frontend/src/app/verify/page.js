@@ -12,6 +12,7 @@ const VerifyResults = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [pendingNavigation, setPendingNavigation] = useState(null);
+    const [showWarning, setShowWarning] = useState(false);
     const childRef = useRef();
     const router = useRouter();
     const pathname = usePathname();
@@ -53,9 +54,11 @@ const VerifyResults = () => {
         const childData = childRef.current.getData(); 
 
         if(validateInputs(childData) == false) {
-            alert("Please fill in all required fields and ensure the start date is before the end date.");
+            setShowWarning(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return false;
         }
+        setShowWarning(false);
 
         setIsLoading(true);
         
@@ -81,6 +84,12 @@ const VerifyResults = () => {
                 <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center text-[0.8rem] md:text-[1.3rem] lg:text-[1.8rem]">
                     These are details IntelliAgents need your eyes on.
                 </h5>
+
+                {showWarning && (
+                    <div className="alert alert-warning mb-4">
+                        <strong>Warning!</strong> Please fill all required fields and ensure the start date is before the end date.
+                    </div>
+                )}
                 
                 <div className="w-full flex flex-col items-center">
                     <form className="w-full flex flex-col items-center" onSubmit={handleUploadChanges}>

@@ -48,6 +48,27 @@ function validateInputs(inputs) {
 }
 
 
+// returns: boolean
+function validateInput(input) {
+    if (input.Name === "" || input["Start Date"] === "" || input["End Date"] === "") {
+        console.log("a required field is not filled");
+        return false; // Invalid input found
+    }
+
+    const startTime = row["Start Time"] 
+        ? new Date(`${row["Start Date"]}T${row["Start Time"]}`) 
+        : new Date(`${row["Start Date"]}T00:00:00`);
+    const endTime = row["End Time"] 
+        ? new Date(`${row["End Date"]}T${row["End Time"]}`) 
+        : new Date(`${row["End Date"]}T00:00:00`);
+
+    if (startTime > endTime) {
+        return false; // Start time must be before end time
+    }
+    return true; // All inputs are valid
+}
+
+
 function getUniqueSources(input_json) {
     let sources = new Set();
     for (const item of input_json) {
@@ -58,4 +79,4 @@ function getUniqueSources(input_json) {
     return Array.from(sources);
 }
 
-export { uploadChanges, validateInputs ,getUniqueSources};
+export { uploadChanges, validateInputs, validateInput, getUniqueSources};
