@@ -21,8 +21,21 @@
         json_data = JSON.parse(json_data);
         json_data = json_data.data;
 
-        if (json_data) {
-            sessionStorage.setItem(process.env.RECOMMENDED_OH, JSON.stringify(json_data));
+        if (typeof json_data === "string") {
+            try {
+              json_data = JSON.parse(json_data);
+            } catch (err) {
+              console.error("Invalid JSON string:", err);
+            }
+        }
+
+        json_data = json_data[0].data; //note: this change should probably exist at the API level
+
+        let json_data_string = JSON.stringify(json_data);
+
+
+        if (json_data_string) {
+            sessionStorage.setItem(process.env.RECOMMENDED_OH, json_data_string);
             return true
 
         }

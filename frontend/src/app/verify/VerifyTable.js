@@ -66,11 +66,11 @@ const VerifyTable = forwardRef((props, ref) => {
                 updatedData[idx]["Start Time"] = ""
                 updatedData[idx]["End Time"] = ""
                 break;
-            case "rrule":
+            case "RRULE":
                 if (e.target.value === "NONE") {
-                    delete updatedData[idx]["rrule"];
+                    delete updatedData[idx]["RRULE"];
                 } else {
-                    updatedData[idx]["rrule"] = e.target.value;
+                    updatedData[idx]["RRULE"] = e.target.value;
                 }
                 break; 
             default:
@@ -208,9 +208,9 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
 
                                 <select
-                                    value={row["rrule"]}
+                                    value={row["RRULE"]}
                                     required={true}
-                                    onChange={(event) => handleFormChange(event, index, "rrule")}
+                                    onChange={(event) => handleFormChange(event, index, "RRULE")}
                                     className="w-full p-2 border mb-2 border-gray-300 rounded-md"
                                 >
                                     {Object.entries(frequency_map).map((key, _) => {
