@@ -32,11 +32,11 @@ const ChatBox = ({ handleButtonToggle }) => {
   // Generate all unique pairs of PDFs
   const generatePromptSuggestions = (pdfs) => {
     if (!pdfs || pdfs.length < 2) return []; // Ensure at least 2 PDFs exist
-
+    
     const suggestions = [];
     for (let i = 0; i < pdfs.length; i++) {
       for (let j = i + 1; j < pdfs.length; j++) {
-        suggestions.push(`Conflicts between ${pdfs[i].name} and ${pdfs[j].name}?`);
+        suggestions.push(`Conflicts between ${pdfs[i]} and ${pdfs[j]}?`);
       }
     }
     return suggestions;

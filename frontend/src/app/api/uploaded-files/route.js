@@ -16,7 +16,7 @@ export async function GET(req) {
     }
     
     let data = await response.json();
-    data = data[0].data;
+    data = data[0].data[0].syllabi;
 
     return Response.json(
       { file_info: data},
