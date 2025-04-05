@@ -47,17 +47,41 @@
 
 // returns: boolean
 function validateInputs(inputs) {
+    let error_found = false;
+
     for (const [index, input] of inputs.entries()) {
-        if (input.Name === "" || input["Start Date"] === "" || input["End Date"] === "") {
-            return false; // Invalid input found
+
+        if (!input["Name"].trim()) {
+            input["Errors"]["Name"] = "Name is required.";
+            error_found = true;
+        }
+        
+        if (!input["Start Date"].trim()) {
+            input["Errors"]["Date"] = "Start Date is required.";
+            error_found = true;
+        }else if (!input["End Date"].trim()) {
+            input["Errors"]["Date"] = "End Date is required.";
+            error_found = true;
+        } else if (!input["Start Time"].trim()) {
+            input["Errors"]["Date"] = "Start Time is required.";
+            error_found = true;
+        } else if (!input["End Time"].trim()) {
+            input["Errors"]["Date"] = "End Time is required.";
+            error_found = true;
         }
 
-        if (input["Start Date"] > input["End Date"]) {
-            return false; // Start date must be before end date
+        const startTime = input["Start Time"] 
+        ? new Date(`${input["Start Date"]}T${input["Start Time"]}`) 
+        : new Date(`${input["Start Date"]}T00:00:00`);
+        const endTime = input["End Time"] 
+            ? new Date(`${input["End Date"]}T${input["End Time"]}`) 
+            : new Date(`${input["End Date"]}T00:00:00`);
+        if (startTime > endTime) {
+            input["Errors"][field] = "Start time must be before end time.";
+            error_found = true;
         }
-
     }
-    return true; // All inputs are valid
+    return !error_found; // All inputs are valid
 }
 
 

@@ -2,8 +2,7 @@ import { addCookiesToHeader } from '../helpers';
 // Sample GET response for the chat
 export async function POST(req) {
   try {
-    let environment = process.env.NODE_ENV === "development" ? "-test" : "";
-    let url = `https://intelliagents.ddns.net/webhook${environment}/chat/fetch`
+    let url = `https://intelliagents.ddns.net/webhook/chat/fetch`
 
     let input_data = await req.json();
 

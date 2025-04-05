@@ -2,6 +2,7 @@ import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react
 import { Icons } from '../components/Icons';
 
 const frequency_map = { // actual value,  showed on drop down
+    'FREQ=ONCE': 'Once',
     'FREQ=DAILY': 'Daily',
     'FREQ=WEEKLY': 'Weekly',
     'FREQ=WEEKLY;BYDAY=MO,WE': 'Weekly - Mon,Wed',
@@ -47,6 +48,18 @@ const VerifyTable = forwardRef((props, ref) => {
         }
         setTableData(tableData.slice(0, index).concat(tableData.slice(index + 1)));
   };
+
+    const appendEmptyEvent = () => {
+        const newEvent = {
+            "Name": "",
+            "RRULE": frequency_map['FREQ=ONCE'],
+            "Source": "Manually added",
+            "All Day": false,
+            "Valid": true,
+            "Errors": {}
+        };
+        setTableData([...tableData, newEvent]);
+    }
 
 
     // TODO: form validation for date, make sure start is before end date
@@ -111,7 +124,7 @@ const VerifyTable = forwardRef((props, ref) => {
 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <div className="border border-gray-900 rounded-[50px] overflow-x-auto my-5 bg-[#FFFFFF80]">
+            <div className="border border-gray-900 rounded-[50px] overflow-x-auto my-5 bg-[#FFFFFF80] item-center">
             <br />
                 <table className="min-w-full w-[50vw] h-[35vh] table-auto p-2">
                     <thead>
@@ -247,6 +260,11 @@ const VerifyTable = forwardRef((props, ref) => {
                         ))}
                     </tbody>
                 </table>
+                <button
+                    onClick={appendEmptyEvent}
+                >
+                    Manually add an event (TESTING ONLY)
+                </button>
             </div>
         </>
     );
