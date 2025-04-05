@@ -19,6 +19,7 @@ export function middleware(req) {
       sameSite: "Strict",
       maxAge: 60 * 60 * 24 * 30, // 30 days
     });
+    res.headers.set("user-cookie", `${userToken}`);
   }
 
   return res;
