@@ -55,7 +55,7 @@ function createEvent(json_event) {
     "DESCRIPTION": "",
 
     // "optional" - will run without but it's gonna look ugly
-    "SUMMARY": json_event["Name"], // this is the title
+    "SUMMARY": `${`${json_event.syllabus} - ` || ""}${json_event["Name"] || ""}`, // this is the title
     "RRULE":json_event.RRULE, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
