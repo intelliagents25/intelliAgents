@@ -4,6 +4,7 @@ import "../../globals.css";
 import VerifyOH from './VerifyOH';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { generateCalendar } from './verifyOhAction';
 
 const VerifyResults = () => {    
     const [showModal, setShowModal] = useState(false);
@@ -61,6 +62,7 @@ const VerifyResults = () => {
 
         if (stringified_events) {
             sessionStorage.setItem("office_hour_data", JSON.stringify(office_hours_data));
+            generateCalendar();
             router.push('/complete-ics');
         }
     }
