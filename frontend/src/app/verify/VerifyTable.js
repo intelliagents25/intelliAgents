@@ -153,6 +153,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                                 row?.Errors?.["Name"] ? "border-red-500" : "border-gray-300"
                                             }`}
                                         />
+                                        For: {row.syllabus}
                                         {row?.Errors?.["Name"] && (
                                             <p className="text-red-500 text-xs mt-1">{row.Errors["Name"]}</p>
                                         )}

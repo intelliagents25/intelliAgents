@@ -6,8 +6,7 @@ export async function POST(req) {
       let input_data = await req.json();
       const headers = await addCookiesToHeader();
 
-      let url = "https://intelliagents.ddns.net/webhook/b90cb657-4b32-4ca7-9293-74733c4c79d7"
-
+      let url = "https://intelliagents.ddns.net/webhook/a19c5e63-b632-4db2-9802-a500efd142df";
       const response = await fetch(url, {
         method: "POST", 
         body: JSON.stringify(input_data),

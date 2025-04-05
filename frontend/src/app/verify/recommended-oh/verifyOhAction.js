@@ -98,15 +98,12 @@ function dateToIcalsDate(date) {
 }  
 
 //todo: implement this
-function generateIcalsJson(OH_data) {
+function generateIcalsJson(events) {
   let mock_ics = createEmptyCalendar()
 
-  if (typeof OH_data === "string") {
-    OH_data = JSON.parse(OH_data)
-  }
+  for (let i = 0; i < events.length; i++) {
+    let event = createEvent(events[i])
 
-  for (let i = 0; i < OH_data.length; i++) {
-    let event = createEvent(OH_data[i])
     mock_ics.VCALENDAR[0].VEVENT.push(event)
   }
   return mock_ics  
@@ -115,9 +112,19 @@ function generateIcalsJson(OH_data) {
 
 function generateCalendar() {
   let events = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
-  const office_hour_data = sessionStorage.getItem("office_hour_data");
+  let office_hour_data = sessionStorage.getItem("office_hour_data");
 
   // todo: append OH and events together
+  if (typeof office_hour_data === "string") {
+    office_hour_data = JSON.parse(office_hour_data)
+  }
+  if (typeof events === "string") {
+    events = JSON.parse(events)
+  }
+
+  if (Array.isArray(events) && Array.isArray(office_hour_data)) {
+    events = events.concat(office_hour_data);
+  }
 
   const ics_json = generateIcalsJson(events)
 

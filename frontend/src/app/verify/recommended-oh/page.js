@@ -49,13 +49,7 @@ const VerifyResults = () => {
             office_hours_data = JSON.parse(office_hours_data);
         }
         if (Array.isArray(office_hours_data)) {
-            office_hours_data = office_hours_data
-            .filter((item) => item["Attend"] !== false) // Exclude items where Attend is false
-            .map((item) => {
-                return {
-                item
-                };
-            });
+            office_hours_data = office_hours_data.filter((item) => item["Attend"] !== false);
         }
 
         const stringified_events = JSON.stringify(office_hours_data);

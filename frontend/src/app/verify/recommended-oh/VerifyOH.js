@@ -26,8 +26,9 @@ const VerifyOH = forwardRef((props, ref) => {
       eventList = eventList.map((item) => {
         return {
           // creates new object that makes it easier for the user to edit
-          //   ...item,
+          ...item,
           Name: item.Name,
+          syllabus: item.syllabus,
           Attend: true, // this is a new field that we add to the object
         };
       });
@@ -73,6 +74,7 @@ const VerifyOH = forwardRef((props, ref) => {
                 <td className="pl-[3rem] pr-4 py-1 text-dark text-[3vw] md:text-[2vw] lg:text-[1vw] text-left w-auto roboto-font w-[60%] align-top">
                   {/* If the row is rejected and being edited, show input */}
                   <p className="w-full py-4 pr-4">{row.Name}</p>
+                  {/* <p className="w-full py-4 pr-4 ">{row.syllabus}</p> */}
                 </td>
                 {/* Second & Third Columns: Buttons (Centered) */}
                 <td colSpan="2" className="px-4 py-2 text-center align-top mt-1 w-[40%]">
@@ -90,7 +92,7 @@ const VerifyOH = forwardRef((props, ref) => {
                     <button
                       onClick={() => handleAccept(index)}
                       className={`rounded-[30px] w-[12.5vw] md:w-[10vw] lg:w-[7.5vw] transition hidden md:block lg:block
-                        ${row.Attend ? "bg-[#7C91DC] text-white font-bold" : ""}`}
+                        ${row.Attend ? "bg-[#7C91DC] text-white font-bold" : "bg-white text-[--text-colour-dark]"}`}
                       style={{ marginLeft: '0rem', marginRight: '1rem', marginTop: '1.1rem' }}
                     >
                       Yes
