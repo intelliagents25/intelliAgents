@@ -27,8 +27,7 @@ const VerifyOH = forwardRef((props, ref) => {
         return {
           // creates new object that makes it easier for the user to edit
           ...item,
-          Name: item.Name,
-          syllabus: item.syllabus,
+          "start_date": item.start_date,
           Attend: true, // this is a new field that we add to the object
         };
       });
