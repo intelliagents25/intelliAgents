@@ -2,7 +2,7 @@ import { addCookiesToHeader } from '../helpers';
 // Sample GET response for the chat
 export async function POST(req) {
   try {
-    let url = `https://intelliagents.ddns.net/webhook/chat/fetch`
+    let url = `https://intelliagents.ddns.net/webhook/chat`
 
     let input_data = await req.json();
 
@@ -14,10 +14,12 @@ export async function POST(req) {
       headers: headers,
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch data');
+      throw new Error('Chat response error');
     }
     
-    const data = await response.json();
+    let data = await response.text();
+    data = JSON.parse(data)[0].output;
+
     return Response.json(
       { message: data},
       { status: 200 }
