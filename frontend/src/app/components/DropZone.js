@@ -1,4 +1,6 @@
-import React, { useState, useRouter } from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import "./DropZone.css";
 import { sendFileToBot, getExtension } from "./DropZoneRequests";
 import LoadingAnimation from './LoadingAnimation';
