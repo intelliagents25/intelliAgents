@@ -7,6 +7,7 @@ export async function POST(req) {
       const headers = await addCookiesToHeader();
 
       let url = "https://intelliagents.ddns.net/webhook/b90cb657-4b32-4ca7-9293-74733c4c79d7"
+      // url = "https://intelliagents.ddns.net/webhook/upload"
 
       const formDataToSend = new FormData();
       formDataToSend.append("file", file, formData.get("file_name"));
@@ -17,7 +18,10 @@ export async function POST(req) {
         headers: headers
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        return Response.json(
+          { error: response.statusText},
+          { status: response.status }
+        );
       }
       
       const data = await response.text();
