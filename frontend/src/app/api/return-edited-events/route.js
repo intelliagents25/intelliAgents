@@ -9,7 +9,7 @@ export async function POST(req) {
       headers["Content-Type"] = "application/json";
 
       let url = "https://intelliagents.ddns.net/webhook/a19c5e63-b632-4db2-9802-a500efd142df";
-      // url = "https://intelliagents.ddns.net/webhook/verified-details"
+      url = "https://intelliagents.ddns.net/webhook/verified-details"
       const response = await fetch(url, {
         method: "POST", 
         body: JSON.stringify(input_data),

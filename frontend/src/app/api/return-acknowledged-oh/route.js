@@ -8,7 +8,7 @@ export async function POST(req) {
     
       headers["Content-Type"] = "application/json";
 
-      let url = "https://intelliagents.ddns.net/webhook-test/recommended-oh";
+      let url = "https://intelliagents.ddns.net/webhook/recommended-oh";
 
       const response = await fetch(url, {
         method: "POST", 
