@@ -42,6 +42,14 @@ const VerifyTable = forwardRef((props, ref) => {
         if (Array.isArray(eventList)) {
             eventList = eventList.map((item) => {
                 const is_all_day = (item["start_time"] == "")
+                if (item["rrule"] == "FREQ=ONCE") {
+                    item.end_date = item.start_date
+                }
+
+                if (item.all_day) {
+                    item.start_time = "";
+                    item.end_time = "";
+                }
                 return {
                     ...item,
                     "rrule" : item["rrule"] || frequency_map['FREQ=ONCE'],

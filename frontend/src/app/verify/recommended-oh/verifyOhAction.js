@@ -133,7 +133,48 @@ function generateCalendar() {
   return icalOutput
 }
 
-export {generateCalendar};
+
+async function returnAcceptedOH(OfficeHourData) {
+   // send accepted OH data to backend
+
+   OfficeHourData.map((item) => {
+    return {
+      uuid:item.uuid,
+      reccurence_key:item.reccurence_key,
+    }
+    });
+
+    console.log("OfficeHourData", OfficeHourData)
+
+   const requestOptions = {
+    method: "POST",
+    body: JSON.stringify(OfficeHourData),
+    redirect: "follow",
+    signal: AbortSignal.timeout(10 * 1000),
+    headers :{
+      "Content-Type" : "application/json",
+    }
+};
+
+try {
+    const url = "https://intelliagents.ddns.net/webhook-test/recommended-oh";
+    let res = await fetch(url, requestOptions)
+    
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
+    return true;
+
+
+} catch (error) {
+    console.error(error);
+}
+return false
+}
+
+
+export {generateCalendar, returnAcceptedOH};
 
 
 

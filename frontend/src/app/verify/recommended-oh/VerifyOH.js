@@ -72,7 +72,7 @@ const VerifyOH = forwardRef((props, ref) => {
               <tr key={index}>
                 <td className="pl-[3rem] pr-4 py-1 text-dark text-[3vw] md:text-[2vw] lg:text-[1vw] text-left w-auto roboto-font w-[60%] align-top">
                   {/* If the row is rejected and being edited, show input */}
-                  <p className="w-full py-4 pr-4">{row.Name}</p>
+                  <p className="w-full py-4 pr-4">{row.syllabus} : {new Date(row.instance_date).toLocaleDateString("en-GB")},  {row.start_time} - {row.end_time}</p>
                   {/* <p className="w-full py-4 pr-4 ">{row.syllabus}</p> */}
                 </td>
                 {/* Second & Third Columns: Buttons (Centered) */}
