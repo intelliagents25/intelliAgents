@@ -11,6 +11,7 @@ const DropZone = () => {
   const [activeTab, setActiveTab] = useState("upload"); // "upload" or "paste"
   const [textInput, setTextInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const handleTextUpload = () => {
     if (textInput === "") {
@@ -21,6 +22,7 @@ const DropZone = () => {
     const textFile = new File([textInput], "syllabus.txt", { type: "text/plain" });
     
     setIsLoading(true);
+    setErrorMessage(false);
     // since sendFile to Bot does a redirect, we don't need to set isLoading to false 
     return sendFileToBot(textFile)
     .then((received) => {
@@ -29,7 +31,8 @@ const DropZone = () => {
         setIsLoading(false);
         window.location.href = "/verify";
       } else {
-        // TODO: define what happens if the call fails
+        setFile([]);
+        setErrorMessage(true);
       }
     })
     .catch((error) => console.error(error));
@@ -133,10 +136,18 @@ const DropZone = () => {
         </button>
       </div>
 
-      {isLoading && <LoadingAnimation isLoading={isLoading} />}
+      {isLoading && 
+      <div className="p-8 bg-white border border-black">
+      <div
+            className="w-full h-[17rem] p-4"
+          >
+            <LoadingAnimation isLoading={true} />
+          </div>
+      </div>
+}
 
       {/* Upload Content */}
-      {activeTab === "upload" && (
+      {activeTab === "upload" && !isLoading && (
         <div className="p-8 bg-white border border-black">
           <div
             className={`flex flex-col items-center justify-center p-8 border border-gray-300 rounded-md ${
@@ -195,10 +206,10 @@ const DropZone = () => {
       )}
 
       {/* Paste Text Content */}
-      {activeTab === "paste" && (
+      {activeTab === "paste"  && !isLoading  && (
         <div className="p-8 border border-black bg-white">
           <textarea
-            className="w-full h-40 p-4 border border-gray-300 rounded-md"
+            className="w-full h-[13.5rem] p-4 border border-gray-300 rounded-md"
             placeholder="Copy and paste your syllabus here"
             name="syllabusText"
             value={textInput}
@@ -213,6 +224,18 @@ const DropZone = () => {
           </button>
         </div>
       )}
+      {files.map((file, index) => (
+        <div key={index} className="flex items-center justify-between mt-2 p-2">
+          <p className="text-gray-700">{file.name}</p>
+          <a
+            className="px-3 py-1 hover:cursor-pointer"
+            onClick={() => removeFile(index)}
+          >
+            X
+          </a>
+        </div>
+      ))}
+      {errorMessage && (<p>Upload failed, please retry again</p>)}
     </div>
   );
 };
