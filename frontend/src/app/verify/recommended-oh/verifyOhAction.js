@@ -37,12 +37,12 @@ function createEvent(json_event) {
   const uniqueID = uuidv4().replace(/-/g, '').slice(0, 6); // might not be unique but its ok since we are adding the date to it
   let uid = uniqueID + dateToIcalsDate(new Date()) +DOMAIN_NAME
 
-  let startTime = json_event["Start Time"] 
-    ? new Date(`${json_event["Start Date"]}T${json_event["Start Time"]}`) 
-    : new Date(`${json_event["Start Date"]}T00:00:00`);
-  let endTime = json_event["End Time"] 
-    ? new Date(`${json_event["End Date"]}T${json_event["End Time"]}`) 
-    : new Date(`${json_event["End Date"]}T00:00:00`);
+  let startTime = json_event["start_time"] 
+    ? new Date(`${json_event["start_date"]}T${json_event["start_time"]}`) 
+    : new Date(`${json_event["start_date"]}T00:00:00`);
+  let endTime = json_event["end_time"] 
+    ? new Date(`${json_event["end_date"]}T${json_event["end_time"]}`) 
+    : new Date(`${json_event["end_date"]}T00:00:00`);
 
   let event = {
     // always required
@@ -74,8 +74,8 @@ function createEvent(json_event) {
     // change the end date so that it's start date + end time. 
       const until = `;UNTIL=${dateToIcalsDate(endTime)}`
 
-      endTime = json_event["End Time"] 
-      ? new Date(`${json_event["Start Date"]}T${json_event["End Time"]}`)
+      endTime = json_event["end_time"] 
+      ? new Date(`${json_event["start_date"]}T${json_event["end_time"]}`)
       : startTime
 
       event["DTEND"] = dateToIcalsDate(endTime)
@@ -102,8 +102,8 @@ function generateIcalsJson(events) {
   let mock_ics = createEmptyCalendar()
 
   for (let i = 0; i < events.length; i++) {
-    let event = createEvent(events[i])
-
+        let event = createEvent(events[i])
+    
     mock_ics.VCALENDAR[0].VEVENT.push(event)
   }
   return mock_ics  
@@ -144,8 +144,6 @@ async function returnAcceptedOH(OfficeHourData) {
     }
     });
 
-    console.log("OfficeHourData", OfficeHourData)
-
    const requestOptions = {
     method: "POST",
     body: JSON.stringify(OfficeHourData),
@@ -157,7 +155,7 @@ async function returnAcceptedOH(OfficeHourData) {
 };
 
 try {
-    const url = "https://intelliagents.ddns.net/webhook-test/recommended-oh";
+    const url = "/api/return-acknowledged-oh";
     let res = await fetch(url, requestOptions)
     
     if (!res.ok) {
