@@ -54,6 +54,7 @@ const VerifyResults = () => {
         const childData = childRef.current.getData(); 
 
         if(validateInputs(childData) == false) {
+            childRef.current.updateTableFields(childData);
             setShowWarning(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return false;
@@ -98,7 +99,7 @@ const VerifyResults = () => {
                     </div>
 
                     <button type="submit" className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleUploadChanges}>
-                        Generate My Calendar
+                    Save and proceed
                     </button>
                     </form>
                     
