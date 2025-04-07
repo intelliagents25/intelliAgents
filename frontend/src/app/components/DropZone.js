@@ -29,7 +29,7 @@ const DropZone = () => {
       if (received) {
         // redirect to the next page
         setIsLoading(false);
-        window.location.href = "/verify";
+        router.push('/verify');
       } else {
         throw new Error("Failed to upload the file");
       }
@@ -53,7 +53,7 @@ const DropZone = () => {
          if (received) {
            // redirect to the next page
            setIsLoading(false);
-           window.location.href = "/verify";
+           router.push('/verify');
           } else {
             throw new Error("Failed to upload the file");
           }
