@@ -70,14 +70,15 @@ const VerifyResults = () => {
             console.error('Failed to upload changes');
         }
     };
+    if (isLoading) {
+        return <div className='w-full h-[1000px]'><LoadingAnimation isLoading={true} /></div>; // Show loading animation while data is being fetched
+    }
 
     return (
         <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
             {showModal}
-            <LoadingAnimation isLoading={isLoading} />
 
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />

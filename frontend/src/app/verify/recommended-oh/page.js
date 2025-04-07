@@ -5,6 +5,7 @@ import VerifyOH from './VerifyOH';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { generateCalendar ,returnAcceptedOH} from './verifyOhAction';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 const VerifyResults = () => {    
     const [showModal, setShowModal] = useState(false);
@@ -64,6 +65,10 @@ const VerifyResults = () => {
 
     // Render the modal only if pathname is `/verify`
     if (pathname !== '/verify/recommended-oh') return null;
+
+    if (isLoading) {
+        return <div className='w-full h-[1000px]'><LoadingAnimation isLoading={true} /></div>; // Show loading animation while data is being fetched
+    }
 
     return (
         <>
