@@ -31,9 +31,14 @@ const mainContent = (
       <div className="text-center mx-auto mb-8">
         <p className='text-light text-md md:text-xl lg:text-2xl'>
           <br />
-          Download the .ics file below to import it to your preferred calendar application!
-          <br />
           Thank you for using IntelliAgents!
+          <br />
+          Download the .ics file below to import it to your preferred calendar application! 
+          {" "}
+          <a href="/#faq-ics"
+            className="text-blue-500 underline hover:text-blue-700">
+              Learn more
+          </a>
         </p>
       </div>
 
