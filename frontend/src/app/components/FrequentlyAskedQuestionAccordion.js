@@ -18,7 +18,27 @@ const honors = [
   },
   {
     name: "Can I sync IntelliAgents with other calendar apps?",
-    content: "Yes, IntelliAgents can be synced with popular calendar apps like Google Calendar, Apple Calendar, and Outlook to provide a seamless scheduling experience."
+    content: [
+      "IntelliAgents cannot directly sync with other calendar apps; however, you can download the .ics file and upload it to the calendar app of your choice. More information can be found here: ",
+      {
+        type: "link",
+        href: "https://support.google.com/calendar/answer/37118?hl=en&co=GENIE.Platform%3DDesktop",
+        label: "Google Calendar"
+      },
+      ", ",
+      {
+        type: "link",
+        href: "https://support.apple.com/guide/calendar/import-or-export-calendars-icl1023/mac",
+        label: "Apple Calendar"
+      },
+      ", and ",
+      {
+        type: "link",
+        href: "https://support.microsoft.com/en-us/office/import-or-subscribe-to-a-calendar-in-outlook-com-503ffaf6-7b86-44fe-8dd6-8099d95f38df",
+        label: "Outlook"
+      },
+      "."
+    ]
   },
   {
     name: "The AI missed some deadlines—how can I fix this?",
@@ -45,7 +65,24 @@ const FrequentlyAskedQuestionAccordion = () => {
               <div className="accordion-icon">v</div>
             </label>
             <div className="content text-[#140B49]">
-              <p>{item.content}</p>
+              <p>
+                {Array.isArray(item.content)
+                  ? item.content.map((part, i) =>
+                    typeof part === "string" ? (
+                      part
+                    ) : (
+                      <a
+                        key={i}
+                        href={part.href}
+                        target="_blank"
+                        className="text-blue-600 underline"
+                      >
+                        {part.label}
+                      </a>
+                    )
+                  )
+                  : item.content}
+              </p>
             </div>
           </div>
         ))}
