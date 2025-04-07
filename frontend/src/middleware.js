@@ -9,8 +9,6 @@ export function middleware(req) {
   // Check if the user already has a session cookie
   if (!cookies.includes("userToken")) {
     let userToken = uuidv4();
-    // the uuid rn is just bigInt, so replace non numerical for now :,) 
-    userToken = userToken.replace(/\D/g, "");
     res.cookies.set({
       name: "userToken",
       value: userToken,
