@@ -90,7 +90,7 @@ const VerifyOH = forwardRef((props, ref) => {
                     <button
                       onClick={() => handleAccept(index)}
                       className={`rounded-[30px] w-[12.5vw] md:w-[10vw] lg:w-[7.5vw] transition hidden md:block lg:block
-                        ${row.Attend ? "bg-[#7C91DC] text-white font-bold" : ""}`}
+                        ${row.Attend ? "bg-[#264A60] text-white font-bold" : ""}`}
                       style={{ marginLeft: '0rem', marginRight: '1rem', marginTop: '1.1rem' }}
                     >
                       Yes
@@ -100,7 +100,7 @@ const VerifyOH = forwardRef((props, ref) => {
                     <button
                       onClick={() => handleReject(index)}
                       className={`rounded-[30px] w-[12.5vw] md:w-[10vw] lg:w-[7.5vw] transition hidden md:block lg:block
-                        ${!row.Attend ? "bg-[#7C91DC] text-white font-bold" : "bg-white text-[--text-colour-dark]"}`}
+                        ${!row.Attend ? "bg-[#264A60] text-white font-bold" : "bg-white text-[--text-colour-dark]"}`}
                       style={{ marginLeft: '3rem', marginRight: '2rem', marginTop: '1.1rem' }}
                     >
                       No
