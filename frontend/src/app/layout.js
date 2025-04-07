@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
                 <div className="hidden md:flex lg:flex items-center space-x-8">
                   <Link href="about-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">About Us</Link>
                   <Link href="contact-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">Contact Us</Link>
-                  <Link href="#faq" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
+                  <Link href="/#faq" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
                 </div>
               </div>
 

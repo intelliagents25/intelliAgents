@@ -2,55 +2,117 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 const honors = [
   {
+    id: "faq-goal",
     name: "What exactly does IntelliAgents do?",
     content: "IntelliAgents is an AI-powered assistant designed to organize and manage your schedule, making it easier to keep track of deadlines, appointments, and tasks."
   },
   {
+    id: "faq-deadlines",
     name: "What kind of deadlines does IntelliAgents extract?",
     content: "IntelliAgents extracts various types of deadlines, including project deadlines, class assignments, meetings, and personal commitments, to help you stay organized."
   },
   {
+    id: "faq-accuracy",
     name: "How accurate is the AI in extracting deadlines?",
     content: "IntelliAgents uses advanced AI algorithms to ensure high accuracy when extracting deadlines, with continuous improvements based on user feedback and data."
   },
   {
+    id: "faq-ics",
     name: "Can I sync IntelliAgents with other calendar apps?",
-    content: "Yes, IntelliAgents can be synced with popular calendar apps like Google Calendar, Apple Calendar, and Outlook to provide a seamless scheduling experience."
+    content: [
+      "IntelliAgents cannot directly sync with other calendar apps; however, you can download the .ics file and upload it to the calendar app of your choice. More information can be found here: ",
+      {
+        type: "link",
+        href: "https://support.google.com/calendar/answer/37118?hl=en&co=GENIE.Platform%3DDesktop",
+        label: "Google Calendar"
+      },
+      ", ",
+      {
+        type: "link",
+        href: "https://support.apple.com/guide/calendar/import-or-export-calendars-icl1023/mac",
+        label: "Apple Calendar"
+      },
+      ", and ",
+      {
+        type: "link",
+        href: "https://support.microsoft.com/en-us/office/import-or-subscribe-to-a-calendar-in-outlook-com-503ffaf6-7b86-44fe-8dd6-8099d95f38df",
+        label: "Outlook"
+      },
+      "."
+    ]
   },
   {
+    id: "faq-verify",
     name: "The AI missed some deadlines—how can I fix this?",
     content: "If IntelliAgents misses a deadline, you can manually update the schedule or provide feedback to improve its accuracy for future events."
   },
   {
+    id: "faq-data",
     name: "Where does my data go?",
     content: "Your data is securely stored and processed by IntelliAgents, adhering to privacy standards. We do not share or sell your data to third parties without your consent."
   }
 ];
 
 const FrequentlyAskedQuestionAccordion = () => {
+  useEffect(() => {
+    // Check if the URL contains the hash of the FAQ item
+    if (window.location.hash === "#faq-ics") {
+      // Find the radio input associated with faq-ics
+      const faqSection = document.getElementById("faq-ics");
+      if (faqSection) {
+        const radioInput = faqSection.querySelector("input[type='radio']");
+        if (radioInput) {
+          radioInput.checked = true; // Open the accordion item
+        }
+      }
+    }
+  }, []); // Empty dependency array to run only once when the component mounts
+
   return (
     <StyledWrapper>
-      <div className="accordion">
-        {honors.map((item, index) => (
-          <div className="accordion-item" key={index}>
-            <input type="radio" id={`section${index}`} name="accordion" defaultChecked={index === 0} />
-            <label htmlFor={`section${index}`} className="accordion-header">
-              <div className="accordion-title">
-                <span className="name">{item.name}</span>
-                <span className="issuer">{item.issuer}</span>
-              </div>
-              <div className="accordion-icon">v</div>
-            </label>
-            <div className="content text-[#140B49]">
-              <p>{item.content}</p>
+    <div className="accordion">
+      {honors.map((item, index) => (
+        <div className="accordion-item" key={index} id={item.id}>
+          <input
+            type="radio"
+            id={`section${index}`}
+            name="accordion"
+            defaultChecked={index === 0}
+          />
+          <label htmlFor={`section${index}`} className="accordion-header">
+            <div className="accordion-title">
+              <span className="name">{item.name}</span>
             </div>
+            <div className="accordion-icon">v</div>
+          </label>
+          <div className="content text-[#140B49]">
+            <p>
+              {Array.isArray(item.content)
+                ? item.content.map((part, i) =>
+                    typeof part === "string" ? (
+                      part
+                    ) : (
+                      <a
+                        key={i}
+                        href={part.href}
+                        target="_blank"
+                        className="text-blue-600 underline"
+                      >
+                        {part.label}
+                      </a>
+                    )
+                  )
+                : item.content}
+            </p>
           </div>
-        ))}
-      </div>
-    </StyledWrapper>
+        </div>
+      ))}
+    </div>
+  </StyledWrapper>
   );
 };
 

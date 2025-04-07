@@ -27,14 +27,19 @@ const mainContent = (
 
         <h6 className="mb-4 text-center">Integration Complete!</h6>
 
-        <div className="text-center mx-auto mb-8">
-          <p className='text-light text-md md:text-xl lg:text-2xl'>
-            Check your calendar - IntelliAgents has successfully integrated your syllabus into your calendar!
-          </p>
-          <p className='text-light text-md md:text-xl lg:text-2xl mt-2'>
-            Thank you for using IntelliAgents.
-          </p>
-        </div>
+      <div className="text-center mx-auto mb-8">
+        <p className='text-light text-md md:text-xl lg:text-2xl'>
+          <br />
+          Thank you for using IntelliAgents!
+          <br />
+          Download the .ics file below to import it to your preferred calendar application! 
+          {" "}
+          <a href="/#faq-ics"
+            className="text-blue-500 underline hover:text-blue-700">
+              Learn more
+          </a>
+        </p>
+      </div>
 
         <div className="flex flex-col items-center justify-center space-y-5 mt-8">
           <button className="px-8 py-3 font-bold button button-rounded w-64"
