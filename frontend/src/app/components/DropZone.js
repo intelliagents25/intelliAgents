@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRouter } from "react";
 import "./DropZone.css";
 import { sendFileToBot, getExtension } from "./DropZoneRequests";
 import LoadingAnimation from './LoadingAnimation';
@@ -12,6 +12,7 @@ const DropZone = () => {
   const [textInput, setTextInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const router = useRouter();
 
   const handleTextUpload = () => {
     if (textInput === "") {
