@@ -95,7 +95,7 @@ function validateInputs(inputs) {
 
 // returns: boolean
 function validateInput(input) {
-    if (input.Name === "" || input["start_date"] === "" || input["end_date"] === "") {
+    if (input.name === "" || input["start_date"] === "" || input["end_date"] === "") {
         console.log("a required field is not filled");
         return false; // Invalid input found
     }

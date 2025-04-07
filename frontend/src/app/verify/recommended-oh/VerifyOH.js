@@ -24,12 +24,14 @@ const VerifyOH = forwardRef((props, ref) => {
     }
     if (Array.isArray(eventList)) {
       eventList = eventList.map((item) => {
-        return {
-          // creates new object that makes it easier for the user to edit
+        let event = {
           ...item,
-          "start_date": item.start_date,
-          Attend: true, // this is a new field that we add to the object
-        };
+          Attend: true, // default value for Attend
+          rrule: "FREQ=ONCE"
+        }
+        event.start_date = event.instance_date.split("T")[0];
+        event.end_date = event.start_date;
+        return event;
       });
       setTableData(eventList);
     }

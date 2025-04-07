@@ -55,8 +55,8 @@ function createEvent(json_event) {
     "DESCRIPTION": "",
 
     // "optional" - will run without but it's gonna look ugly
-    "SUMMARY": `${`${json_event.syllabus} - ` || ""}${json_event["Name"] || ""}`, // this is the title
-    "RRULE":json_event.RRULE, // this is the repeat rule - this is a weekly event
+    "SUMMARY": `${`${json_event.syllabus} - ` || ""}${json_event["name"] || ""}`, // this is the title
+    "RRULE":json_event.rrule, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
     // "DESCRIPTION": "",
@@ -66,7 +66,7 @@ function createEvent(json_event) {
     // "TRANSP": ""
   }
 
-  switch (json_event["RRULE"]) {
+  switch (json_event["rrule"]) {
     case "FREQ=ONCE":
       delete event.RRULE
       break;
@@ -79,7 +79,7 @@ function createEvent(json_event) {
       : startTime
 
       event["DTEND"] = dateToIcalsDate(endTime)
-      event["RRULE"] = json_event.RRULE + until
+      event["rrule"] = json_event.rrule + until
       break;
   }
   return event
@@ -100,9 +100,8 @@ function dateToIcalsDate(date) {
 //todo: implement this
 function generateIcalsJson(events) {
   let mock_ics = createEmptyCalendar()
-
   for (let i = 0; i < events.length; i++) {
-        let event = createEvent(events[i])
+    let event = createEvent(events[i])
     
     mock_ics.VCALENDAR[0].VEVENT.push(event)
   }
