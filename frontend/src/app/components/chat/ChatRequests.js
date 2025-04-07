@@ -40,7 +40,7 @@ export const getFileInfo = async () => {
         file_info = JSON.parse(file_info);
         const difference = new Date() - new Date(file_info.last_update);
 
-        if (difference < 1000 * 60 && file_info.files != []) { // check every minute
+        if (difference < 1000 * 3 && file_info.files != []) { // check every minute
             return file_info.files;
         }
     }
