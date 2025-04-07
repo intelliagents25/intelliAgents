@@ -36,7 +36,7 @@
             }
         }
 
-        json_data = json_data[0].data; //note: this change should probably exist at the API level
+        json_data = json_data[0].body; 
 
         let json_data_string = JSON.stringify(json_data);
 
