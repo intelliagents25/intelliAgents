@@ -16,7 +16,7 @@ const LoadingAnimation = ({ isLoading }) => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-white bg-opacity-90 z-[9999]">
+    <div className="flex justify-center items-center bg-white bg-opacity-90 z-[9999]">
       <div className="w-64 h-64">
         {View}
       </div>

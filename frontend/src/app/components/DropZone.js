@@ -31,11 +31,14 @@ const DropZone = () => {
         setIsLoading(false);
         window.location.href = "/verify";
       } else {
-        setFile([]);
-        setErrorMessage(true);
+        throw new Error("Failed to upload the file");
       }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      setFile([]);
+      setErrorMessage(true);
+      setIsLoading(false);
+    });
   };
 
   const handleUploadFile = () => {
@@ -51,11 +54,15 @@ const DropZone = () => {
            // redirect to the next page
            setIsLoading(false);
            window.location.href = "/verify";
-         } else {
-           // TODO: define what happens if the call fails
-         }
-       })
-       .catch((error) => console.error(error));
+          } else {
+            throw new Error("Failed to upload the file");
+          }
+        })
+        .catch((error) => {
+          setFile([]);
+          setErrorMessage(true);
+          setIsLoading(false);
+        });
   };
 
   const handleFileChange = (event) => {
@@ -63,6 +70,7 @@ const DropZone = () => {
       const extension = getExtension(event.target.files[0].name);
       if (validFileTypes.includes(extension)) {
         setFile(files.concat(event.target.files[0]));
+        setErrorMessage(false);
         return;
       } else {
         alert("Invalid file type. Please select a PDF file.");
