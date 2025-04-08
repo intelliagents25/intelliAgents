@@ -7,7 +7,6 @@ export const sendDataToBot = async (message_str) => {
     return fetch("/api/chat", {
         method: 'POST',
         body: JSON.stringify(data),
-        signal: AbortSignal.timeout(60 * 1000) // 60 second timeout
     })
         .then((response) => {
             if (!response.ok) {
@@ -46,7 +45,6 @@ export const getFileInfo = async () => {
     }
     const requestOptions = {
         method: "GET",
-        signal: AbortSignal.timeout(10 * 1000)
     };
 
     try {

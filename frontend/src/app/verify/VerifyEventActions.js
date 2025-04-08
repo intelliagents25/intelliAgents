@@ -14,7 +14,6 @@
         method: "POST",
         body: JSON.stringify(json_data),
         redirect: "follow",
-        signal: AbortSignal.timeout(10 * 1000)
     };
     
     try {

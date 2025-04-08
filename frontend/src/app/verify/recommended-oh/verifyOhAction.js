@@ -79,11 +79,11 @@ function createEvent(json_event) {
       : startTime
 
       event["DTEND"] = dateToIcalsDate(endTime)
-      event["rrule"] = json_event.rrule + until
+      event["RRULE"] = json_event.rrule + until
       break;
   }
   return event
-}
+}  
 
 function dateToIcalsDate(date) {
   const year = date.getUTCFullYear();
@@ -147,7 +147,6 @@ async function returnAcceptedOH(OfficeHourData) {
     method: "POST",
     body: JSON.stringify(OfficeHourData),
     redirect: "follow",
-    signal: AbortSignal.timeout(10 * 1000),
     headers :{
       "Content-Type" : "application/json",
     }

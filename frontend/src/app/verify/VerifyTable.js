@@ -54,7 +54,11 @@ const VerifyTable = forwardRef((props, ref) => {
                 // so we set it to empty string.
                 item.end_time = (item.end_date == "00:00:00" && item.start_time == "") ? "" : item.end_time
 
-                const is_all_day = (item["start_time"] == "")
+                const is_all_day = (item["start_time"] == "" && item["end_time"] == "")
+
+                item.syllabus = typeof item.syllabus === "string" && item.syllabus.includes(".")
+                    ? item.syllabus.split(".")[0]
+                    : item.syllabus ?? "";
 
                 return {
                     ...item,
