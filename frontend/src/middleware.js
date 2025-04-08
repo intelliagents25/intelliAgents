@@ -46,5 +46,5 @@ export async function middleware(req) {
 
 // Apply middleware to all/api routes, except /api/auth/*
 export const config = {
-  matcher: ['/api/((?!auth).*)']
+  matcher: ["/api/:path*"]
 };
