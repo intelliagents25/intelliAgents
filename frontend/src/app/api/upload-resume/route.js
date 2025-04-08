@@ -30,6 +30,7 @@ export async function POST(req) {
         { status: 200 }
       );
     } catch (error) {
+      console.warn("Error in upload-resume route: ", error.message)
       return Response.json(
         { error: error.message },
         { status: 500 }
