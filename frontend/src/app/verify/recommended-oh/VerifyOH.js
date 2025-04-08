@@ -29,6 +29,10 @@ const VerifyOH = forwardRef((props, ref) => {
           Attend: true, // default value for Attend
           rrule: "FREQ=ONCE"
         }
+        event.syllabus = typeof event.syllabus === "string" && event.syllabus.includes(".")
+          ? event.syllabus.split(".")[0]
+          : event.syllabus ?? "";        
+        event.source = `Office Hours for ${event.syllabus}`;
         event.start_date = event.instance_date.split("T")[0];
         event.end_date = event.start_date;
         return event;

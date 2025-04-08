@@ -79,11 +79,11 @@ function createEvent(json_event) {
       : startTime
 
       event["DTEND"] = dateToIcalsDate(endTime)
-      event["rrule"] = json_event.rrule + until
+      event["RRULE"] = json_event.rrule + until
       break;
   }
   return event
-}
+}  
 
 function dateToIcalsDate(date) {
   const year = date.getUTCFullYear();

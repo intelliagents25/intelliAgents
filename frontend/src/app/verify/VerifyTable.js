@@ -56,6 +56,10 @@ const VerifyTable = forwardRef((props, ref) => {
 
                 const is_all_day = (item["start_time"] == "")
 
+                item.syllabus = typeof item.syllabus === "string" && item.syllabus.includes(".")
+                    ? item.syllabus.split(".")[0]
+                    : item.syllabus ?? "";
+
                 return {
                     ...item,
                     "rrule" : item["rrule"] || frequency_map['FREQ=ONCE'],
