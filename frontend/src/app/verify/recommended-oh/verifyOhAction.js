@@ -37,12 +37,12 @@ function createEvent(json_event) {
   const uniqueID = uuidv4().replace(/-/g, '').slice(0, 6); // might not be unique but its ok since we are adding the date to it
   let uid = uniqueID + dateToIcalsDate(new Date()) +DOMAIN_NAME
 
-  let startTime = json_event["Start Time"] 
-    ? new Date(`${json_event["Start Date"]}T${json_event["Start Time"]}`) 
-    : new Date(`${json_event["Start Date"]}T00:00:00`);
-  let endTime = json_event["End Time"] 
-    ? new Date(`${json_event["End Date"]}T${json_event["End Time"]}`) 
-    : new Date(`${json_event["End Date"]}T00:00:00`);
+  let startTime = json_event["start_time"] 
+    ? new Date(`${json_event["start_date"]}T${json_event["start_time"]}`) 
+    : new Date(`${json_event["start_date"]}T00:00:00`);
+  let endTime = json_event["end_time"] 
+    ? new Date(`${json_event["end_date"]}T${json_event["end_time"]}`) 
+    : new Date(`${json_event["end_date"]}T00:00:00`);
 
   let event = {
     // always required
@@ -55,8 +55,8 @@ function createEvent(json_event) {
     "DESCRIPTION": "",
 
     // "optional" - will run without but it's gonna look ugly
-    "SUMMARY": json_event["Name"], // this is the title
-    "RRULE":json_event.RRULE, // this is the repeat rule - this is a weekly event
+    "SUMMARY": `${`${json_event.syllabus} - ` || ""}${json_event["name"] || ""}`, // this is the title
+    "RRULE":json_event.rrule, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
     // "DESCRIPTION": "",
@@ -66,7 +66,7 @@ function createEvent(json_event) {
     // "TRANSP": ""
   }
 
-  switch (json_event["RRULE"]) {
+  switch (json_event["rrule"]) {
     case "FREQ=ONCE":
       delete event.RRULE
       break;
@@ -74,12 +74,12 @@ function createEvent(json_event) {
     // change the end date so that it's start date + end time. 
       const until = `;UNTIL=${dateToIcalsDate(endTime)}`
 
-      endTime = json_event["End Time"] 
-      ? new Date(`${json_event["Start Date"]}T${json_event["End Time"]}`)
+      endTime = json_event["end_time"] 
+      ? new Date(`${json_event["start_date"]}T${json_event["end_time"]}`)
       : startTime
 
       event["DTEND"] = dateToIcalsDate(endTime)
-      event["RRULE"] = json_event.RRULE + until
+      event["rrule"] = json_event.rrule + until
       break;
   }
   return event
@@ -98,15 +98,11 @@ function dateToIcalsDate(date) {
 }  
 
 //todo: implement this
-function generateIcalsJson(OH_data) {
+function generateIcalsJson(events) {
   let mock_ics = createEmptyCalendar()
-
-  if (typeof OH_data === "string") {
-    OH_data = JSON.parse(OH_data)
-  }
-
-  for (let i = 0; i < OH_data.length; i++) {
-    let event = createEvent(OH_data[i])
+  for (let i = 0; i < events.length; i++) {
+    let event = createEvent(events[i])
+    
     mock_ics.VCALENDAR[0].VEVENT.push(event)
   }
   return mock_ics  
@@ -115,9 +111,19 @@ function generateIcalsJson(OH_data) {
 
 function generateCalendar() {
   let events = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
-  const office_hour_data = sessionStorage.getItem("office_hour_data");
+  let office_hour_data = sessionStorage.getItem("office_hour_data");
 
   // todo: append OH and events together
+  if (typeof office_hour_data === "string") {
+    office_hour_data = JSON.parse(office_hour_data)
+  }
+  if (typeof events === "string") {
+    events = JSON.parse(events)
+  }
+
+  if (Array.isArray(events) && Array.isArray(office_hour_data)) {
+    events = events.concat(office_hour_data);
+  }
 
   const ics_json = generateIcalsJson(events)
 
@@ -126,7 +132,46 @@ function generateCalendar() {
   return icalOutput
 }
 
-export {generateCalendar};
+
+async function returnAcceptedOH(OfficeHourData) {
+   // send accepted OH data to backend
+
+   OfficeHourData.map((item) => {
+    return {
+      uuid:item.uuid,
+      reccurence_key:item.reccurence_key,
+    }
+    });
+
+   const requestOptions = {
+    method: "POST",
+    body: JSON.stringify(OfficeHourData),
+    redirect: "follow",
+    signal: AbortSignal.timeout(10 * 1000),
+    headers :{
+      "Content-Type" : "application/json",
+    }
+};
+
+try {
+    const url = "/api/return-acknowledged-oh";
+    let res = await fetch(url, requestOptions)
+    
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
+    return true;
+
+
+} catch (error) {
+    console.error(error);
+}
+return false
+}
+
+
+export {generateCalendar, returnAcceptedOH};
 
 
 

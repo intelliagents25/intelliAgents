@@ -5,6 +5,8 @@ import { AuthProvider } from "./api/auth/[...nextauth]/Providers";
 import React from 'react';
 import Link from 'next/link'
 import Chat from './components/chat/Chat';
+import Script from "next/script";
+
 import WarningModal from './components/WarningModal'; // Import the modal
 import CheckboxDropdown from './components/CheckboxDropdown';
 import ScrollToSection from "./components/ScrollToSection";
@@ -112,6 +114,10 @@ export default function RootLayout({ children }) {
             </footer>
 
           </div>
+          <Script 
+        src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js" 
+        strategy="lazyOnload" 
+      />
         </AuthProvider>
       </body>
     </html>

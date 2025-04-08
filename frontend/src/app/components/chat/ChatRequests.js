@@ -7,7 +7,7 @@ export const sendDataToBot = async (message_str) => {
     return fetch("/api/chat", {
         method: 'POST',
         body: JSON.stringify(data),
-        signal: AbortSignal.timeout(15 * 1000) // 10 second timeout
+        signal: AbortSignal.timeout(60 * 1000) // 60 second timeout
     })
         .then((response) => {
             if (!response.ok) {
@@ -57,8 +57,12 @@ export const getFileInfo = async () => {
         }
 
         let json_data = await res.text();
-        json_data = JSON.parse(json_data);
+        json_data = JSON.parse(json_data); //TODO: this parsing should be done on server side
         json_data = json_data.file_info;
+
+        if (json_data == null) {
+            json_data = [];
+        }
 
         const file_info = {
             files: json_data,
@@ -67,7 +71,7 @@ export const getFileInfo = async () => {
         sessionStorage.setItem(process.env.FILE_INFO, JSON.stringify(file_info));
         return json_data;
     } catch (error) {
-        console.error(error);
+        console.error("error when getting file info", error);
     }
     return false
 }

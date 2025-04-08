@@ -15,7 +15,7 @@ export const sendFileToBot = async (file) => {
         // headers: headers,
         body: formData,
         redirect: "follow",
-        signal: AbortSignal.timeout(40 * 1000)
+        signal: AbortSignal.timeout(60 * 1000)
     };
 
     try {
@@ -35,6 +35,7 @@ export const sendFileToBot = async (file) => {
               json_data = JSON.parse(json_data);
             } catch (err) {
               console.error("Invalid JSON string:", err);
+              return false;
             }
         }
 
@@ -50,7 +51,7 @@ export const sendFileToBot = async (file) => {
         }
         return true
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
     return false
 }

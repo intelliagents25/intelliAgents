@@ -5,10 +5,11 @@ export async function POST(req) {
     try {
       let input_data = await req.json();
       const headers = await addCookiesToHeader();
+    
+      headers["Content-Type"] = "application/json";
 
-      let url = "https://intelliagents.ddns.net/webhook/b90cb657-4b32-4ca7-9293-74733c4c79d7"
-      // url = "https://intelliagents.ddns.net/webhook-test/get-details"
-
+      let url = "https://intelliagents.ddns.net/webhook/a19c5e63-b632-4db2-9802-a500efd142df";
+      url = "https://intelliagents.ddns.net/webhook/verified-details"
       const response = await fetch(url, {
         method: "POST", 
         body: JSON.stringify(input_data),

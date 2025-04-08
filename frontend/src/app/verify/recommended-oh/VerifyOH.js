@@ -24,12 +24,14 @@ const VerifyOH = forwardRef((props, ref) => {
     }
     if (Array.isArray(eventList)) {
       eventList = eventList.map((item) => {
-        return {
-          // creates new object that makes it easier for the user to edit
-          //   ...item,
-          Name: item.Name,
-          Attend: true, // this is a new field that we add to the object
-        };
+        let event = {
+          ...item,
+          Attend: true, // default value for Attend
+          rrule: "FREQ=ONCE"
+        }
+        event.start_date = event.instance_date.split("T")[0];
+        event.end_date = event.start_date;
+        return event;
       });
       setTableData(eventList);
     }
@@ -72,7 +74,8 @@ const VerifyOH = forwardRef((props, ref) => {
               <tr key={index}>
                 <td className="pl-[3rem] pr-4 py-1 text-dark text-[3vw] md:text-[2vw] lg:text-[1vw] text-left w-auto roboto-font w-[60%] align-top">
                   {/* If the row is rejected and being edited, show input */}
-                  <p className="w-full py-4 pr-4">{row.Name}</p>
+                  <p className="w-full py-4 pr-4">{row.syllabus} : {new Date(row.instance_date).toLocaleDateString("en-GB")},  {row.start_time} - {row.end_time}</p>
+                  {/* <p className="w-full py-4 pr-4 ">{row.syllabus}</p> */}
                 </td>
                 {/* Second & Third Columns: Buttons (Centered) */}
                 <td colSpan="2" className="px-4 py-2 text-center align-top mt-1 w-[40%]">

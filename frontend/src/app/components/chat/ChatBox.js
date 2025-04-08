@@ -9,7 +9,7 @@ import { IoMdSend } from "react-icons/io";
 
 const initialChatState = [
   {
-    data: "Hello There! I'm Intelli. Feel free to ask me any questions :)",
+    data: "Hi, Im Intelliagent... Before I can assist you, please ensure you have uploaded a syllabus so I have the necessary context!",
     author: "other",
   },
 ];
@@ -21,6 +21,8 @@ const ChatBox = ({ handleButtonToggle }) => {
 
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState(initialChatState);
+  const [files, setFiles] = useState([]);
+
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [showRetryMessage, setShowRetryMessage] = useState(false);
   const [promptSuggestions, setPromptSuggestions] = useState([]);
@@ -56,9 +58,10 @@ const ChatBox = ({ handleButtonToggle }) => {
       }
 
 
-      getFileInfo()
+      getFileInfo() //NOTE: we might want to figure out when is the best time to show suggestions - rn it shows every time 
         .then((response) => {
           if (response) {
+            setFiles(response);
             setPromptSuggestions(generatePromptSuggestions(response));
           } else {
             throw new Error("No file info found in the response.");
@@ -70,6 +73,14 @@ const ChatBox = ({ handleButtonToggle }) => {
       sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof renderMarkdown === "function") {
+      renderMarkdown();
+    } else {
+      console.warn("renderMarkdown has not been loaded, some markdown may not render properly");
+    }
+  }, [receivedMessages]);
 
   // ==== helper functions ====
 
@@ -101,7 +112,13 @@ const ChatBox = ({ handleButtonToggle }) => {
     scrollToBottom();
     inputBox.focus();
 
-    const response = await sendDataToBot(message);
+    let response = null;
+
+    if (files.length == 0) { 
+      response = "Before I can assist you, please upload a syllabus so I have the necessary context!";
+    } else {
+      response = await sendDataToBot(message);
+    }
 
     setAwaitingResponse(false);
 
@@ -135,11 +152,20 @@ const ChatBox = ({ handleButtonToggle }) => {
   // ==== html rendering constants ====
   const messages = receivedMessages.map((message, index) => {
     const author = message.author;
-    return (
-      <span key={index} className={styles.message} data-author={author}>
-        {message.data}
-      </span>
-    );
+    if (author === "me") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          {message.data}
+        </span>
+      );
+    } else if (author === "other") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          <github-md>{message.data}</github-md>
+        </span>
+      );
+    }
+
   });
 
   const retryMessage = (

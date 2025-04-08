@@ -2,8 +2,16 @@ import React, { useState,useImperativeHandle, forwardRef,useEffect } from 'react
 import { Icons } from '../components/Icons';
 
 const frequency_map = { // actual value,  showed on drop down
+    'FREQ=ONCE': 'Once',
     'FREQ=DAILY': 'Daily',
     'FREQ=WEEKLY': 'Weekly',
+    'FREQ=WEEKLY;BYDAY=MO': 'Weekly - Mondays',
+    'FREQ=WEEKLY;BYDAY=TU': 'Weekly - Tuesdays',
+    'FREQ=WEEKLY;BYDAY=WE': 'Weekly - Wednesdays',
+    'FREQ=WEEKLY;BYDAY=TH': 'Weekly - Thursdays',
+    'FREQ=WEEKLY;BYDAY=FR': 'Weekly - Fridays',
+    'FREQ=WEEKLY;BYDAY=SA': 'Weekly - Saturdays',
+    'FREQ=WEEKLY;BYDAY=SU': 'Weekly - Sundays',
     'FREQ=WEEKLY;BYDAY=MO,WE': 'Weekly - Mon,Wed',
     'FREQ=WEEKLY;BYDAY=TU,TH': 'Weekly - Tue, Thu',
     'FREQ=WEEKLY;BYDAY=MO,WE,FR': 'Weekly - M,W,F'
@@ -14,6 +22,9 @@ const VerifyTable = forwardRef((props, ref) => {
     // Expose the getData method to parent
     useImperativeHandle(ref, () => ({
         getData: () => tableData,
+        updateTableFields: (new_values) => {
+            setTableData([...new_values]);
+          }
     }));
 
     useEffect(() => {
@@ -30,10 +41,19 @@ const VerifyTable = forwardRef((props, ref) => {
         }
         if (Array.isArray(eventList)) {
             eventList = eventList.map((item) => {
-                const is_all_day = (item["Start Time"] == "")
+                const is_all_day = (item["start_time"] == "")
+                if (item["rrule"] == "FREQ=ONCE") {
+                    item.end_date = item.start_date
+                }
+
+                if (item.all_day) {
+                    item.start_time = "";
+                    item.end_time = "";
+                }
                 return {
                     ...item,
-                    "All Day": is_all_day,
+                    "rrule" : item["rrule"] || frequency_map['FREQ=ONCE'],
+                    "all_day": is_all_day,
                     "Valid": true,
                     "Errors": {}
                 }});
@@ -48,29 +68,43 @@ const VerifyTable = forwardRef((props, ref) => {
         setTableData(tableData.slice(0, index).concat(tableData.slice(index + 1)));
   };
 
+    const appendEmptyEvent = () => {
+        const newEvent = {
+            "name": "",
+            "rrule": frequency_map['FREQ=ONCE'],
+            "source": "Manually added",
+            "all_day": false,
+            "Valid": true,
+            "Errors": {}
+        };
+        setTableData([...tableData, newEvent]);
+    }
+
 
     // TODO: form validation for date, make sure start is before end date
     const handleFormChange = (e, idx, field) => {
         const updatedData = [...tableData];
         switch (field) {
-            case "Start Time":
+            case "start_time":
                 updatedData[idx][field] = e.target.value;
-                updatedData[idx]["All Day"] = false;
+                updatedData[idx]["all_day"] = false;
                 break;
-                case "End Time":
+                case "end_time":
                     updatedData[idx][field] = e.target.value;
-                    updatedData[idx]["All Day"] = false;
+                    updatedData[idx]["all_day"] = false;
                     break;
-            case "All Day":
-                updatedData[idx]["All Day"] = e.target.checked;
-                updatedData[idx]["Start Time"] = ""
-                updatedData[idx]["End Time"] = ""
+            case "all_day":
+                updatedData[idx]["all_day"] = e.target.checked;
+                updatedData[idx]["start_time"] = ""
+                updatedData[idx]["end_time"] = ""
+                updatedData[idx]["Errors"]["Date"] = "";
                 break;
-            case "RRULE":
+            case "rrule":
+                console.log("rrule changed to " + e.target.key)
                 if (e.target.value === "NONE") {
-                    delete updatedData[idx]["RRULE"];
+                    delete updatedData[idx]["rrule"];
                 } else {
-                    updatedData[idx]["RRULE"] = e.target.value;
+                    updatedData[idx]["rrule"] = e.target.value;
                 }
                 break; 
             default:
@@ -86,17 +120,17 @@ const VerifyTable = forwardRef((props, ref) => {
     
         let errorMessage = "";
     
-        if (field === "Name" && !row["Name"].trim()) {
+        if (field === "name" && !row["name"].trim()) {
             errorMessage = "Name is required.";
         }
     
         if (field === "Date") {
-            const startTime = row["Start Time"] 
-                ? new Date(`${row["Start Date"]}T${row["Start Time"]}`) 
-                : new Date(`${row["Start Date"]}T00:00:00`);
-            const endTime = row["End Time"] 
-                ? new Date(`${row["End Date"]}T${row["End Time"]}`) 
-                : new Date(`${row["End Date"]}T00:00:00`);
+            const startTime = row["start_time"] 
+                ? new Date(`${row["start_date"]}T${row["start_time"]}`) 
+                : new Date(`${row["start_date"]}T00:00:00`);
+            const endTime = row["end_time"] 
+                ? new Date(`${row["end_date"]}T${row["end_time"]}`) 
+                : new Date(`${row["end_date"]}T00:00:00`);
             if (startTime > endTime) {
                 errorMessage = "Start date and time must be before end date and time.";
             }
@@ -111,7 +145,7 @@ const VerifyTable = forwardRef((props, ref) => {
 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <div className="border border-gray-900 rounded-[50px] overflow-x-auto my-5 bg-[#FFFFFF80]">
+            <div className="border border-gray-900 rounded-[50px] overflow-x-auto my-5 bg-[#FFFFFF80] item-center">
             <br />
                 <table className="min-w-full w-[50vw] h-[35vh] table-auto p-2">
                     <thead>
@@ -133,15 +167,16 @@ const VerifyTable = forwardRef((props, ref) => {
                                         <input
                                             required={true}
                                             type="text"
-                                            value={row["Name"]|| ""}
-                                            onChange={(event) => handleFormChange(event, index, "Name")}
-                                            onBlur={() => handleBlur("Name", index)}
+                                            value={row["name"]|| ""}
+                                            onChange={(event) => handleFormChange(event, index, "name")}
+                                            onBlur={() => handleBlur("name", index)}
                                             className={`w-full p-2 border rounded-md ${
-                                                row?.Errors?.["Name"] ? "border-red-500" : "border-gray-300"
+                                                row?.Errors?.["name"] ? "border-red-500" : "border-gray-300"
                                             }`}
                                         />
-                                        {row?.Errors?.["Name"] && (
-                                            <p className="text-red-500 text-xs mt-1">{row.Errors["Name"]}</p>
+                                        For: {row.syllabus}
+                                        {row?.Errors?.["name"] && (
+                                            <p className="text-red-500 text-xs mt-1">{row.Errors["name"]}</p>
                                         )}
                                 </td>
 
@@ -149,8 +184,8 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <input
                                     type="date"
                                     required={true}
-                                    value={row["Start Date"]|| ""}
-                                    onChange={(event) => handleFormChange(event, index, "Start Date")}
+                                    value={row["start_date"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "start_date")}
                                     onBlur={() => handleBlur("Date", index)}
                                     className={`w-full p-2 border mb-2 rounded-md ${
                                         row?.Errors?.["Date"] ? "border-red-500" : "border-gray-300"
@@ -158,8 +193,8 @@ const VerifyTable = forwardRef((props, ref) => {
                                 />
                                 <input
                                     type="time"
-                                    value={row["Start Time"]|| ""}
-                                    onChange={(event) => handleFormChange(event, index, "Start Time")}
+                                    value={row["start_time"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "start_time")}
                                     onBlur={() => handleBlur("Date", index)}
                                     className={`w-full p-2 border mb-2 rounded-md ${
                                     row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
@@ -168,8 +203,8 @@ const VerifyTable = forwardRef((props, ref) => {
 
                                 <div className="flex items-center pb-4">
                                     <input type="checkbox" name="all_day" 
-                                    onChange={(event) => handleFormChange(event, index, "All Day")}
-                                    checked={row["All Day"]}
+                                    onChange={(event) => handleFormChange(event, index, "all_day")}
+                                    checked={row["all_day"]}
                                     />
                                     <label htmlFor="all_day" className='ml-2'>All Day</label>
                                 </div>
@@ -184,9 +219,9 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="w-1/8 px-4 py-1 text-center cursor-pointer w-1/5 align-top">
                                 <input
                                     type="date"
-                                    value={row["End Date"]|| ""}
+                                    value={row["end_date"]|| ""}
                                     required={true}
-                                    onChange={(event) => handleFormChange(event, index, "End Date")}
+                                    onChange={(event) => handleFormChange(event, index, "end_date")}
                                     onBlur={() => handleBlur("Date", index)}
                                     className={`w-full p-2 border mb-2 rounded-md ${
                                     row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
@@ -194,8 +229,8 @@ const VerifyTable = forwardRef((props, ref) => {
                                 />
                                 <input
                                     type="time"
-                                    value={row["End Time"]|| ""}
-                                    onChange={(event) => handleFormChange(event, index, "End Time")}
+                                    value={row["end_time"]|| ""}
+                                    onChange={(event) => handleFormChange(event, index, "end_time")}
                                     onBlur={() => handleBlur("Date", index)}
                                     className={`w-full p-2 border mb-2 rounded-md ${
                                     row?.Errors?.["Date"] ? "border-red-500 font-bold" : "border-gray-300"
@@ -208,15 +243,14 @@ const VerifyTable = forwardRef((props, ref) => {
                                 <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
 
                                 <select
-                                    value={row["RRULE"]}
+                                    value={row["rrule"]}
                                     required={true}
-                                    onChange={(event) => handleFormChange(event, index, "RRULE")}
+                                    onChange={(event) => handleFormChange(event, index, "rrule")}
                                     className="w-full p-2 border mb-2 border-gray-300 rounded-md"
                                 >
                                     {Object.entries(frequency_map).map((key, _) => {
                                         return <option 
                                         key={key[0]} value={key[0]}
-                                        
                                         > 
                                         {key[1]}
                                         </option>;
@@ -228,8 +262,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                 
                                 <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
                                     <p>
-                                    {row["Source"]}
-
+                                    {row["source"]}
                                     </p>
                                     
                                 </td>
@@ -247,6 +280,11 @@ const VerifyTable = forwardRef((props, ref) => {
                         ))}
                     </tbody>
                 </table>
+                {/* <button
+                    onClick={appendEmptyEvent}
+                >
+                    Manually add an event (TESTING ONLY)
+                </button> */}
             </div>
         </>
     );

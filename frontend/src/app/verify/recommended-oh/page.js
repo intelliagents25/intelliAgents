@@ -4,7 +4,8 @@ import "../../globals.css";
 import VerifyOH from './VerifyOH';
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { generateCalendar } from './verifyOhAction';
+import { generateCalendar ,returnAcceptedOH} from './verifyOhAction';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 const VerifyResults = () => {    
     const [showModal, setShowModal] = useState(false);
@@ -49,13 +50,7 @@ const VerifyResults = () => {
             office_hours_data = JSON.parse(office_hours_data);
         }
         if (Array.isArray(office_hours_data)) {
-            office_hours_data = office_hours_data
-            .filter((item) => item["Attend"] !== false) // Exclude items where Attend is false
-            .map((item) => {
-                return {
-                item
-                };
-            });
+            office_hours_data = office_hours_data.filter((item) => item["Attend"] !== false);
         }
 
         const stringified_events = JSON.stringify(office_hours_data);
@@ -63,12 +58,17 @@ const VerifyResults = () => {
         if (stringified_events) {
             sessionStorage.setItem("office_hour_data", JSON.stringify(office_hours_data));
             generateCalendar();
+            returnAcceptedOH(office_hours_data);
             router.push('/complete-ics');
         }
     }
 
     // Render the modal only if pathname is `/verify`
     if (pathname !== '/verify/recommended-oh') return null;
+
+    if (isLoading) {
+        return <div className='w-full h-[1000px]'><LoadingAnimation isLoading={true} /></div>; // Show loading animation while data is being fetched
+    }
 
     return (
         <>
