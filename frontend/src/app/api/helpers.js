@@ -46,9 +46,11 @@ export async function addCookiesToHeader(headers={}) {
     let userToken = cookieStore.get("userToken")?.value;
     const userEmail = cookieStore.get("userEmail")?.value;
 
+    console.warn("userToken", userToken);
+
     if (userEmail) {
         let token = await getUserID(userEmail);
-        if (token) {
+        if (token && token !== "") {
             userToken = token;
         }
     }
@@ -58,7 +60,7 @@ export async function addCookiesToHeader(headers={}) {
       }
     
     headers['user-cookie'] = `${userToken}`;
-    
+
 
     return headers;
 }
