@@ -41,15 +41,21 @@ const VerifyTable = forwardRef((props, ref) => {
         }
         if (Array.isArray(eventList)) {
             eventList = eventList.map((item) => {
-                const is_all_day = (item["start_time"] == "")
+                if (item.all_day) { // this one is for the refresh. 
+                    item.start_time = "";
+                    item.end_time = "";
+                }
+
                 if (item["rrule"] == "FREQ=ONCE") {
                     item.end_date = item.start_date
                 }
 
-                if (item.all_day) {
-                    item.start_time = "";
-                    item.end_time = "";
-                }
+                // if the end time is 00:00:00 and start time is empty, this end time is probably wrong, 
+                // so we set it to empty string.
+                item.end_time = (item.end_date == "00:00:00" && item.start_time == "") ? "" : item.end_time
+
+                const is_all_day = (item["start_time"] == "")
+
                 return {
                     ...item,
                     "rrule" : item["rrule"] || frequency_map['FREQ=ONCE'],

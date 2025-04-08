@@ -42,7 +42,7 @@ function createEvent(json_event) {
     : new Date(`${json_event["start_date"]}T00:00:00`);
   let endTime = json_event["end_time"] 
     ? new Date(`${json_event["end_date"]}T${json_event["end_time"]}`) 
-    : new Date(`${json_event["end_date"]}T00:00:00`);
+    : new Date(`${json_event["end_date"]}T23:59:59`);
 
   let event = {
     // always required
