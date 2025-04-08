@@ -30,7 +30,10 @@ const mainContent = (
       <div className="text-center mx-auto mb-8">
         <p className='text-light text-md md:text-xl lg:text-2xl'>
           <br />
-          Thank you for using IntelliAgents!
+          Thank you for using IntelliAgents! 
+          <span className="text-blue-800 ml-1 cursor-pointer">
+            <a href="#disclaimer" title="Read Disclaimer">*</a>
+          </span>
           <br />
           Download the .ics file below to import it to your preferred calendar application! 
           {" "}

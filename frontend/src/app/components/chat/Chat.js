@@ -14,8 +14,11 @@ const Chat = () => {
   return (
     <>
       {showChat && <ChatBox handleButtonToggle={toggleChat}  />}
-      <div className={showChat? styles.minimizedIcon : styles.maximizeIcon}>
+      <div
+        className={showChat ? styles.minimizedIcon : styles.maximizeIcon}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <ChatPopUpIcon handleButtonToggle={toggleChat} />
+        {!showChat && <p className="suez-font text-color-dark" style={{ marginTop: '1rem', fontSize: '1.5rem' }}> Click Me to Chat! </p>}
       </div>
     </>
   );
