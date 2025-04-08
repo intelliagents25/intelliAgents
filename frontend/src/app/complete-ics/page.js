@@ -3,15 +3,14 @@ import React, { useState } from 'react';
 import "../globals.css";
 import LoadingAnimation from '../components/LoadingAnimation';
 import Link from 'next/link';
+import Chat from '../components/chat/Chat';
 
 const handleDownload = () => {
-  console.log("Download button clicked");
   const icsData = sessionStorage.getItem(process.env.FINAL_ICALS);
   // Log to verify the cleaned-up data
   const blob = new Blob([icsData], { type: 'text/calendar' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
-  console.log(url);
   a.href = url;
   a.download = 'semester_schedule.ics';
   a.click();
@@ -20,35 +19,49 @@ const handleDownload = () => {
 
 const mainContent = (
   <main className="flex-1 flex justify-center items-center">
-    <div className="flex flex-col items-center justify-center px-4 py-16 text-center w-full">
-      <div className="flex justify-center mb-6">
-        <img src="/images/check.png" alt="Check mark" />
-      </div>
-      
-      <h6 className="mb-4 text-center">Integration Complete!</h6>
-      
+    {/* <div className="flex flex-col items-center justify-center px-4 py-16 text-center w-full"> */}
+      <div className="flex flex-col items-center justify-center px-4 py-16 text-center justify-center w-3/5">
+        <div className="flex justify-center mb-6">
+          <img src="/images/check.png" alt="Check mark" />
+        </div>
+
+        <h6 className="mb-4 text-center">Integration Complete!</h6>
+
       <div className="text-center mx-auto mb-8">
-        <p className='text-light text-md md:text-xl lg:text-2xl'> 
-          Check your calendar - IntelliAgents has successfully integrated your syllabus into your calendar!
-        </p>
-        <p className='text-light text-md md:text-xl lg:text-2xl mt-2'>
-          Thank you for using IntelliAgents.
+        <p className='text-light text-md md:text-xl lg:text-2xl'>
+          <br />
+          Thank you for using IntelliAgents! 
+          <span className="text-blue-800 ml-1 cursor-pointer">
+            <a href="#disclaimer" title="Read Disclaimer">*</a>
+          </span>
+          <br />
+          Download the .ics file below to import it to your preferred calendar application! 
+          {" "}
+          <a href="/#faq-ics"
+            className="text-blue-500 underline hover:text-blue-700">
+              Learn more
+          </a>
         </p>
       </div>
 
-      <div className="flex flex-col items-center justify-center space-y-5 mt-8">
-        <button className="px-8 py-3 font-bold button button-rounded w-64"
-          onClick={handleDownload} >
-          Download .ics File
-        </button>
-        
-        <Link href={{ pathname: '/' }}>
-          <button className="px-8 py-3 button button-blue button-rounded font-bold w-64">
-            Return Home
+        <div className="flex flex-col items-center justify-center space-y-5 mt-8">
+          <button className="px-8 py-3 font-bold button button-rounded w-64"
+            onClick={handleDownload} >
+            Download .ics File
           </button>
-        </Link>
+
+          <Link href={{ pathname: '/' }}>
+            <button className="px-8 py-3 button button-blue button-rounded font-bold w-64">
+              Return Home
+            </button>
+          </Link>
+        </div>
       </div>
-    </div>
+
+      <div className="flex w-2/5 justify-center items-center hidden lg:flex">
+        <Chat />
+      </div>
+    {/* </div> */}
   </main>
 );
 

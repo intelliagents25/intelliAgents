@@ -20,6 +20,9 @@ const InfinitiScrollLandingPage = () => {
               </h1>
               <p className="text-[#505F7C] text-[4.5vw] md:text-[3vw] lg:text-[1.5vw] font-[400] text-center md:text-left lg:text-left mb-10 roboto-font">
                 The AI agent that organises your schedule... and keeps it organised.
+                <span className="text-blue-800 cursor-pointer">
+                  <a href="#disclaimer" title="Read Disclaimer">*</a>
+                </span>
               </p>
               <div className="flex flex-col mb-8 items-center md:items-start lg:items-start w-full">
                 {/* Sign-In Section */}
@@ -44,7 +47,7 @@ const InfinitiScrollLandingPage = () => {
             </div>
             
             {/* Right mascot */}
-            <div className="flex w-1/2 justify-center items-center hidden lg:flex">
+            <div className="w-1/2 items-end hidden lg:flex translate-y-[-50px]">
               <Chat />
             </div>
           </div>

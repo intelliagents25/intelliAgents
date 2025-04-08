@@ -2,9 +2,13 @@
 
 /* chat icon stuff */
 .minimizedIcon {
-/* TODO: maybe use this to change the icon sizing etc */
-  width: 10vw;
+  width: fit-content;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
+
 
 .maximizeIcon {
   width: 100vw;
@@ -22,15 +26,16 @@
     align-items: center;
     justify-content: center;
     /* sizing */
-    max-height: 60%;
+    max-height: 80%;
     height: 44rem; /* approx. 700px */
-    min-width: 20%;
+    min-width: 50%;
     max-width: 32rem; /* approx. 500px */
     /* styling */
     overflow:hidden;
-    background-color: #FFFFFB;
+    background-color: #8AC9E4;
     border-color: #152935;
     border-width: 1px;
+    border-radius: 10px;
   }
   
   .chatHeader {
@@ -154,9 +159,7 @@
     color: white;
     font-weight: bold;
     font-size: 1.4em;
-    background-color: var(--secondary-color-2);
-    cursor: pointer;
-    height: 75%;
+    background-color: white;
   }
   
   .sendButton:hover {
@@ -174,5 +177,35 @@
 
   .sendButtonIcon:hover {
     color: var(--secondary-color-2);
+    cursor: pointer;
+  }
+
+  .suggestionsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 8px;
+    justify-content: center;
+    width: 100%;
+    max-width: 90%;
+    max-height: 20%;
+    overflow-y: auto; /* Prevents overflow when too many suggestions */
+    padding: 8px;
+  }
+  
+  .suggestionButton {
+    background-color: var(--secondary-color-1);
+    border: 1px solid var(--text-colour-dark);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .suggestionButton:hover {
+    background-color: var(--secondary-color-2);
   }
   

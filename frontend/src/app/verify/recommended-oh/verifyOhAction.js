@@ -1,5 +1,3 @@
-import { create } from "domain";
-
 var ical2json = require("ical2json");
 const { v4: uuidv4 } = require('uuid');
 /**
@@ -20,11 +18,7 @@ along with some other currently unique (perhaps sequential) identifier available
 
 const DOMAIN_NAME = "@intelliagents.com"
 
-
-
-
-
-function createEmmptyCalendar() {
+function createEmptyCalendar() {
   return {
     "VCALENDAR": [
       {
@@ -43,25 +37,50 @@ function createEvent(json_event) {
   const uniqueID = uuidv4().replace(/-/g, '').slice(0, 6); // might not be unique but its ok since we are adding the date to it
   let uid = uniqueID + dateToIcalsDate(new Date()) +DOMAIN_NAME
 
+  let startTime = json_event["start_time"] 
+    ? new Date(`${json_event["start_date"]}T${json_event["start_time"]}`) 
+    : new Date(`${json_event["start_date"]}T00:00:00`);
+  let endTime = json_event["end_time"] 
+    ? new Date(`${json_event["end_date"]}T${json_event["end_time"]}`) 
+    : new Date(`${json_event["end_date"]}T00:00:00`);
+
   let event = {
     // always required
     "DTSTAMP": dateToIcalsDate(new Date()), // timestamp of this object
     "UID": uid, // has to be unique
 
     // required if the method of the icals is not specified
-    "DTSTART;VALUE=DATE": "20130101",
+    "DTSTART": dateToIcalsDate(startTime), // start time of the event
+    "DTEND": dateToIcalsDate(endTime), // end time of the event
     "DESCRIPTION": "",
 
     // "optional" - will run without but it's gonna look ugly
-    "SUMMARY": "", // this is the title
+    "SUMMARY": `${`${json_event.syllabus} - ` || ""}${json_event["name"] || ""}`, // this is the title
+    "RRULE":json_event.rrule, // this is the repeat rule - this is a weekly event
 
     // everything after this is considered optional, but it's useful to keep it here for reference
-    // "DTEND;VALUE=DATE": "",
     // "DESCRIPTION": "",
     // "LOCATION": "",
     // "SEQUENCE": "",
     // "STATUS": "",
     // "TRANSP": ""
+  }
+
+  switch (json_event["rrule"]) {
+    case "FREQ=ONCE":
+      delete event.RRULE
+      break;
+    default: // if its not once, then  it is a recurring event. 
+    // change the end date so that it's start date + end time. 
+      const until = `;UNTIL=${dateToIcalsDate(endTime)}`
+
+      endTime = json_event["end_time"] 
+      ? new Date(`${json_event["start_date"]}T${json_event["end_time"]}`)
+      : startTime
+
+      event["DTEND"] = dateToIcalsDate(endTime)
+      event["rrule"] = json_event.rrule + until
+      break;
   }
   return event
 }
@@ -79,37 +98,80 @@ function dateToIcalsDate(date) {
 }  
 
 //todo: implement this
-function generateIcasJson(OH_data) {
-  console.log(OH_data)
-  let mock_ics = createEmmptyCalendar()
-
-  let mock_information = {
-    "Start Date": dateToIcalsDate(new Date()),
-    "Name": "Office Hours",
-    "Description": "This is a description of an office hour happening"
+function generateIcalsJson(events) {
+  let mock_ics = createEmptyCalendar()
+  for (let i = 0; i < events.length; i++) {
+    let event = createEvent(events[i])
+    
+    mock_ics.VCALENDAR[0].VEVENT.push(event)
   }
-  let v_event = createEvent(mock_information)
-  
-  mock_ics.VCALENDAR[0].VEVENT.push(v_event)
-  mock_information.Description = "Office Hours 2"
-  mock_ics.VCALENDAR[0].VEVENT.push(createEvent(mock_information))
-  mock_information.Description = "Office Hours 3"
-  mock_ics.VCALENDAR[0].VEVENT.push(createEvent(mock_information))
-
   return mock_ics  
 }
 
 
-function generateCalendar(OH_data) {
-const ics_json = generateIcasJson(OH_data)
+function generateCalendar() {
+  let events = sessionStorage.getItem(process.env.INITIAL_EVENTS_JSON);
+  let office_hour_data = sessionStorage.getItem("office_hour_data");
 
-var icalOutput = ical2json.revert(ics_json);
-sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
-console.log(icalOutput)
-return icalOutput
+  // todo: append OH and events together
+  if (typeof office_hour_data === "string") {
+    office_hour_data = JSON.parse(office_hour_data)
+  }
+  if (typeof events === "string") {
+    events = JSON.parse(events)
+  }
+
+  if (Array.isArray(events) && Array.isArray(office_hour_data)) {
+    events = events.concat(office_hour_data);
+  }
+
+  const ics_json = generateIcalsJson(events)
+
+  var icalOutput = ical2json.revert(ics_json);
+  sessionStorage.setItem(process.env.FINAL_ICALS, icalOutput);
+  return icalOutput
 }
 
-export default generateCalendar;
+
+async function returnAcceptedOH(OfficeHourData) {
+   // send accepted OH data to backend
+
+   OfficeHourData.map((item) => {
+    return {
+      uuid:item.uuid,
+      reccurence_key:item.reccurence_key,
+    }
+    });
+
+   const requestOptions = {
+    method: "POST",
+    body: JSON.stringify(OfficeHourData),
+    redirect: "follow",
+    signal: AbortSignal.timeout(10 * 1000),
+    headers :{
+      "Content-Type" : "application/json",
+    }
+};
+
+try {
+    const url = "/api/return-acknowledged-oh";
+    let res = await fetch(url, requestOptions)
+    
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
+    return true;
+
+
+} catch (error) {
+    console.error(error);
+}
+return false
+}
+
+
+export {generateCalendar, returnAcceptedOH};
 
 
 

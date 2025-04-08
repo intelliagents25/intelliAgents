@@ -8,13 +8,14 @@ export const sendFileToBot = async (file) => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("file_name", file.name);
 
     const requestOptions = {
         method: "POST",
         // headers: headers,
         body: formData,
         redirect: "follow",
-        signal: AbortSignal.timeout(10 * 1000)
+        signal: AbortSignal.timeout(60 * 1000)
     };
 
     try {
@@ -28,15 +29,29 @@ export const sendFileToBot = async (file) => {
         let json_data = await res.text();
         json_data = JSON.parse(json_data);
         json_data = json_data.data;
+
+        if (typeof json_data === "string") {
+            try {
+              json_data = JSON.parse(json_data);
+            } catch (err) {
+              console.error("Invalid JSON string:", err);
+              return false;
+            }
+        }
+
+        json_data = json_data[0].data; //note: this change should probably exist at the API level
+
         let json_data_string = JSON.stringify(json_data);
 
 
         if (json_data_string) {
             sessionStorage.setItem(process.env.INITIAL_EVENTS_JSON, json_data_string);
+        }else {
+            throw new Error('json_data_string is empty');
         }
         return true
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
     return false
 }

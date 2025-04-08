@@ -13,10 +13,10 @@ const LoadingAnimation = ({ isLoading }) => {
 
   const { View } = useLottie(defaultOptions);
 
-  if (!isLoading) return null;
+  if (!isLoading) {return <></>};
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-white bg-opacity-90 z-[9999]">
+    <div className="flex h-full justify-center items-center bg-opacity-90 z-[9999]">
       <div className="w-64 h-64">
         {View}
       </div>

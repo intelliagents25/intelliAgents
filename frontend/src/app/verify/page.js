@@ -12,6 +12,7 @@ const VerifyResults = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [pendingNavigation, setPendingNavigation] = useState(null);
+    const [showWarning, setShowWarning] = useState(false);
     const childRef = useRef();
     const router = useRouter();
     const pathname = usePathname();
@@ -50,12 +51,15 @@ const VerifyResults = () => {
         // Prevent the default form submission behavior
         event.preventDefault(); // Uncomment this if you want to prevent the default form submission`
 
-        console.log("handleUploadChanges called")
         const childData = childRef.current.getData(); 
 
         if(validateInputs(childData) == false) {
+            childRef.current.updateTableFields(childData);
+            setShowWarning(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return false;
         }
+        setShowWarning(false);
 
         setIsLoading(true);
         
@@ -66,16 +70,15 @@ const VerifyResults = () => {
             console.error('Failed to upload changes');
         }
     };
+    if (isLoading) {
+        return <div className='w-full h-[1000px]'><LoadingAnimation isLoading={true} /></div>; // Show loading animation while data is being fetched
+    }
 
     return (
         <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-            {/* todo: add a loading animation */}
-            {/* {isLoading && (loadng)} */}
             {showModal}
-            <LoadingAnimation isLoading={isLoading} />
 
             <div className="py-[75px] flex flex-col justify-content-center items-center">
                 <br />
@@ -83,15 +86,21 @@ const VerifyResults = () => {
                 <h5 className="mb-2 pb-5 roboto-font text-light font-bold text-center text-[0.8rem] md:text-[1.3rem] lg:text-[1.8rem]">
                     These are details IntelliAgents need your eyes on.
                 </h5>
+
+                {showWarning && (
+                    <div className="alert alert-warning mb-4">
+                        <strong>Warning!</strong> Please fill all required fields and ensure the start date is before the end date.
+                    </div>
+                )}
                 
                 <div className="w-full flex flex-col items-center">
-                    <form className="w-full flex flex-col items-center">
+                    <form className="w-full flex flex-col items-center" onSubmit={handleUploadChanges}>
                     <div className="w-full flex justify-center mb-4">
                         <VerifyTable ref={childRef}/>
                     </div>
 
                     <button type="submit" className="ml-0 button button-blue button-rounded font-bold my-3" onClick={handleUploadChanges}>
-                        Generate My Calendar
+                    Save and proceed
                     </button>
                     </form>
                     

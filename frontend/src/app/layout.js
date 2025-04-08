@@ -5,6 +5,8 @@ import { AuthProvider } from "./api/auth/[...nextauth]/Providers";
 import React from 'react';
 import Link from 'next/link'
 import Chat from './components/chat/Chat';
+import Script from "next/script";
+
 import WarningModal from './components/WarningModal'; // Import the modal
 import CheckboxDropdown from './components/CheckboxDropdown';
 import ScrollToSection from "./components/ScrollToSection";
@@ -58,7 +60,7 @@ export default function RootLayout({ children }) {
                 <div className="hidden md:flex lg:flex items-center space-x-8">
                   <Link href="about-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">About Us</Link>
                   <Link href="contact-us" className="text-[16px] font-[400] text-[#2C5281] hover:underline">Contact Us</Link>
-                  <Link href="#faq" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
+                  <Link href="/#faq" className="text-[16px] font-[400] text-[#2C5281] hover:underline">FAQ's</Link>
                 </div>
               </div>
 
@@ -69,7 +71,7 @@ export default function RootLayout({ children }) {
               <Link
               href="#how-it-works"
               id="how-it-works-button"
-              className="flex justify-center w-[10vw] items-center bg-[#6138B9] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium"
+              className="flex justify-center w-[30vw] md:w-[20vw] lg:w-[10vw] items-center bg-[--secondary-color-1] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium whitespace-nowrap"
               >
                 How It Works
                 </Link>
@@ -103,10 +105,19 @@ export default function RootLayout({ children }) {
               <a href="#" className="scroll-top font-bold">Back to top</a>
               <hr />
               <br />
-              <p className="text-sm roboto-font">© IntelliAgents 2025</p>
+              <div className="flex flex-row justify-between items-center w-full">
+                <p id="disclaimer" className="text-md roboto-font" style={{ fontStyle: 'italic' }}>
+                  <span className="font-semibold">*Disclaimer:</span> IntelliAgents can make mistakes sometimes. Please double-check the information!
+                </p>
+                <p className="text-sm roboto-font ml-auto">© IntelliAgents 2025</p>
+              </div>
             </footer>
 
           </div>
+          <Script 
+        src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js" 
+        strategy="lazyOnload" 
+      />
         </AuthProvider>
       </body>
     </html>

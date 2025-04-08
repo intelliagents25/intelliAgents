@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./ChatBox.module.css";
-import { sendDataToBot } from "./ChatRequests";
+import { sendDataToBot, getFileInfo  } from "./ChatRequests";
+
 import LoadingAnimation from "./ChatLoadingAnimation";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
 
 const initialChatState = [
   {
-    data: "Hello There! I'm Intelli. Feel free to ask me any questions :)",
+    data: "Hi, Im Intelliagent... Before I can assist you, please ensure you have uploaded a syllabus so I have the necessary context!",
     author: "other",
   },
 ];
@@ -20,10 +21,28 @@ const ChatBox = ({ handleButtonToggle }) => {
 
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState(initialChatState);
+  const [files, setFiles] = useState([]);
+
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [showRetryMessage, setShowRetryMessage] = useState(false);
+  const [promptSuggestions, setPromptSuggestions] = useState([]);
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
+
+
+
+  // Generate all unique pairs of PDFs
+  const generatePromptSuggestions = (pdfs) => {
+    if (!pdfs || pdfs.length < 2) return []; // Ensure at least 2 PDFs exist
+    
+    const suggestions = [];
+    for (let i = 0; i < pdfs.length; i++) {
+      for (let j = i + 1; j < pdfs.length; j++) {
+        suggestions.push(`Conflicts between ${pdfs[i]} and ${pdfs[j]}?`);
+      }
+    }
+    return suggestions;
+  };
 
   // check if there are existing messages in this session and try to load. 
   useEffect(() => {
@@ -37,13 +56,31 @@ const ChatBox = ({ handleButtonToggle }) => {
         let msg_json = JSON.stringify(initialChatState);
         sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
       }
+
+
+      getFileInfo() //NOTE: we might want to figure out when is the best time to show suggestions - rn it shows every time 
+        .then((response) => {
+          if (response) {
+            setFiles(response);
+            setPromptSuggestions(generatePromptSuggestions(response));
+          } else {
+            throw new Error("No file info found in the response.");
+          }
+        })
     } catch (error) {
-      console.log(error);
       setMessages(initialChatState);
       let msg_json = JSON.stringify(initialChatState);
       sessionStorage.setItem(process.env.CHAT_BOX, msg_json);
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof renderMarkdown === "function") {
+      renderMarkdown();
+    } else {
+      console.warn("renderMarkdown has not been loaded, some markdown may not render properly");
+    }
+  }, [receivedMessages]);
 
   // ==== helper functions ====
 
@@ -75,7 +112,13 @@ const ChatBox = ({ handleButtonToggle }) => {
     scrollToBottom();
     inputBox.focus();
 
-    const response = await sendDataToBot(message);
+    let response = null;
+
+    if (files.length == 0) { 
+      response = "Before I can assist you, please upload a syllabus so I have the necessary context!";
+    } else {
+      response = await sendDataToBot(message);
+    }
 
     setAwaitingResponse(false);
 
@@ -109,11 +152,20 @@ const ChatBox = ({ handleButtonToggle }) => {
   // ==== html rendering constants ====
   const messages = receivedMessages.map((message, index) => {
     const author = message.author;
-    return (
-      <span key={index} className={styles.message} data-author={author}>
-        {message.data}
-      </span>
-    );
+    if (author === "me") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          {message.data}
+        </span>
+      );
+    } else if (author === "other") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          <github-md>{message.data}</github-md>
+        </span>
+      );
+    }
+
   });
 
   const retryMessage = (
@@ -142,6 +194,23 @@ const ChatBox = ({ handleButtonToggle }) => {
               messageEnd = element;
             }}
           ></div>
+        </div>
+        {promptSuggestions.length >= 1 && (
+          <>
+            <p className={styles.suggestionsMessage}>
+              Try suggested prompts for quick insights!
+            </p>
+          </>)}
+        <div className={styles.suggestionsContainer}>
+          {promptSuggestions.map((suggestion, index) => (
+            <button 
+              key={index} 
+              className={styles.suggestionButton} 
+              onClick={() => sendChatMessage(suggestion)}
+            >
+              {suggestion}
+            </button>
+          ))}
         </div>
         <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea

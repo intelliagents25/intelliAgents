@@ -7,7 +7,7 @@ export const sendDataToBot = async (message_str) => {
     return fetch("/api/chat", {
         method: 'POST',
         body: JSON.stringify(data),
-        signal: AbortSignal.timeout(15 * 1000) // 10 second timeout
+        signal: AbortSignal.timeout(60 * 1000) // 60 second timeout
     })
         .then((response) => {
             if (!response.ok) {
@@ -31,3 +31,47 @@ export const sendDataToBot = async (message_str) => {
             }
         });
 };
+
+export const getFileInfo = async () => {
+    // redirect person to the the gcals page
+    let file_info = sessionStorage.getItem(process.env.FILE_INFO);
+    if (file_info) {
+
+        file_info = JSON.parse(file_info);
+        const difference = new Date() - new Date(file_info.last_update);
+
+        if (difference < 1000 * 3 && file_info.files != []) { // check every minute
+            return file_info.files;
+        }
+    }
+    const requestOptions = {
+        method: "GET",
+        signal: AbortSignal.timeout(10 * 1000)
+    };
+
+    try {
+        let res = await fetch("/api/uploaded-files", requestOptions)
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        let json_data = await res.text();
+        json_data = JSON.parse(json_data); //TODO: this parsing should be done on server side
+        json_data = json_data.file_info;
+
+        if (json_data == null) {
+            json_data = [];
+        }
+
+        const file_info = {
+            files: json_data,
+            last_update: new Date()
+        }
+        sessionStorage.setItem(process.env.FILE_INFO, JSON.stringify(file_info));
+        return json_data;
+    } catch (error) {
+        console.error("error when getting file info", error);
+    }
+    return false
+}
