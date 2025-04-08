@@ -18,7 +18,7 @@ const honors = [
   {
     id: "faq-accuracy",
     name: "How accurate is the AI in extracting deadlines?",
-    content: "IntelliAgents uses advanced AI algorithms to ensure high accuracy when extracting deadlines, with continuous improvements based on user feedback and data."
+    content: "IntelliAgents uses advanced AI algorithms to ensure high accuracy when extracting deadlines, with continuous improvements based on user feedback and data. That said, IntelliAgents can make mistakes sometimes so please double-check."
   },
   {
     id: "faq-ics",

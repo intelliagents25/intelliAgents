@@ -103,7 +103,12 @@ export default function RootLayout({ children }) {
               <a href="#" className="scroll-top font-bold">Back to top</a>
               <hr />
               <br />
-              <p className="text-sm roboto-font">© IntelliAgents 2025</p>
+              <div className="flex flex-row justify-between items-center w-full">
+                <p id="disclaimer" className="text-md roboto-font" style={{ fontStyle: 'italic' }}>
+                  <span className="font-semibold">*Disclaimer:</span> IntelliAgents can make mistakes sometimes. Please double-check the information!
+                </p>
+                <p className="text-sm roboto-font ml-auto">© IntelliAgents 2025</p>
+              </div>
             </footer>
 
           </div>
