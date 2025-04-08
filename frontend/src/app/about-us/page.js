@@ -36,7 +36,7 @@ const AboutUsPage = () => {
                 </div>
 
                 <div className="bg-[#FFFFFB]">                    
-                    <div className="flex flex-col md:grid md:grid-cols-2 w-full items-center justify-between pt-[32px] px-10 md:px-20 lg:px-32">                      
+                    <div className="flex flex-col md:grid md:grid-cols-2 w-full items-center justify-between pt-[32px] px-10 md:px-20 lg:px-32 mb-[32px]">                      
                         {/* Left content */}
                         <div className="flex justify-start mr-20 ml-20">
                             <video
@@ -60,13 +60,15 @@ const AboutUsPage = () => {
                     </div>
                 </div>
 
-                <div className="bg-blue">
-                    <div className="gap-[32px] pt-20 text-center">
+                <div className="bg-blue flex flex-col justify-center items-center">
+                    <div className="gap-[32px] pt-20 text-center flex flex-col items-center">
                         <h1 className="text-dark text-[48px] font-[400] suez-font">Where does my data go?</h1>
                     </div>
                     
-                    <div className="w-full flex justify-center items-center pt-[32px] pb-[128px] px-10 md:px-20 lg:px-32">
-                        <p className="text-dark text-[18px] roboto-font text-center max-w-5xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div className="w-full flex flex-col justify-center items-center space-y-5 justify-center items-center pt-[32px] pb-[128px] px-10 md:px-20 lg:px-32">
+                        <p className="text-dark text-[18px] roboto-font text-center max-w-5xl">Your data security and privacy are our highest priorities at IntelliAgents. We employ industry-leading standards and robust security measures to ensure your personal information is protected at all times. IntelliAgents strictly adheres to applicable privacy laws and regulations, ensuring your data remains confidential and secure.</p>
+                        <p className="text-dark text-[18px] roboto-font text-center max-w-5xl">We are committed to transparency about how your information is used. Your data is processed solely to enhance and personalize your experience with our services. Under no circumstances do we sell, rent, or share your data with third-party entities without obtaining your explicit consent.</p>
+                        <p className="text-dark text-[18px] roboto-font text-center max-w-5xl">Should there be a need to involve trusted third-party partners to facilitate specific services, we will always clearly inform you and seek your approval before sharing any of your information. You retain complete control over your data and can review, modify, or request deletion of your information at any time.</p>
                     </div>
                 </div>
 
