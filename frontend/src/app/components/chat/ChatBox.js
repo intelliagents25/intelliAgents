@@ -71,6 +71,10 @@ const ChatBox = ({ handleButtonToggle }) => {
     }
   }, []);
 
+  useEffect(() => {
+    renderMarkdown?.();
+  }, [receivedMessages]);
+
   // ==== helper functions ====
 
   // scroll to the bottom of the chat box
@@ -135,11 +139,20 @@ const ChatBox = ({ handleButtonToggle }) => {
   // ==== html rendering constants ====
   const messages = receivedMessages.map((message, index) => {
     const author = message.author;
-    return (
-      <span key={index} className={styles.message} data-author={author}>
-        {message.data}
-      </span>
-    );
+    if (author === "me") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          {message.data}
+        </span>
+      );
+    } else if (author === "other") {
+      return (
+        <span key={index} className={styles.message} data-author={author}>
+          <github-md>{message.data}</github-md>
+        </span>
+      );
+    }
+
   });
 
   const retryMessage = (
