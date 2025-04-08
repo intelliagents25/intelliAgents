@@ -147,7 +147,6 @@ async function returnAcceptedOH(OfficeHourData) {
     method: "POST",
     body: JSON.stringify(OfficeHourData),
     redirect: "follow",
-    signal: AbortSignal.timeout(10 * 1000),
     headers :{
       "Content-Type" : "application/json",
     }

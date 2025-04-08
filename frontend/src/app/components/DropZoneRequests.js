@@ -15,7 +15,6 @@ export const sendFileToBot = async (file) => {
         // headers: headers,
         body: formData,
         redirect: "follow",
-        signal: AbortSignal.timeout(60 * 1000)
     };
 
     try {
