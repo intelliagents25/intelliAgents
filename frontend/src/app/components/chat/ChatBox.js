@@ -9,7 +9,7 @@ import { IoMdSend } from "react-icons/io";
 
 const initialChatState = [
   {
-    data: "Hi, Im Intelliagent... Before I can assist you, please ensure you have uploaded a syllabus so I have the necessary context!",
+    data: "Hello I'm Intelli. To proceed, please ensure a syllabus is uploaded so I can assist you effectively.",
     author: "other",
   },
 ];
