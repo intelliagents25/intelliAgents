@@ -153,7 +153,7 @@ const VerifyTable = forwardRef((props, ref) => {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <div className="border border-gray-900 rounded-[50px] overflow-x-auto my-5 bg-[#FFFFFF80] item-center">
             <br />
-                <table className="min-w-full w-[50vw] h-[35vh] table-auto p-2">
+                <table className="min-w-full w-[80vw] h-[35vh] table-auto p-2">
                     <thead>
                         <tr>
                             <th className="pl-[3rem] pr-4 pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-left w-auto">Name</th>
@@ -162,15 +162,15 @@ const VerifyTable = forwardRef((props, ref) => {
                             <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Frequency</th>
                             <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Source</th>
 
-                            <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-auto whitespace-nowrap">Remove</th>
+                            <th className="pl-4 pr-[3rem] pt-3 pb-2 text-[0.5rem] md:text-[1.0rem] lg:text-[1.5rem] text-[--secondary-color-1] font-bold text-center w-[5%] whitespace-nowrap">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         {tableData.map((row, index) => (
                             <tr key={index}>
-                                <td className="pl-[3rem] pr-4 py-1 text-dark text-[0.2rem] md:text-[0.7rem] lg:text-[1.2rem] text-left w-2/5 align-top">
+                                <td className="pl-[3rem] pr-4 py-1 text-dark text-[0.2rem] md:text-[0.7rem] lg:text-[1.2rem] text-left w-[25%] align-top">
                                     {/* If the row is rejected and being edited, show input */}
-                                        <input
+                                        <textarea
                                             required={true}
                                             type="text"
                                             value={row["name"]|| ""}
@@ -180,13 +180,14 @@ const VerifyTable = forwardRef((props, ref) => {
                                                 row?.Errors?.["name"] ? "border-red-500" : "border-gray-300"
                                             }`}
                                         />
-                                        For: {row.syllabus}
+                                        <p className='text-gray-600'>For: {row.syllabus}</p>
+                                        
                                         {row?.Errors?.["name"] && (
                                             <p className="text-red-500 text-xs mt-1">{row.Errors["name"]}</p>
                                         )}
                                 </td>
 
-                                <td className="px-4 pt-1 pb-4 text-center cursor-pointer w-1/5 align-top ">
+                                <td className="px-4 pt-1 pb-4 text-center cursor-pointer w-[10%] align-top ">
                                 <input
                                     type="date"
                                     required={true}
@@ -222,7 +223,7 @@ const VerifyTable = forwardRef((props, ref) => {
 
                                 </td>
 
-                                <td className="w-1/8 px-4 py-1 text-center cursor-pointer w-1/5 align-top">
+                                <td className="w-[10%] px-4 py-1 text-center cursor-pointer align-top">
                                 <input
                                     type="date"
                                     value={row["end_date"]|| ""}
@@ -246,7 +247,7 @@ const VerifyTable = forwardRef((props, ref) => {
                                     
                                 </td>
 
-                                <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+                                <td className="w-[25%] pl-4 pr-[3rem] py-1 text-center cursor-pointer align-top">
 
                                 <select
                                     value={row["rrule"]}
@@ -266,14 +267,14 @@ const VerifyTable = forwardRef((props, ref) => {
                                 </td>
 
                                 
-                                <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+                                <td className="w-[20%] pl-4 pr-[3rem] py-1 text-center cursor-pointer align-top">
                                     <p>
                                     {row["source"]}
                                     </p>
                                     
                                 </td>
 
-                                <td className="w-1/8 pl-4 pr-[3rem] py-1 text-center cursor-pointer w-1/5 align-top">
+                                <td className="w-[10%] pl-4 pr-[3rem] py-1 text-center cursor-pointer align-top">
                                     
                                         <Icons.xmark
                                             className={`inline-block text-2xl md:text-3xl lg:text-4xl transition-all duration-300 hover:text-red-500`}
