@@ -23,7 +23,7 @@ main {
 }
 
 body {
-  color: var(--foreground);
+  color: var(--text-colour-dark);
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
@@ -300,6 +300,7 @@ button.button-rounded {
 /* Body of layout */
 .body {
   background-color: var(--bg-colour-blue);
+  color: var(--text-colour-dark);
 }
 
 /* Footer of layour */
