@@ -2,6 +2,7 @@
 import React, { useEffect, useState,useRef} from "react";
 import styles from "./ChatBox.module.css";
 import { sendDataToBot, getFileInfo  } from "./ChatRequests";
+import TableModal from "./TableModal";
 
 import LoadingAnimation from "./ChatLoadingAnimation";
 import { IoCloseOutline } from "react-icons/io5";
@@ -12,6 +13,10 @@ const initialChatState = [
     data: "Hello I'm Intelli. To proceed, please ensure a syllabus is uploaded so I can assist you effectively.",
     author: "other",
   },
+  // {
+  //   data: "| Conflict | Date | Time | Course | \n|------|-----|\n| Midterm-OH | 02/10/2025 | 10:00 AM | Math226-Math419 |", // This is the markdown table
+  //   author: "other",
+  // },
 ];
 
 const ChatBox = ({ handleButtonToggle }) => {
@@ -27,6 +32,7 @@ const ChatBox = ({ handleButtonToggle }) => {
   const [awaitingResponse, setAwaitingResponse] = useState(false);
   const [showRetryMessage, setShowRetryMessage] = useState(false);
   const [promptSuggestions, setPromptSuggestions] = useState([]);
+  const [showTableModal, setShowTableModal] = useState(false); // State for table modal visibility
 
   const disableSend = messageText.trim().length === 0 || awaitingResponse;
 
@@ -82,6 +88,21 @@ const ChatBox = ({ handleButtonToggle }) => {
       console.warn("renderMarkdown has not been loaded, some markdown may not render properly");
     }
   }, [receivedMessages]);
+
+  // Check if any message contains a table
+  useEffect(() => {
+    const containsTable = receivedMessages.some((message) =>
+      message.data.includes("|")
+    );
+
+    if (containsTable) {
+      setShowTableModal(true); // Open modal if a table is found
+    }
+  }, [receivedMessages]);
+
+  // Close the modal
+  const closeModal = () => setShowTableModal(false);
+
 
   // ==== helper functions ====
 
@@ -213,6 +234,17 @@ const ChatBox = ({ handleButtonToggle }) => {
             </button>
           ))}
         </div>
+
+        {/* Show modal if a table is detected */}
+        {showTableModal && (
+          <TableModal
+            tableMarkdown={receivedMessages.find((message) =>
+              message.data.includes("|")
+            )?.data || ""}
+            onClose={closeModal}
+          />
+        )}
+
         <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea
             ref={inputBoxRef}
