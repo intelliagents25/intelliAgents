@@ -26,7 +26,7 @@ export const sendDataToBot = async (message_str) => {
             if (end - start < MIN_WAIT_TIME) {
                 return new Promise(resolve => setTimeout(() => resolve(response), MIN_WAIT_TIME - (end - start)));
             } else {
-                return response;
+                return typeof response === "string" ? response : JSON.stringify(response);
             }
         });
 };

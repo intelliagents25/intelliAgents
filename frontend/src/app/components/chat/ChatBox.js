@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef} from "react";
 import styles from "./ChatBox.module.css";
 import { sendDataToBot, getFileInfo  } from "./ChatRequests";
 
@@ -16,8 +16,9 @@ const initialChatState = [
 
 const ChatBox = ({ handleButtonToggle }) => {
   // ==== state variables ====
-  let inputBox = null;
   let messageEnd = null;
+
+  const inputBoxRef = useRef(null);
 
   const [messageText, setMessageText] = useState("");
   const [receivedMessages, setMessages] = useState(initialChatState);
@@ -75,8 +76,8 @@ const ChatBox = ({ handleButtonToggle }) => {
   }, []);
 
   useEffect(() => {
-    if (typeof renderMarkdown === "function") {
-      renderMarkdown();
+    if (typeof window.renderMarkdown === "function") {
+      window.renderMarkdown();
     } else {
       console.warn("renderMarkdown has not been loaded, some markdown may not render properly");
     }
@@ -110,7 +111,8 @@ const ChatBox = ({ handleButtonToggle }) => {
     setAwaitingResponse(true);
 
     scrollToBottom();
-    inputBox.focus();
+    inputBoxRef.current?.focus();
+
 
     let response = null;
 
@@ -155,7 +157,7 @@ const ChatBox = ({ handleButtonToggle }) => {
     if (author === "me") {
       return (
         <span key={index} className={styles.message} data-author={author}>
-          {message.data}
+          {typeof message.data === "string" ? message.data : JSON.stringify(message.data)}
         </span>
       );
     } else if (author === "other") {
@@ -165,6 +167,7 @@ const ChatBox = ({ handleButtonToggle }) => {
         </span>
       );
     }
+    return <></>
 
   });
 
@@ -190,9 +193,7 @@ const ChatBox = ({ handleButtonToggle }) => {
           <div
             className={styles.anchor}
             id="anchor"
-            ref={(element) => {
-              messageEnd = element;
-            }}
+            ref={inputBoxRef}
           ></div>
         </div>
         {promptSuggestions.length >= 1 && (
@@ -214,9 +215,7 @@ const ChatBox = ({ handleButtonToggle }) => {
         </div>
         <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea
-            ref={(element) => {
-              inputBox = element;
-            }}
+            ref={inputBoxRef}
             value={messageText}
             placeholder="Type a message..."
             onChange={(e) => setMessageText(e.target.value)}
