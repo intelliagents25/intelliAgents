@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef} from "react";
 import styles from "./ChatBox.module.css";
 import { sendDataToBot, getFileInfo  } from "./ChatRequests";
 
@@ -76,8 +76,8 @@ const ChatBox = ({ handleButtonToggle }) => {
   }, []);
 
   useEffect(() => {
-    if (typeof renderMarkdown === "function") {
-      renderMarkdown();
+    if (typeof window.renderMarkdown === "function") {
+      window.renderMarkdown();
     } else {
       console.warn("renderMarkdown has not been loaded, some markdown may not render properly");
     }
@@ -215,9 +215,7 @@ const ChatBox = ({ handleButtonToggle }) => {
         </div>
         <form onSubmit={handleFormSubmission} className={styles.form}>
           <textarea
-            ref={(element) => {
-              inputBox = element;
-            }}
+            ref={inputBoxRef}
             value={messageText}
             placeholder="Type a message..."
             onChange={(e) => setMessageText(e.target.value)}
