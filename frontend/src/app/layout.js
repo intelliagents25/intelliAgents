@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
               {/* Right Section: How It Works */}
               <div className='flex items-center py-[10px]'>
               <Link
-              href="#how-it-works"
+              href="/#how-it-works"
               id="how-it-works-button"
               className="flex justify-center w-[30vw] md:w-[20vw] lg:w-[10vw] items-center bg-[--secondary-color-1] text-white py-2 px-4 rounded-full border border-[#2E374C] cursor-pointer hover:bg-[#5AAAFA] font-medium whitespace-nowrap"
               >
@@ -96,9 +96,9 @@ export default function RootLayout({ children }) {
                   Home
                 </Link>                
                 <a href="about-us">About Us</a>
-                <Link href="#faq">FAQ's</Link>
-                <a href="contact-us">Contact Us</a>
-                <Link href="fa" className="font-roboto">
+                <Link href="/faq">FAQ's</Link>
+                <a href="/contact-us">Contact Us</a>
+                <Link href="/#how-it-works" className="font-roboto">
                   How It Works
                 </Link>  
               </div>
